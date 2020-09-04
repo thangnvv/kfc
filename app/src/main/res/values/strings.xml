@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">KFC</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="combo_for_one">Fragment Combo For One</string>
+    <string name="combo_for_sharing">Fragment Combo For Sharing</string>
+    <string name="combo_hot_deals">Fragment Combo Hot Deals</string>
+    <string name="a_la_cart">Fragment For A La Cart</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
