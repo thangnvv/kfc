@@ -37,7 +37,7 @@ public class ALaCarte_Menu_Fragment extends Fragment {
             mFragmentManagerMenuAlaCarte = getChildFragmentManager();
             mViewPagerAdapterMenuAlaCarte = new ViewPagerAdapterForMenuALaCarte(mFragmentManagerMenuAlaCarte, 4);
             mViewPagerMenuAlaCarte.setAdapter(mViewPagerAdapterMenuAlaCarte);
-
+            mViewPagerMenuAlaCarte.setOffscreenPageLimit(2);
         return view;
     }
 

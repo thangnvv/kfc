@@ -25,15 +25,15 @@ public class ViewPagerAdapterForTabLine extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
 
-        All_Line_Fragment _all_lineFragment = new All_Line_Fragment();
+        All_Line_Fragment all_lineFragment = new All_Line_Fragment();
 
         switch (position){
             case 0:
-                return _all_lineFragment;
+                return all_lineFragment;
             case 1:
-                return _all_lineFragment;
+                return all_lineFragment;
             case 2:
-                return _all_lineFragment;
+                return all_lineFragment;
             case 3:
                 return new ALaCarte_TabLayout_Fragment();
             default:

@@ -11,6 +11,7 @@ import com.example.shop.fragment.ALaCarte_Menu_Fragment;
 import com.example.shop.fragment.Fried_RoastedChicken_Fragment;
 import com.example.shop.fragment.Hot_Deals_Fragment;
 import com.example.shop.fragment.Rice_Burger_Fragment;
+import com.example.shop.fragment.Snacks_Fragment;
 
 public class ViewPagerAdapterForMenuALaCarte extends FragmentPagerAdapter{
 
@@ -33,7 +34,7 @@ public class ViewPagerAdapterForMenuALaCarte extends FragmentPagerAdapter{
             case 1:
                 return new Rice_Burger_Fragment();
             case 2:
-                return new Hot_Deals_Fragment();
+                return new Snacks_Fragment();
             case 3:
                 return new ALaCarte_Menu_Fragment();
             default:
