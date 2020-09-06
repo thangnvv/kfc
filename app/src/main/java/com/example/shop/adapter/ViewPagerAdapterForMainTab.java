@@ -5,7 +5,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.shop.fragment.ALaCarte_Fragment;
+import com.example.shop.fragment.Fragment_ALaCarte_Menu;
+import com.example.shop.fragment.Fragment_ALaCarte_TabLayout;
 import com.example.shop.fragment.ForOne_Fragment_Old;
 import com.example.shop.fragment.ForSharing_Fragment;
 import com.example.shop.fragment.HotDeals_Fragment;
@@ -33,7 +34,7 @@ public class ViewPagerAdapterForMainTab extends FragmentPagerAdapter {
             case 2:
                 return new HotDeals_Fragment();
             case 3:
-                return new ALaCarte_Fragment();
+                return new Fragment_ALaCarte_Menu();
             default:
                 return null;
         }

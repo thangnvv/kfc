@@ -146,7 +146,7 @@
                 <com.example.shop.ultil.noneAllowSwipeViewPager
                     android:id="@+id/viewPagerLine"
                     android:layout_width="match_parent"
-                    android:layout_height="600dp" />
+                    android:layout_height="50dp" />
 
             </LinearLayout>
         </com.google.android.material.appbar.AppBarLayout>
@@ -161,15 +161,10 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <!--                <com.example.shop.ultil.noneAllowSwipeViewPager-->
-                <!--                    android:id="@+id/viewPagerMain"-->
-                <!--                    android:layout_width="match_parent"-->
-                <!--                    android:layout_height="2200dp"-->
-                <!--                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />-->
-
-                <View
+                <com.example.shop.ultil.noneAllowSwipeViewPager
+                    android:id="@+id/viewPagerMain"
                     android:layout_width="match_parent"
-                    android:layout_height="2dp"
+                    android:layout_height="2200dp"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
             </LinearLayout>

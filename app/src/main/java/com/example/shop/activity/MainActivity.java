@@ -33,8 +33,7 @@ public class MainActivity extends AppCompatActivity {
     TabLayout mTabLayoutMain;
     noneAllowSwipeViewPager mViewPagerLine, mViewPagerMain;
     ViewPagerAdapterForTabLine viewPagerAdapterForTabLine;
-//    ViewPagerAdapterForMainTab viewPagerAdapterForMainTab;
-    ProductAdapter mProductAdapter;
+    ViewPagerAdapterForMainTab viewPagerAdapterForMainTab;
 
     //For slider banner in main
     private List<BannerImage> bannerMain;
@@ -53,19 +52,19 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-//        FragmentManager fragmentManagerMain = getSupportFragmentManager();
+        FragmentManager fragmentManagerMain = getSupportFragmentManager();
 
         viewPagerAdapterForTabLine = new ViewPagerAdapterForTabLine(fragmentManager, mTabLayoutMain.getTabCount());
-//        viewPagerAdapterForMainTab = new ViewPagerAdapterForMainTab(fragmentManagerMain, mTabLayoutMain.getTabCount());
+        viewPagerAdapterForMainTab = new ViewPagerAdapterForMainTab(fragmentManagerMain, mTabLayoutMain.getTabCount());
         Log.d("DDD", mTabLayoutMain.getTabCount() + " Số tab");
         mViewPagerLine.setAdapter(viewPagerAdapterForTabLine);
-//        mViewPagerMain.setAdapter(viewPagerAdapterForMainTab);
+        mViewPagerMain.setAdapter(viewPagerAdapterForMainTab);
 
         mViewPagerLine.setOffscreenPageLimit(2);
-//        mViewPagerMain.setOffscreenPageLimit(2);
+        mViewPagerMain.setOffscreenPageLimit(2);
 
         mViewPagerLine.setPagingEnabled(false);
-//        mViewPagerMain.setPagingEnabled(false);
+        mViewPagerMain.setPagingEnabled(false);
 
         mViewPagerLine.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayoutMain));
 
@@ -82,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 mViewPagerLine.setCurrentItem(tab.getPosition());
-//                mViewPagerMain.setCurrentItem(tab.getPosition());
+                mViewPagerMain.setCurrentItem(tab.getPosition());
             }
 
             @Override
@@ -110,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
         sliderView             = findViewById(R.id.imageSlider);
         mToolbarMain           = findViewById(R.id.toolBarMain);
         mImgViewMore           = findViewById(R.id.imageViewMore);
-//        mViewPagerMain         = findViewById(R.id.viewPagerMain);
+        mViewPagerMain         = findViewById(R.id.viewPagerMain);
         mTabLayoutMain         = findViewById(R.id.tabLayoutMain);
         mViewPagerLine         = findViewById(R.id.viewPagerLine);
 

@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.ALaCarte_Fragment">
+    tools:context=".fragment.Fragment_ALaCarte_Menu">
 
     <androidx.viewpager.widget.ViewPager
         android:background="#00FFC4"
         android:id="@+id/viewPagerMenuAlaCarte"
         android:layout_width="match_parent"
-        android:layout_height="2dp"/>
+        android:layout_height="2000dp"/>
 
 </LinearLayout>
