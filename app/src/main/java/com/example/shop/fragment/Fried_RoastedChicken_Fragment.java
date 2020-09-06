@@ -32,7 +32,7 @@ public class Fried_RoastedChicken_Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_fried__roasted_chicken_, container, false);
+        View view = inflater.inflate(R.layout.fragment_fried_roasted_chicken_, container, false);
 
         mListProduct = new ArrayList<>();
 

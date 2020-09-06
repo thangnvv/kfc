@@ -1,12 +1,13 @@
 package com.example.shop.fragment;
 
 import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
-
-import androidx.fragment.app.Fragment;
 
 import com.example.shop.R;
 import com.example.shop.adapter.ProductAdapter;
@@ -15,21 +16,22 @@ import com.example.shop.ultil.Product;
 
 import java.util.ArrayList;
 
-public class Fragment_Group_Combo extends Fragment {
+public class For_Sharing_Fragment extends Fragment {
+
     GridView gridViewComboGroup;
     ArrayList<Product> mListProduct;
     ProductAdapter mProductAdapter;
     ArrayList<BannerImage> ComboGroupA, ComboGroupB, ComboGroupC, ComboGroupD, ComboGroupE, ComboGroupF, ComboFamilyA, ComboFamilyB;
 
-    public Fragment_Group_Combo() {
+    public For_Sharing_Fragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_group_combo, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_combo_group_old, container, false);
 
         mListProduct = new ArrayList<>();
 
@@ -38,7 +40,7 @@ public class Fragment_Group_Combo extends Fragment {
 
         mProductAdapter = new ProductAdapter(mListProduct, getContext());
 
-        gridViewComboGroup = view.findViewById(R.id.gridViewGroupCombo);
+        gridViewComboGroup = view.findViewById(R.id.gridViewComboGroup);
         gridViewComboGroup.setAdapter(mProductAdapter);
 
         return view;
@@ -59,7 +61,7 @@ public class Fragment_Group_Combo extends Fragment {
                 "* 1 Popcorn (Lớn)\n" + "* 1 Khoai Tây Chiên (Lớn)\n" + "* 2 Pepsi Lon"));
 
         mListProduct.add(new Product(ComboFamilyA , "COMBO GIA ĐÌNH A", "359.000đ", "* 8 Miếng Gà Giòn Cay / 8 Miếng Gà Giòn Không Cay / 8 Miếng Gà Truyền Thống\n"+
-                "* 2 Khoai Tây Chiên (Lớn)\n" + "* 4 Pepsi Lon"));
+               "* 2 Khoai Tây Chiên (Lớn)\n" + "* 4 Pepsi Lon"));
 
         mListProduct.add(new Product(ComboFamilyB , "COMBO GIA ĐÌNH B", "359.000đ", "* 5 Miếng Gà Giòn Cay / 5 Miếng Gà Giòn Không Cay / 5 Miếng Gà Truyền Thống\n"+
                 "2 Burger Gà Quay Flava / 2 Burger Zinger\n"  +"* 2 Khoai Tây Chiên (Lớn)\n" + "* 3 Pepsi Lon"));

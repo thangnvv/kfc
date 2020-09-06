@@ -7,8 +7,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.shop.fragment.Fragment_ALaCarte_TabLayout;
-import com.example.shop.fragment.Fragment_All_Line;
+import com.example.shop.fragment.ALaCarte_TabLayout_Fragment;
+import com.example.shop.fragment.All_Line_Fragment;
 
 public class ViewPagerAdapterForTabLine extends FragmentPagerAdapter {
 
@@ -25,17 +25,17 @@ public class ViewPagerAdapterForTabLine extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
 
-        Fragment_All_Line fragment_all_line = new Fragment_All_Line();
+        All_Line_Fragment _all_lineFragment = new All_Line_Fragment();
 
         switch (position){
             case 0:
-                return fragment_all_line;
+                return _all_lineFragment;
             case 1:
-                return fragment_all_line;
+                return _all_lineFragment;
             case 2:
-                return fragment_all_line;
+                return _all_lineFragment;
             case 3:
-                return new Fragment_ALaCarte_TabLayout();
+                return new ALaCarte_TabLayout_Fragment();
             default:
                 Log.d("DDD",  "Check tab");
                 return null;

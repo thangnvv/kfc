@@ -15,15 +15,15 @@ import com.example.shop.R;
 import com.example.shop.adapter.ViewPagerAdapterForMenuALaCarte;
 import com.example.shop.interfaces.OnListenChangeTab;
 
-public class Fragment_ALaCarte_Menu extends Fragment {
+public class ALaCarte_Menu_Fragment extends Fragment {
 
-    ViewPager mViewPagerMenuAlaCarte;
+    public static ViewPager mViewPagerMenuAlaCarte;
 
     static ViewPagerAdapterForMenuALaCarte mViewPagerAdapterMenuAlaCarte;
     FragmentManager mFragmentManagerMenuAlaCarte;
     View view;
 
-    public Fragment_ALaCarte_Menu() {
+    public ALaCarte_Menu_Fragment() {
         // Required empty public constructor
     }
 

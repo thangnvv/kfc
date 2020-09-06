@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.Fragment_ALaCarte_Menu">
+    tools:context=".fragment.ALaCarte_Menu_Fragment">
 
     <androidx.viewpager.widget.ViewPager
         android:background="#00FFC4"

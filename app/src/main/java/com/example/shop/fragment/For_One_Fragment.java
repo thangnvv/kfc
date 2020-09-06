@@ -1,12 +1,13 @@
 package com.example.shop.fragment;
 
 import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
-
-import androidx.fragment.app.Fragment;
 
 import com.example.shop.R;
 import com.example.shop.adapter.ProductAdapter;
@@ -15,32 +16,34 @@ import com.example.shop.ultil.Product;
 
 import java.util.ArrayList;
 
-public class Fragment_One_Person_Combo extends Fragment {
-    GridView gridViewComboOnePerson;
+
+public class For_One_Fragment extends Fragment {
+
+    GridView gridView;
     ArrayList<Product> mListProduct;
     ProductAdapter mProductAdapter;
     ArrayList<BannerImage> ComboChickenA, ComboChickenB, ComboChickenC, ComboChickenD, ComboRiceA, ComboRiceB, ComboRiceC;
 
-
-    public Fragment_One_Person_Combo() {
+    public For_One_Fragment() {
         // Required empty public constructor
     }
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         createBannerListForProduct();
 
-        View view = inflater.inflate(R.layout.fragment_one_person_combo, container, false);
+        View view = inflater.inflate(R.layout.fragment_combo_one_person_old, container, false);
 
         mListProduct = new ArrayList<>();
+
         createBannerListForProduct();
         addProductInfo();
 
         mProductAdapter = new ProductAdapter(mListProduct, getContext());
-        gridViewComboOnePerson = view.findViewById(R.id.gridViewComboOnePerson);
-        gridViewComboOnePerson.setAdapter(mProductAdapter);
+
+        gridView = view.findViewById(R.id.gridViewProduct);
+        gridView.setAdapter(mProductAdapter);
+
 
         return view;
     }

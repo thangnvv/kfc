@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.HotDeals_Fragment">
+    tools:context=".fragment.Hot_Deals_Fragment">
 
     <GridView
         android:id="@+id/gridViewHotDeal"

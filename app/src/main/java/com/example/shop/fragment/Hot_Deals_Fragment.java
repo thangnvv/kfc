@@ -1,12 +1,13 @@
 package com.example.shop.fragment;
 
 import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
-
-import androidx.fragment.app.Fragment;
 
 import com.example.shop.R;
 import com.example.shop.adapter.ProductAdapter;
@@ -15,15 +16,15 @@ import com.example.shop.ultil.Product;
 
 import java.util.ArrayList;
 
-public class Fragment_HotDeals extends Fragment {
+public class Hot_Deals_Fragment extends Fragment {
 
-    GridView gridViewHotDeals;
+    GridView gridViewHotDeal;
     ArrayList<Product> mListProduct;
     ProductAdapter mProductAdapter;
     ArrayList<BannerImage> CheesePumpkinBar2PC, CheesePumpkinBar3PC, CheesePumpkinBar5PC, ComboCheesePumkinBarHDA,
             ComboCheesePumkinBarHDB, ComboCheesePumkinBarHDC, SteakWithRice, SteakWithFries, ZingerSteakHDA, ZingerSteakHDB ;
 
-    public Fragment_HotDeals() {
+    public Hot_Deals_Fragment() {
         // Required empty public constructor
     }
 
@@ -31,7 +32,7 @@ public class Fragment_HotDeals extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_hot_deals, container, false);
+        View view = inflater.inflate(R.layout.fragment_hot_deals_old, container, false);
 
         mListProduct = new ArrayList<>();
 
@@ -40,8 +41,8 @@ public class Fragment_HotDeals extends Fragment {
 
         mProductAdapter = new ProductAdapter(mListProduct, getContext());
 
-        gridViewHotDeals = view.findViewById(R.id.gridViewHotDeals);
-        gridViewHotDeals.setAdapter(mProductAdapter);
+        gridViewHotDeal = view.findViewById(R.id.gridViewHotDeal);
+        gridViewHotDeal.setAdapter(mProductAdapter);
 
         return view;
     }
@@ -69,7 +70,7 @@ public class Fragment_HotDeals extends Fragment {
 
         mListProduct.add(new Product(ZingerSteakHDA, "COMBO GÀ BÍT-TẾT HDA", "81.000đ",
                 "* 1 Phần Gà Bít-tết với Khoai Tây Chiên\n" + "* 1 Miếng Gà Giòn Cay / 1 Miếng Gà Giòn Không Cay / 1 Miếng Gà Truyền Thống\n"+
-                        "* 1 Pepsi Lon"));
+                "* 1 Pepsi Lon"));
 
         mListProduct.add(new Product(ZingerSteakHDB, "COMBO GÀ BÍT-TẾT HDB", "81.000đ",
                 "* 1 Phần Gà Bít-tết với Cơm\n" + "* 1 Miếng Gà Giòn Cay / 1 Miếng Gà Giòn Không Cay / 1 Miếng Gà Truyền Thống\n"+

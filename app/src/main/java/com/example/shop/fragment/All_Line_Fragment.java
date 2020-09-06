@@ -11,10 +11,10 @@ import androidx.fragment.app.Fragment;
 import com.example.shop.R;
 
 
-public class Fragment_All_Line extends Fragment {
+public class All_Line_Fragment extends Fragment {
 
 
-    public Fragment_All_Line() {
+    public All_Line_Fragment() {
         // Required empty public constructor
     }
 
