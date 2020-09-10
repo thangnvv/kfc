@@ -12,7 +12,7 @@ import com.google.android.material.tabs.TabLayout;
 
 public class ALaCarte_TabLayout_Fragment extends Fragment {
 
-    TabLayout mTabLayoutMenuALaCarte;
+    public static TabLayout mTabLayoutMenuALaCarte;
 
     public ALaCarte_TabLayout_Fragment() {
         // Required empty public constructor

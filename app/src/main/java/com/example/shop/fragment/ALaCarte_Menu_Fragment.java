@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import com.example.shop.R;
 import com.example.shop.adapter.ViewPagerAdapterForMenuALaCarte;
 import com.example.shop.interfaces.OnListenChangeTab;
+import com.google.android.material.tabs.TabLayout;
 
 public class ALaCarte_Menu_Fragment extends Fragment {
 
@@ -33,11 +34,28 @@ public class ALaCarte_Menu_Fragment extends Fragment {
 
         view = inflater.inflate(R.layout.fragment_a_la_carte_menu, container, false);
 
-            mViewPagerMenuAlaCarte = view.findViewById(R.id.viewPagerMenuAlaCarte);
-            mFragmentManagerMenuAlaCarte = getChildFragmentManager();
-            mViewPagerAdapterMenuAlaCarte = new ViewPagerAdapterForMenuALaCarte(mFragmentManagerMenuAlaCarte, 4);
-            mViewPagerMenuAlaCarte.setAdapter(mViewPagerAdapterMenuAlaCarte);
-            mViewPagerMenuAlaCarte.setOffscreenPageLimit(2);
+        mViewPagerMenuAlaCarte = view.findViewById(R.id.viewPagerMenuAlaCarte);
+        mFragmentManagerMenuAlaCarte = getChildFragmentManager();
+        mViewPagerAdapterMenuAlaCarte = new ViewPagerAdapterForMenuALaCarte(mFragmentManagerMenuAlaCarte, 4);
+        mViewPagerMenuAlaCarte.setAdapter(mViewPagerAdapterMenuAlaCarte);
+        mViewPagerMenuAlaCarte.setOffscreenPageLimit(1);
+        mViewPagerMenuAlaCarte.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                    TabLayout.Tab tab = ALaCarte_TabLayout_Fragment.mTabLayoutMenuALaCarte.getTabAt(position);
+                    tab.select();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         return view;
     }
 

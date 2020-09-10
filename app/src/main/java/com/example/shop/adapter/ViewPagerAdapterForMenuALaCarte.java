@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.shop.fragment.ALaCarte_Menu_Fragment;
+import com.example.shop.fragment.Desserts_And_Drinks_Fragment;
 import com.example.shop.fragment.Fried_RoastedChicken_Fragment;
 import com.example.shop.fragment.Hot_Deals_Fragment;
 import com.example.shop.fragment.Rice_Burger_Fragment;
@@ -36,7 +37,7 @@ public class ViewPagerAdapterForMenuALaCarte extends FragmentPagerAdapter{
             case 2:
                 return new Snacks_Fragment();
             case 3:
-                return new ALaCarte_Menu_Fragment();
+                return new Desserts_And_Drinks_Fragment();
             default:
                 Log.d("DDD",  "Check tab 1");
                 return null;

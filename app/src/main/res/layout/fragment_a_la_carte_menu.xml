@@ -7,9 +7,8 @@
     tools:context=".fragment.ALaCarte_Menu_Fragment">
 
     <androidx.viewpager.widget.ViewPager
-        android:background="#00FFC4"
         android:id="@+id/viewPagerMenuAlaCarte"
         android:layout_width="match_parent"
-        android:layout_height="2000dp"/>
+        android:layout_height="5000dp"/>
 
 </LinearLayout>
