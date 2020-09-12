@@ -69,56 +69,56 @@
                         android:id="@+id/textViewMyAccount"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="15dp"
                         android:text="THÔNG TIN TÀI KHOẢN"
                         android:textColor="@android:color/darker_gray"
-                        android:textSize="24sp"
+                        android:textSize="22sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/textViewTransactionHistory"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="15dp"
                         android:text="LỊCH SỬ ĐƠN HÀNG"
                         android:textColor="@android:color/darker_gray"
-                        android:textSize="24sp"
+                        android:textSize="22sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/textViewShippingAddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="15dp"
                         android:text="ĐỊA CHỈ GIAO HÀNG"
                         android:textColor="@android:color/darker_gray"
-                        android:textSize="24sp"
+                        android:textSize="22sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/textViewAppSetting"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="15dp"
                         android:text="CÀI ĐẶT"
                         android:textColor="@color/black"
-                        android:textSize="24sp"
+                        android:textSize="22sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/textViewAboutKFC"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="15dp"
                         android:text="VỀ KFC"
                         android:textColor="@color/black"
-                        android:textSize="24sp"
+                        android:textSize="22sp"
                         android:textStyle="bold" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="15dp"
                         android:background="@android:color/darker_gray" />
 
                     <LinearLayout
@@ -174,6 +174,12 @@
             </com.google.android.material.navigation.NavigationView>
         </LinearLayout>
     </ScrollView>
+
+    <include
+        layout="@layout/layout_bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
 
 
 </LinearLayout>

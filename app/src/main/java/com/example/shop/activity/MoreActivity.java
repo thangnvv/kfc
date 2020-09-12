@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import com.example.shop.R;
 
-public class More_Activity extends AppCompatActivity {
+public class MoreActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

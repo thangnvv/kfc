@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.tbuonomo.morphbottomnavigation.MorphBottomNavigationView
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:backgroundTint="@color/white"
+        app:menu="@menu/bottom_navigation"
+        app:morphCornerRadius="128dp"
+        app:morphItemRadius="64dp"
+        app:morphVerticalOffset="20dp"
+        style="@style/BottomNavigationView"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
