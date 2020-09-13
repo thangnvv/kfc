@@ -30,7 +30,7 @@
             android:textSize="20sp"
             android:textColor="@color/white"
             android:text="ĐĂNG KÝ"
-            android:background="@drawable/custom_button"
+            android:background="@drawable/background_red_thick"
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
 
@@ -50,7 +50,7 @@
             android:textSize="20sp"
             android:textColor="@color/white"
             android:text="ĐĂNG NHẬP"
-            android:background="@drawable/custom_button"
+            android:background="@drawable/background_red_thick"
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
     </LinearLayout>

@@ -32,7 +32,7 @@
         <Button
             android:id="@+id/buttonPromotion"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/custom_button_setting"
+            android:background="@drawable/background_black_thick"
             android:textColor="@color/darkGrey"
             android:textSize="10sp"
             android:text="Khuyến mãi"
@@ -105,7 +105,7 @@
 
         <Button
             android:id="@+id/buttonSeeMore"
-            android:background="@drawable/custom_button_setting"
+            android:background="@drawable/background_black_thick"
             android:textSize="20sp"
             android:textColor="@color/black"
             android:text="Xem Thêm"

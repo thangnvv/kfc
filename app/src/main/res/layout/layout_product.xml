@@ -80,7 +80,7 @@
             android:textStyle="bold"
             android:textColor="@color/black"
             android:text="TÙY CHỈNH"
-            android:background="@drawable/custom_button_setting"
+            android:background="@drawable/background_black_thick"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
@@ -94,7 +94,7 @@
             android:textColor="@color/white"
             android:textStyle="bold"
             android:text="ĐẶT HÀNG"
-            android:background="@drawable/custom_button"
+            android:background="@drawable/background_red_thick"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </LinearLayout>

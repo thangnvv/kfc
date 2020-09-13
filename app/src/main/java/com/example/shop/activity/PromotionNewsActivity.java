@@ -1,39 +1,54 @@
 package com.example.shop.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import com.example.shop.R;
 import com.example.shop.adapter.PromotionNewsAdapter;
 import com.example.shop.ultil.PromotionNews;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 
-public class PromotionNewsActivity extends AppCompatActivity {
+import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
+
+public class PromotionNewsActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
 
     ArrayList<PromotionNews> mListPromotionNews;
     PromotionNewsAdapter mPromotionNewsAdapter;
     RecyclerView.LayoutManager mLayoutManager;
-
     RecyclerView mRecyclerViewPromotionNews;
+    BottomNavigationView mBtmNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_promotion_news);
 
-        mListPromotionNews = new ArrayList<>();
-
+        intiView();
         addPromotionNews();
 
-        mRecyclerViewPromotionNews = findViewById(R.id.recyclerViewPromotionNews);
+        mBtmNavigationView.setSelectedItemId(R.id.promotion);
+        mBtmNavigationView.setOnNavigationItemSelectedListener(this);
+
         mPromotionNewsAdapter      = new PromotionNewsAdapter(mListPromotionNews, getApplicationContext());
         mLayoutManager             = new LinearLayoutManager(getApplicationContext());
         mRecyclerViewPromotionNews.setLayoutManager(mLayoutManager);
         mRecyclerViewPromotionNews.setAdapter(mPromotionNewsAdapter);
+    }
+
+    private void intiView() {
+
+        mListPromotionNews = new ArrayList<>();
+        mRecyclerViewPromotionNews = findViewById(R.id.recyclerViewPromotionNews);
+        mBtmNavigationView = findViewById(R.id.bottomNavigationView);
+
     }
 
     private void addPromotionNews() {
@@ -49,5 +64,27 @@ public class PromotionNewsActivity extends AppCompatActivity {
         mListPromotionNews.add(new PromotionNews("https://kfcvietnam.com.vn/uploads/content/a6e1db2b6df45c9e7960d4b0a7877ccd.png",
                 "Thanh Bí Phô-mai – Thơm Bùi Giòn Vị!!!", "01/06/2020 - 31/12/2020", "Món “Ăn Vặt” thần thánh đã xuất hiện tại KFC, cơ hội thưởng thức món ăn có 1-0-2 cho team nhà mình!!!", 813) );
 
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.more:
+                Intent intentMore = new Intent(PromotionNewsActivity.this, MoreActivity.class);
+                startActivity(intentMore);
+                finish();
+                break;
+            case R.id.menu:
+                Intent intentMenu = new Intent(PromotionNewsActivity.this, MainActivity.class);
+                startActivity(intentMenu);
+                finish();
+                break;
+            case R.id.restaurant:
+                Intent intentRestaurant = new Intent(PromotionNewsActivity.this, RestaurantActivity.class);
+                startActivity(intentRestaurant);
+                finish();
+        }
+
+        return true;
     }
 }

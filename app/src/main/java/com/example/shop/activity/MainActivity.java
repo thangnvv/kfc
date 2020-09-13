@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     noneAllowSwipeViewPager mViewPagerLine, mViewPagerMain;
     ViewPagerAdapterForTabLine viewPagerAdapterForTabLine;
     ViewPagerAdapterForMainTab viewPagerAdapterForMainTab;
-    MorphBottomNavigationView mBtmNavigationView;
+    BottomNavigationView mBtmNavigationView;
 
     //For slider banner in main
     private List<BannerImage> bannerMain;
@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         setSupportActionBar(mToolbarMain);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         mBtmNavigationView.setOnNavigationItemSelectedListener(this);
+        mBtmNavigationView.setSelectedItemId(R.id.menu);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentManager fragmentManagerMain = getSupportFragmentManager();
@@ -141,12 +142,19 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             case R.id.promotion:
                 Intent intentPromotion = new Intent(MainActivity.this, PromotionNewsActivity.class);
                 startActivity(intentPromotion);
+                finish();
                 break;
             case R.id.more:
                 Intent intentMore = new Intent(MainActivity.this, MoreActivity.class);
                 startActivity(intentMore);
+                finish();
                 break;
+            case R.id.restaurant:
+                Intent intentRestaurant = new Intent(MainActivity.this, RestaurantActivity.class);
+                startActivity(intentRestaurant);
+                finish();
         }
         return true;
     }
+
 }

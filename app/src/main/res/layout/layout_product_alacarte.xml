@@ -88,7 +88,7 @@
             android:textColor="@color/white"
             android:textStyle="bold"
             android:text="ĐẶT HÀNG"
-            android:background="@drawable/custom_button"
+            android:background="@drawable/background_red_thick"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </LinearLayout>
