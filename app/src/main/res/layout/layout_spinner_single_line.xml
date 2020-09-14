@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    android:id="@+id/textViewCity"
+    android:textColor="@color/black"
+    android:maxLines="1"
+    android:padding="@dimen/_8sdp"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:text="City"
+    android:textSize="@dimen/h1"
+    xmlns:android="http://schemas.android.com/apk/res/android" />

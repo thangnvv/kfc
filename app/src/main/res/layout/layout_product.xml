@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:elevation="10dp"
+    android:elevation="@dimen/_8sdp"
     app:cardCornerRadius="5dp">
 
     <LinearLayout
@@ -15,7 +15,8 @@
         <com.smarteist.autoimageslider.SliderView
             android:id="@+id/sliderViewProduct"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="@dimen/_120sdp"
+            app:sliderIndicatorMarginBottom="@dimen/_20sdp"
             app:sliderIndicatorEnabled="true"
             app:sliderIndicatorGravity="center_horizontal|bottom"
             app:sliderIndicatorOrientation="horizontal"
@@ -26,39 +27,38 @@
 
         <TextView
             android:id="@+id/textViewProductName"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="@dimen/margin_left_parent"
+            android:layout_marginRight="@dimen/margin_right_parent"
             android:textStyle="bold"
             android:text="Product Name"
             android:textAllCaps="true"
             android:textColor="@color/black"
-            android:textSize="26sp"
+            android:textSize="@dimen/h2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
         <TextView
             android:id="@+id/textViewProductPrice"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_marginLeft="@dimen/margin_left_parent"
+            android:layout_marginRight="@dimen/margin_right_parent"
             android:textStyle="bold"
             android:text="79.000đ"
             android:textColor="@color/black"
-            android:textSize="25sp"
+            android:textSize="@dimen/h1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
         <TextView
             android:id="@+id/textViewDiscrip"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_marginLeft="@dimen/margin_left_parent"
+            android:layout_marginRight="@dimen/margin_right_parent"
             android:text="* 2 Miếng Gà Giòn Cay/ 2 Miếng Gà Giòn Không Cay/ 2 Miếng Gà Truyền Thống
             \n* 1 Pepsi Lon"
             android:maxLines="3"
             android:textColor="@color/grey"
-            android:textSize="20sp"
+            android:textSize="@dimen/h1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
@@ -67,16 +67,16 @@
             android:id="@+id/imageButtonExpandText"
             android:src="@drawable/arrow_down"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/_8sdp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
         <Button
             android:id="@+id/buttonSettingProduct"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:textSize="20sp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginRight="@dimen/margin_right_parent"
+            android:layout_marginLeft="@dimen/margin_left_parent"
+            android:textSize="@dimen/h1"
             android:textStyle="bold"
             android:textColor="@color/black"
             android:text="TÙY CHỈNH"
@@ -86,11 +86,11 @@
 
         <Button
             android:id="@+id/buttonOrderProduct"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:textSize="18sp"
+            android:layout_marginTop="@dimen/_14sdp"
+            android:layout_marginBottom="@dimen/_14sdp"
+            android:layout_marginRight="@dimen/margin_right_parent"
+            android:layout_marginLeft="@dimen/margin_left_parent"
+            android:textSize="@dimen/h1"
             android:textColor="@color/white"
             android:textStyle="bold"
             android:text="ĐẶT HÀNG"

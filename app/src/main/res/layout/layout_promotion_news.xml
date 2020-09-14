@@ -3,9 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginBottom="20dp"
-    android:elevation="20dp"
-    app:cardCornerRadius="5dp">
+    android:layout_marginBottom="@dimen/_18sdp"
+    android:elevation="@dimen/_18sdp"
+    app:cardCornerRadius="@dimen/_4sdp">
 
     <LinearLayout
         android:orientation="vertical"
@@ -16,40 +16,40 @@
             android:id="@+id/imageViewBannerPromotion"
             android:layout_width="match_parent"
             android:scaleType="fitXY"
-            android:layout_height="200dp"/>
+            android:layout_height="@dimen/_150sdp"/>
 
         <TextView
             android:id="@+id/textViewTitle"
-            android:textSize="20sp"
+            android:textSize="@dimen/h1"
             android:textStyle="bold"
             android:textColor="@color/black"
             android:text="Promotion Title"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginLeft="@dimen/margin_left_parent"
+            android:layout_marginTop="@dimen/_16sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
         <Button
             android:id="@+id/buttonPromotion"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/margin_left_parent"
             android:background="@drawable/background_black_thick"
             android:textColor="@color/darkGrey"
-            android:textSize="10sp"
+            android:textSize="@dimen/_10sdp"
             android:text="Khuyến mãi"
             android:layout_marginTop="5dp"
-            android:layout_width="100dp"
-            android:layout_height="20dp"
+            android:layout_width="@dimen/_90sdp"
+            android:layout_height="@dimen/_18sdp"
             android:gravity="center"/>
 
         <LinearLayout
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/_18sdp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <ImageButton
                 android:id="@+id/imageButtonCalendar"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="@dimen/margin_left_parent"
                 android:background="@drawable/calendar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -57,8 +57,8 @@
             <TextView
                 android:id="@+id/textViewPeriodPromotion"
                 android:layout_weight="1"
-                android:layout_marginLeft="10dp"
-                android:textSize="18sp"
+                android:layout_marginLeft="@dimen/margin_left_parent"
+                android:textSize="@dimen/h0"
                 android:gravity="center_vertical"
                 android:textColor="@color/darkGrey"
                 android:text="Start Day - End Day"
@@ -68,7 +68,7 @@
             <ImageButton
                 android:id="@+id/imageButtonHeart"
                 android:background="@drawable/heart"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="@dimen/margin_right_parent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
@@ -76,17 +76,17 @@
                 android:id="@+id/textViewHeartCount"
                 android:textColor="@color/red"
                 android:textStyle="bold"
-                android:textSize="18sp"
+                android:textSize="@dimen/h0"
                 android:text="0"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="@dimen/margin_right_parent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
 
         <View
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginRight="@dimen/margin_right_parent"
+            android:layout_marginLeft="@dimen/margin_left_parent"
+            android:layout_marginTop="@dimen/_12sdp"
             android:background="@color/darkGrey"
             android:layout_width="match_parent"
             android:layout_height="2dp"/>
@@ -96,9 +96,9 @@
             android:textColor="@color/darkGrey"
             android:textSize="18sp"
             android:text="Promotion Description"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_marginRight="@dimen/margin_right_parent"
+            android:layout_marginLeft="@dimen/margin_left_parent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="2"/>
@@ -110,9 +110,10 @@
             android:textColor="@color/black"
             android:text="Xem Thêm"
             android:gravity="center"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginBottom="15dp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginLeft="@dimen/margin_left_parent"
+            android:layout_marginRight="@dimen/margin_right_parent"
+            android:layout_marginBottom="@dimen/_12sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </LinearLayout>

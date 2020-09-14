@@ -8,18 +8,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.shop.R;
 import com.example.shop.adapter.RestaurantAdapter;
+import com.example.shop.ultil.CustomDialogChooseLocation;
 import com.example.shop.ultil.Restaurant;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class RestaurantActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
+public class RestaurantActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener,
+        View.OnClickListener{
 
     BottomNavigationView mBtmNavigationView;
     TextView mTxtViewCity, mTxtViewDistrict;
@@ -41,6 +44,7 @@ public class RestaurantActivity extends AppCompatActivity implements BottomNavig
 
         mBtmNavigationView.setSelectedItemId(R.id.restaurant);
         mBtmNavigationView.setOnNavigationItemSelectedListener(this);
+        mTxtViewCity.setOnClickListener(this);
 
 
     }
@@ -90,5 +94,15 @@ public class RestaurantActivity extends AppCompatActivity implements BottomNavig
 
 
         return true;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.textViewCity:
+                CustomDialogChooseLocation chooseCityDialog = new CustomDialogChooseLocation(RestaurantActivity.this);
+                chooseCityDialog.show();
+                break;
+        }
     }
 }

@@ -18,24 +18,24 @@
         <ImageView
             android:id="@+id/imageViewCollaps"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="@dimen/_20sdp"
             app:layout_scrollFlags="scroll|exitUntilCollapsed" />
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="@dimen/_36sdp"
             android:gravity="center"
             android:text="TIN KHUYẾN MÃI"
             android:textColor="@color/white"
-            android:textSize="30sp"
+            android:textSize="@dimen/h6"
             android:textStyle="bold"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="25dp"/>
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_18sdp"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <RelativeLayout
-        android:layout_marginBottom="70dp"
+        android:layout_marginBottom="@dimen/_60sdp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -43,15 +43,15 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="@dimen/_60sdp"
             android:background="@color/red" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewPromotionNews"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp" />
+            android:layout_marginLeft="@dimen/margin_left_parent"
+            android:layout_marginRight="@dimen/margin_right_parent" />
 
     </RelativeLayout>
 

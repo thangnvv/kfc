@@ -9,10 +9,10 @@
     <GridView
         android:stretchMode="columnWidth"
         android:id="@+id/gridViewComboGroup"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
-        android:verticalSpacing="10dp"
-        android:horizontalSpacing="10dp"
+        android:layout_marginRight="@dimen/margin_right_parent"
+        android:layout_marginLeft="@dimen/margin_left_parent"
+        android:verticalSpacing="@dimen/_8sdp"
+        android:horizontalSpacing="@dimen/_8sdp"
         android:numColumns="2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

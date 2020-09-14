@@ -9,10 +9,10 @@
     <GridView
         android:id="@+id/gridViewFriedRoastedChicken"
         android:numColumns="2"
-        android:verticalSpacing="10dp"
-        android:horizontalSpacing="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
+        android:verticalSpacing="@dimen/_8sdp"
+        android:horizontalSpacing="@dimen/_8sdp"
+        android:layout_marginRight="@dimen/margin_right_parent"
+        android:layout_marginLeft="@dimen/margin_left_parent"
         android:stretchMode="columnWidth"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

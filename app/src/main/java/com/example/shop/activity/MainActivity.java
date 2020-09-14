@@ -24,7 +24,6 @@ import com.google.android.material.tabs.TabLayout;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
-import com.tbuonomo.morphbottomnavigation.MorphBottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;

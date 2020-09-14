@@ -13,7 +13,7 @@
             android:layout_height="wrap_content"
             android:text="KFC"
             android:textColor="@color/red"
-            android:textSize="30sp"
+            android:textSize="@dimen/_30sdp"
             android:textStyle="bold" />
 
     </androidx.appcompat.widget.Toolbar>
@@ -24,7 +24,7 @@
         android:background="@android:color/darker_gray" />
 
     <ScrollView
-        android:layout_margin="15dp"
+        android:layout_margin="@dimen/margin_right_parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -43,89 +43,91 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
+                    android:layout_marginTop="@dimen/margin_right_parent"
+                    android:layout_marginLeft="@dimen/margin_left_parent"
+                    android:layout_marginRight="@dimen/margin_right_parent"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="VN"
-                        android:textColor="#f20"
-                        android:textSize="20sp"
+                        android:textColor="@color/red"
+                        android:textSize="@dimen/h1"
                         android:textStyle="bold" />
 
                     <include
                         layout="@layout/signin_or_signup"
                         android:layout_width="match_parent"
-                        android:layout_height="150dp"/>
+                        android:layout_height="@dimen/_110sdp"/>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="@dimen/_6sdp"
                         android:background="@android:color/darker_gray" />
 
                     <TextView
                         android:id="@+id/textViewMyAccount"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
+                        android:layout_marginTop="@dimen/_12sdp"
                         android:text="THÔNG TIN TÀI KHOẢN"
                         android:textColor="@android:color/darker_gray"
-                        android:textSize="22sp"
+                        android:textSize="@dimen/h3"
                         android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/textViewTransactionHistory"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
+                        android:layout_marginTop="@dimen/_12sdp"
                         android:text="LỊCH SỬ ĐƠN HÀNG"
                         android:textColor="@android:color/darker_gray"
-                        android:textSize="22sp"
+                        android:textSize="@dimen/h3"
                         android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/textViewShippingAddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
+                        android:layout_marginTop="@dimen/_12sdp"
                         android:text="ĐỊA CHỈ GIAO HÀNG"
                         android:textColor="@android:color/darker_gray"
-                        android:textSize="22sp"
+                        android:textSize="@dimen/h3"
                         android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/textViewAppSetting"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
+                        android:layout_marginTop="@dimen/_12sdp"
                         android:text="CÀI ĐẶT"
                         android:textColor="@color/black"
-                        android:textSize="22sp"
+                        android:textSize="@dimen/h3"
                         android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/textViewAboutKFC"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
+                        android:layout_marginTop="@dimen/_12sdp"
                         android:text="VỀ KFC"
                         android:textColor="@color/black"
-                        android:textSize="22sp"
+                        android:textSize="@dimen/h3"
                         android:textStyle="bold" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_marginTop="15dp"
+                        android:layout_marginTop="@dimen/_12sdp"
                         android:background="@android:color/darker_gray" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginBottom="@dimen/_4sdp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
@@ -139,14 +141,14 @@
                             android:id="@+id/imageButtonYoutube"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="15dp"
+                            android:layout_marginLeft="@dimen/_12sdp"
                             android:background="@drawable/youtube_logo" />
 
                         <ImageButton
                             android:id="@+id/imageButtonInsta"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="15dp"
+                            android:layout_marginLeft="@dimen/_12sdp"
                             android:background="@drawable/instagram_logo" />
 
                         <View
@@ -165,8 +167,8 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginBottom="@dimen/_8sdp"
                         android:background="@android:color/darker_gray" />
 
                 </LinearLayout>

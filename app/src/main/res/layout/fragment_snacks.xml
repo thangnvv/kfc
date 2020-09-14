@@ -2,8 +2,8 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_marginRight="10dp"
-    android:layout_marginLeft="10dp"
+    android:layout_marginRight="@dimen/margin_right_parent"
+    android:layout_marginLeft="@dimen/margin_left_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragment.Fried_RoastedChicken_Fragment">
@@ -11,8 +11,8 @@
     <GridView
         android:id="@+id/gridViewSnacks"
         android:numColumns="2"
-        android:verticalSpacing="10dp"
-        android:horizontalSpacing="10dp"
+        android:verticalSpacing="@dimen/_8sdp"
+        android:horizontalSpacing="@dimen/_8sdp"
         android:stretchMode="columnWidth"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

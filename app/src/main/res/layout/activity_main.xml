@@ -30,7 +30,7 @@
                 android:layout_height="match_parent"
                 android:text="KFC"
                 android:textColor="@color/red"
-                android:textSize="35sp"
+                android:textSize="@dimen/_30sdp"
                 android:textStyle="bold" />
 
             <View
@@ -39,12 +39,11 @@
                 android:layout_height="match_parent"/>
 
             <FrameLayout
-                android:layout_marginRight="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:padding="10dp"
+                    android:padding="@dimen/_8sdp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/cart" />
@@ -52,7 +51,7 @@
                 <TextView
                     android:layout_gravity="center"
                     android:textStyle="bold"
-                    android:textSize="25sp"
+                    android:textSize="@dimen/h2"
                     android:textColor="@color/white"
                     android:text="0"
                     android:layout_width="wrap_content"
@@ -89,20 +88,20 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="@dimen/margin_left_parent"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/margin_right_parent"
                     android:text="Giao hàng đến:"
                     android:textColor="@android:color/darker_gray"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/h0" />
 
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="@dimen/margin_left_parent"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/margin_right_parent"
                     android:orientation="horizontal">
 
                     <TextView
@@ -110,7 +109,7 @@
                         android:layout_height="wrap_content"
                         android:text="Hồ Chí Minh"
                         android:textColor="@color/black"
-                        android:textSize="18sp"
+                        android:textSize="@dimen/h0"
                         android:textStyle="bold" />
 
                     <View
@@ -123,7 +122,7 @@
                         android:layout_height="wrap_content"
                         android:text="Thay đổi >"
                         android:textColor="@color/black"
-                        android:textSize="18sp"
+                        android:textSize="@dimen/h0"
                         android:textStyle="bold" />
 
                 </LinearLayout>
@@ -136,22 +135,22 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginBottom="@dimen/_4sdp"
                         android:background="@android:color/darker_gray" />
 
                     <include
                         layout="@layout/signin_or_signup"
                         android:layout_width="match_parent"
-                        android:layout_height="120dp"
-                        android:layout_margin="10dp" />
+                        android:layout_height="@dimen/_110sdp"
+                        android:layout_margin="@dimen/margin_right_parent" />
 
                     <!--   app:sliderIndicatorMargin="15dp"-->
 
                     <com.smarteist.autoimageslider.SliderView
                         android:id="@+id/imageSlider"
                         android:layout_width="match_parent"
-                        android:layout_height="180dp"
+                        android:layout_height="@dimen/_130sdp"
                         app:sliderAnimationDuration="600"
                         app:sliderAutoCycleDirection="back_and_forth"
                         app:sliderAutoCycleEnabled="true"
@@ -172,8 +171,8 @@
                 android:id="@+id/linear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginLeft="@dimen/margin_left_parent"
+                android:layout_marginRight="@dimen/margin_right_parent"
                 android:orientation="vertical"
                 app:layout_anchor="@id/imageSlider"
                 app:layout_anchorGravity="bottom">
@@ -181,7 +180,7 @@
                 <com.example.shop.ultil.noneAllowSwipeViewPager
                     android:id="@+id/viewPagerLine"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp" />
+                    android:layout_height="@dimen/_40sdp" />
 
             </LinearLayout>
         </com.google.android.material.appbar.AppBarLayout>
@@ -199,7 +198,7 @@
                 <com.example.shop.ultil.noneAllowSwipeViewPager
                     android:id="@+id/viewPagerMain"
                     android:layout_width="match_parent"
-                    android:layout_height="2200dp"
+                    android:layout_height="2500dp"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
             </LinearLayout>
