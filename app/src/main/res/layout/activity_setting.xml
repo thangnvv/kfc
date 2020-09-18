@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.SettingActivity"
+    android:background="@color/white">
+
+
+    <RelativeLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_150sdp">
+
+        <ImageButton
+            android:id="@+id/imageButtonClose"
+            android:layout_marginLeft="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:background="@drawable/close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/textViewSetting"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:gravity="center_horizontal"
+            android:paddingTop="@dimen/_30sdp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_80sdp"
+            android:text="CÀI ĐẶT"
+            android:textColor="@color/black"
+            android:textSize="@dimen/h6" />
+
+        <ImageView
+            android:layout_below="@id/textViewSetting"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_70sdp"
+            android:background="@color/red" />
+
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:paddingBottom="@dimen/_5sdp"
+            android:paddingRight="@dimen/_20sdp"
+            android:paddingLeft="@dimen/_20sdp"
+            android:paddingTop="@dimen/_30sdp"
+            android:background="@drawable/background_header_restaurant_activity"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_left_parent"
+            android:layout_marginRight="@dimen/margin_right_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Nhận thông báo"
+                android:textColor="@color/black"
+                android:textSize="@dimen/h0" />
+
+            <Switch
+                android:theme="@style/SwitchTheme"
+                android:id="@+id/switchReceiveNotifi"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_marginRight="@dimen/_30sdp"
+        android:layout_marginLeft="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:background="@color/grey"
+        android:layout_below="@id/linearLayout"
+        android:paddingBottom="@dimen/_10sdp"
+        android:paddingTop="@dimen/_10sdp"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_2sdp"/>
+</LinearLayout>

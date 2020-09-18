@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.ContactActivity"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_150sdp">
+
+        <ImageButton
+            android:id="@+id/imageButtonClose"
+            android:layout_marginLeft="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:background="@drawable/close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/textViewContact"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:gravity="center_horizontal"
+            android:paddingTop="@dimen/_30sdp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_80sdp"
+            android:text="LIÊN HỆ"
+            android:textColor="@color/black"
+            android:textSize="@dimen/h6" />
+
+        <ImageView
+            android:layout_below="@id/textViewContact"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_70sdp"
+            android:background="@color/red" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:paddingBottom="@dimen/_5sdp"
+            android:paddingRight="@dimen/_20sdp"
+            android:paddingLeft="@dimen/_20sdp"
+            android:paddingTop="@dimen/_30sdp"
+            android:background="@drawable/background_header_restaurant_activity"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_left_parent"
+            android:layout_marginRight="@dimen/margin_right_parent"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/map_location" />
+
+            <TextView
+                android:gravity="center_vertical"
+                android:layout_marginLeft="@dimen/margin_left_parent"
+                android:textSize="@dimen/h2"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:text="Địa chỉ"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <TextView
+        android:textSize="@dimen/h0"
+        android:textColor="@color/black"
+        android:text="Tầng 12, Tòa nhà BlueSky,01 đường Bạch Đằng, phường 2, quận Tân Bình, Tp. Hồ Chí Minh"
+        android:layout_marginRight="@dimen/_28sdp"
+        android:layout_marginLeft="@dimen/_56sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+    <RelativeLayout
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginLeft="@dimen/_28sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/imageButtonPhone"
+            android:background="@drawable/phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/textViewPhoneTitle"
+            android:layout_marginLeft="@dimen/margin_left_parent"
+            android:layout_toEndOf="@+id/imageButtonPhone"
+            android:textStyle="bold"
+            android:textSize="@dimen/h2"
+            android:textColor="@color/black"
+            android:text="Số điện thoại"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <ImageButton
+            android:id="@+id/imageButtonFax"
+            android:layout_toEndOf="@id/textViewPhoneTitle"
+            android:layout_marginLeft="@dimen/_16sdp"
+            android:background="@drawable/fax"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/textViewFaxTitle"
+            android:layout_marginLeft="@dimen/margin_left_parent"
+            android:layout_toEndOf="@+id/imageButtonFax"
+            android:textStyle="bold"
+            android:textSize="@dimen/h2"
+            android:textColor="@color/black"
+            android:text="Fax"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/textViewPhoneNumber"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:textSize="@dimen/h0"
+            android:textColor="@color/black"
+            android:layout_alignLeft="@id/textViewPhoneTitle"
+            android:layout_below="@id/textViewPhoneTitle"
+            android:text="(84-28)\n3848.9828"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:text="(84-28)\n3848.9825"
+            android:textSize="@dimen/h0"
+            android:textColor="@color/black"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_alignLeft="@id/textViewFaxTitle"
+            android:layout_below="@id/textViewFaxTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <ImageButton
+            android:id="@+id/imageButtonEmail"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_below="@id/textViewPhoneNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/mail_contact" />
+
+        <TextView
+            android:id="@+id/textViewEmailTitle"
+            android:gravity="center_vertical"
+            android:layout_below="@id/textViewPhoneNumber"
+            android:layout_toRightOf="@id/imageButtonEmail"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginLeft="@dimen/margin_left_parent"
+            android:textSize="@dimen/h2"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:text="Email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/textViewEmail"
+            android:textColor="@color/black"
+            android:textSize="@dimen/h0"
+            android:text="lienhe@kfcvietnam.com.vn"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_alignLeft="@id/textViewEmailTitle"
+            android:layout_below="@id/textViewEmailTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <ImageButton
+            android:id="@+id/imageButtonHotline"
+            android:background="@drawable/phone"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_below="@id/textViewEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/textViewHotlineTitle"
+            android:gravity="center_vertical"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginLeft="@dimen/margin_left_parent"
+            android:layout_toRightOf="@id/imageButtonHotline"
+            android:layout_below="@id/textViewEmail"
+            android:textSize="@dimen/h2"
+            android:textStyle="bold"
+            android:textColor="@color/red"
+            android:text="Hotline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/textViewHotline"
+            android:textSize="@dimen/h0"
+            android:textColor="@color/red"
+            android:textStyle="bold"
+            android:text="1900 6886"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_alignLeft="@id/textViewHotlineTitle"
+            android:layout_below="@id/textViewHotlineTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
+
+</LinearLayout>

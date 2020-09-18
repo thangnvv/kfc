@@ -2,7 +2,6 @@ package com.example.shop.fragment;
 
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
@@ -13,7 +12,6 @@ import android.view.ViewGroup;
 
 import com.example.shop.R;
 import com.example.shop.adapter.ViewPagerAdapterForMenuALaCarte;
-import com.example.shop.interfaces.OnListenChangeTab;
 import com.google.android.material.tabs.TabLayout;
 
 public class ALaCarte_Menu_Fragment extends Fragment {

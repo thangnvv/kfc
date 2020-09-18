@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/_280sdp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_gravity="center_horizontal">
+
+    <include
+        android:layout_marginBottom="@dimen/_16sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/layout_red_columns"/>
+
+    <Spinner
+        android:background="@drawable/background_black_thin"
+        android:id="@+id/spinnerCity"
+        android:layout_margin="@dimen/_16sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/buttonChoose"
+        android:layout_marginBottom="@dimen/_16sdp"
+        android:layout_marginRight="@dimen/_16sdp"
+        android:layout_marginLeft="@dimen/_16sdp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/h0"
+        android:textStyle="bold"
+        android:text="Chọn"
+        android:layout_gravity="center"
+        android:background="@drawable/background_red_thick"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

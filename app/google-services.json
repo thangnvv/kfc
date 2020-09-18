@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "517786075458",
+    "firebase_url": "https://kfcclone.firebaseio.com",
+    "project_id": "kfcclone",
+    "storage_bucket": "kfcclone.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:517786075458:android:c47eb03da2bda767f708db",
+        "android_client_info": {
+          "package_name": "com.example.shop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "517786075458-s8qibskq2kb7mol619rgmk48o7g34f0e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAU4ITalHED1oNG8ZgiIO4ybL4llwiQlAU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "517786075458-s8qibskq2kb7mol619rgmk48o7g34f0e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

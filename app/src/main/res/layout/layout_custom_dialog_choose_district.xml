@@ -64,7 +64,7 @@
 
     <Spinner
         android:background="@drawable/background_black_thin"
-        android:id="@+id/spinnerCity"
+        android:id="@+id/spinnerDistrict"
         android:layout_margin="@dimen/_16sdp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

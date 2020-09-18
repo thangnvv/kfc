@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    android:layout_gravity="center"
+    android:layout_height="@dimen/_480sdp"
+    android:layout_width="@dimen/_280sdp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="@dimen/_8sdp">
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/_4sdp"
+        android:layout_marginRight="@dimen/margin_right_parent"
+        android:layout_marginLeft="@dimen/margin_left_parent">
+
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/layout_red_columns"/>
+
+        <ImageButton
+            android:id="@+id/imageButtonCloseTermsAndConditons"
+            android:background="@drawable/cancel"
+            android:layout_gravity="end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <ScrollView
+            android:padding="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+            <TextView
+                android:id="@+id/textViewTermsAndConditions"
+                android:textColor="@color/black"
+                android:textSize="@dimen/h0"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </ScrollView>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
+
+

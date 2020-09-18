@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.RestaurantActivity">
+    tools:context=".activity.RestaurantActivity"
+    android:background="@color/white">
 
     <RelativeLayout
         android:id="@+id/relative"
@@ -46,32 +47,64 @@
             android:orientation="horizontal"
             >
 
+            <LinearLayout
+                android:id="@+id/linearLayoutCity"
+                android:gravity="center_vertical"
+                android:layout_marginRight="@dimen/_8sdp"
+                android:background="@drawable/background_black_thin"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_4sdp">
+
                 <TextView
                     android:id="@+id/textViewCity"
-                    android:gravity="center"
-                    android:paddingTop="@dimen/_4sdp"
-                    android:paddingBottom="@dimen/_4sdp"
-                    android:layout_marginRight="@dimen/_8sdp"
                     android:textColor="@color/darkGrey"
                     android:textSize="@dimen/h0"
                     android:text="Tỉnh/Thành Phố"
-                    android:background="@drawable/background_black_thin"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"/>
 
-                <TextView
-                    android:id="@+id/textViewDisTrict"
-                    android:gravity="center"
-                    android:textColor="@color/darkGrey"
-                    android:paddingTop="@dimen/_4sdp"
-                    android:paddingBottom="@dimen/_4sdp"
-                    android:textSize="@dimen/h0"
-                    android:text="Quận/Huyện *"
-                    android:background="@drawable/background_black_thin"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
+                <ImageButton
+                    android:layout_marginRight="@dimen/_4sdp"
+                    android:background="@drawable/arrow_down_black"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayoutDistrict"
+            android:gravity="center_vertical"
+            android:layout_marginRight="@dimen/_8sdp"
+            android:background="@drawable/background_black_thin"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_4sdp"
+            >
+
+            <TextView
+                android:id="@+id/textViewDisTrict"
+                android:textColor="@color/darkGrey"
+                android:textSize="@dimen/h0"
+                android:text="Quận/Huyện *"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"/>
+
+            <ImageButton
+                android:layout_marginRight="@dimen/_4sdp"
+                android:background="@drawable/arrow_down_black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+
 
         </LinearLayout>
 
@@ -116,10 +149,13 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewRestaurant"
+        android:clipToPadding="false"
+        android:padding="@dimen/_4sdp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"
         android:layout_marginBottom="@dimen/_8sdp"
         android:layout_marginLeft="@dimen/margin_left_parent"
         android:orientation="horizontal"
-        android:layout_alignParentLeft="true"
         android:layout_above="@+id/bottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

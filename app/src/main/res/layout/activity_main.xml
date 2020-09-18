@@ -51,13 +51,22 @@
                 <TextView
                     android:layout_gravity="center"
                     android:textStyle="bold"
-                    android:textSize="@dimen/h2"
+                    android:textSize="@dimen/h1"
                     android:textColor="@color/white"
                     android:text="0"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"/>
             </FrameLayout>
 
+            <TextView
+                android:layout_marginRight="@dimen/margin_right_parent"
+                android:textSize="@dimen/_14sdp"
+                android:textColor="@color/red"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:text="Giỏ hàng"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
         </LinearLayout>
     </androidx.appcompat.widget.Toolbar>
 
@@ -189,7 +198,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -202,7 +210,6 @@
                     app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
             </LinearLayout>
-
         </androidx.core.widget.NestedScrollView>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -9,16 +9,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Spinner;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.shop.R;
 import com.example.shop.adapter.RestaurantAdapter;
-import com.example.shop.ultil.CustomDialogChooseLocation;
+import com.example.shop.interfaces.OnSpinnerItemSelectedListener;
+import com.example.shop.ultil.CustomDialogChooseCity;
 import com.example.shop.ultil.Restaurant;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class RestaurantActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener,
@@ -30,6 +31,8 @@ public class RestaurantActivity extends AppCompatActivity implements BottomNavig
     RestaurantAdapter mRestaurantAdapter;
     RecyclerView.LayoutManager mLayoutManager;
     ArrayList<Restaurant> mArrayListRestaurant;
+    LinearLayout mLinearLayoutCity, mLinearLayoutDistrict;
+    Boolean citySelected = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +47,9 @@ public class RestaurantActivity extends AppCompatActivity implements BottomNavig
 
         mBtmNavigationView.setSelectedItemId(R.id.restaurant);
         mBtmNavigationView.setOnNavigationItemSelectedListener(this);
-        mTxtViewCity.setOnClickListener(this);
-
-
+        mLinearLayoutCity.setOnClickListener(this);
+        mLinearLayoutDistrict.setOnClickListener(this);
+        mLinearLayoutDistrict.setClickable(false);
     }
 
     private void createRestaurantList() {
@@ -64,6 +67,8 @@ public class RestaurantActivity extends AppCompatActivity implements BottomNavig
     }
 
     private void initView() {
+        mLinearLayoutCity   = findViewById(R.id.linearLayoutCity);
+        mLinearLayoutDistrict = findViewById(R.id.linearLayoutDistrict);
         mTxtViewCity        = findViewById(R.id.textViewCity);
         mTxtViewDistrict    = findViewById(R.id.textViewDisTrict);
         mBtmNavigationView  = findViewById(R.id.bottomNavigationView);
@@ -99,10 +104,32 @@ public class RestaurantActivity extends AppCompatActivity implements BottomNavig
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.textViewCity:
-                CustomDialogChooseLocation chooseCityDialog = new CustomDialogChooseLocation(RestaurantActivity.this);
+            case R.id.linearLayoutCity:
+                CustomDialogChooseCity chooseCityDialog = new CustomDialogChooseCity(RestaurantActivity.this);
+                chooseCityDialog.setCancelable(false);
+                chooseCityDialog.setOnItemSelectedListener(new OnSpinnerItemSelectedListener() {
+                    @Override
+                    public void onItemSelectedListener(String cityName) {
+                        if(!cityName.equals("Chọn Tỉnh/Thành Phố")){
+                            mTxtViewCity.setText("Tỉnh/Thành Phố" + "\n" + cityName);
+                            citySelected = true;
+                            mLinearLayoutDistrict.setClickable(citySelected);
+                        }else{
+                            mTxtViewCity.setText("Tỉnh/Thành Phố");
+                            citySelected = false;
+                            mLinearLayoutDistrict.setClickable(citySelected);
+                        }
+                    }
+                });
                 chooseCityDialog.show();
+                break;
+
+            case R.id.linearLayoutDistrict:
+                String cityName = mTxtViewCity.getText().toString().trim();
+                Toast.makeText(RestaurantActivity.this,"It's Works", Toast.LENGTH_LONG).show();
                 break;
         }
     }
+
+
 }

@@ -12,18 +12,22 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.shop.R;
+import com.example.shop.interfaces.OnSpinnerItemSelectedListener;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
-
-public class CustomDialogChooseLocation extends Dialog implements View.OnClickListener, AdapterView.OnItemSelectedListener{
+public class CustomDialogChooseDistrict extends Dialog implements View.OnClickListener,
+        AdapterView.OnItemSelectedListener{
 
     Activity hostActivity;
     Button mBtnChoose;
     Spinner mSpinnerCity;
+    OnSpinnerItemSelectedListener mListener;
 
-    public CustomDialogChooseLocation (Activity activity){
+    public CustomDialogChooseDistrict(Activity activity){
+        super(activity);
+        hostActivity = activity;
+    }
+
+    public CustomDialogChooseDistrict(Activity activity, int a){
         super(activity);
         hostActivity = activity;
     }
@@ -33,31 +37,25 @@ public class CustomDialogChooseLocation extends Dialog implements View.OnClickLi
         super.onCreate(savedInstanceState);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.layout_custom_dialog_choose_location);
+        setContentView(R.layout.layout_custom_dialog_choose_city);
         mBtnChoose   = findViewById(R.id.buttonChoose);
         mSpinnerCity = findViewById(R.id.spinnerCity);
         mBtnChoose.setOnClickListener(this);
 
-        ArrayList<String> cityList = new ArrayList<>();
-        cityList.add("Chọn Tỉnh/Thành Phố");
-        cityList.add("Hồ Chí Minh");
-        cityList.add("Hà Nội");
-        cityList.add("Đà Nẵng");
-        cityList.add("Nha Trang");
-        cityList.add("Vũng Tàu");
+        String[] city = hostActivity.getResources().getStringArray(R.array.city);
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(hostActivity.getBaseContext(),R.layout.layout_selected_city,
-                R.id.textViewCity, cityList);
+                R.id.textViewCity, city);
 
         dataAdapter.setDropDownViewResource(R.layout.layout_spinner_single_line);
-
         mSpinnerCity.setAdapter(dataAdapter);
 
     }
 
     @Override
     public void onClick(View v) {
-        Toast.makeText(hostActivity.getBaseContext(), "It Works!!!", Toast.LENGTH_LONG).show();
+        mListener.onItemSelectedListener(mSpinnerCity.getSelectedItem().toString());
+        Toast.makeText(hostActivity.getBaseContext(), "" + mSpinnerCity.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
         dismiss();
     }
 
@@ -71,4 +69,9 @@ public class CustomDialogChooseLocation extends Dialog implements View.OnClickLi
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
+
+    public void setOnItemSelectedListener(OnSpinnerItemSelectedListener listener){
+        mListener = listener;
+    }
+
 }

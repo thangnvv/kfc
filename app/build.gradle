@@ -1,12 +1,14 @@
 apply plugin: 'com.android.application'
 
+apply plugin: 'com.google.gms.google-services'
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
 
     defaultConfig {
         applicationId "com.example.shop"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -53,5 +55,8 @@ dependencies {
     implementation 'com.google.android.material:material:1.0.0'
     // sdp
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
-
+    // Hawk librabry for save information in app
+    implementation "com.orhanobut:hawk:2.0.1"
+    // Realtime firebase
+    implementation 'com.google.firebase:firebase-database:19.4.0'
 }

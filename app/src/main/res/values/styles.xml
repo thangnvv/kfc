@@ -21,4 +21,8 @@
         <item name="paddingStart">32dp</item>
         <item name="paddingEnd">32dp</item>
     </style>
+
+    <style name="SwitchTheme" parent="Theme.AppCompat.Light">
+        <item name="android:colorControlActivated">#E4002B</item>
+    </style>
 </resources>

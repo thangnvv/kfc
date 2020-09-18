@@ -9,10 +9,108 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string-array name="city">
+        <item>Chọn Tỉnh/Thành Phố</item>
         <item>Hồ Chí Minh</item>
         <item>Hà Nội</item>
         <item>Đà Nẵng</item>
         <item>Nha Trang</item>
         <item>Vũng Tàu</item>
     </string-array>
+
+    <string-array name="restaurantNameInHoChiMinh">
+        <item>KFC LOTTE GÒ VẤP</item>
+        <item>KFC EMART GÒ VẤP</item>
+        <item>KFC LŨY BÁN BÍCH</item>
+        <item>KFC LÝ THƯỜNG KIỆT</item>
+        <item>KFC AEON MALL TÂN PHÚ</item>
+        <item>KFC HÓC MÔN</item>
+        <item>KFC PHÚ MỸ HƯNG - HCM</item>
+    </string-array>
+
+    <string-array name="restaurantAddresInHoChiMinh">
+        <item>Lô 1F17, tầng 1 , Lotte mart Gò Vấp, số 18, Phan Văn Trị, Phường 10, Gò Vấp, TP.HCM</item>
+        <item>366 Phan Văn Trị,Phường 5,Quận Gò Vấp</item>
+        <item>Số 01, Vườn Lài, Phường Phú Thọ Hòa, Quận Tân Phú, Tp.HCM</item>
+        <item>446 - 446A Lý Thường Kiệt, phường 7, quận Tân Bình, TPHCM</item>
+        <item>Trung tâm mua sắm Aeon, số 30 đường Bờ Bao Tân Thắng, P.Sơn Kỳ, Q.Tân Phú, TP. HCM</item>
+        <item>Khu phố 5, Thị trấn Hóc Môn, huyện Hóc Môn, TP. HCM</item>
+        <item>số 11 (S41-1), Bùi Bằng Đoàn, Khu Phố Hưng Vượng 2 (R13), P.Tân Phong, Q.7, TPHCM</item>
+    </string-array>
+
+    <string-array name="districtInHoChiMinh">
+        <item>Quận 1</item>
+        <item>Quận 2</item>
+        <item>Quận 3</item>
+        <item>Quận 4</item>
+        <item>Quận 5</item>
+        <item>Quận 6</item>
+        <item>Quận 7</item>
+        <item>Quận Gò Vấp</item>
+        <item>Quận Tân Phú</item>
+        <item>Quận Tân Bình</item>
+        <item>Huyện Hóc Môn</item>
+    </string-array>
+
+    <string-array name="restaurantNameInHaNoi">
+        <item>KFC BIG C HỒ GƯƠM PLAZA</item>
+        <item>KFC ROYAL CITY MEGA MALL</item>
+        <item>KFC PHẠM NGỌC THẠCH</item>
+        <item>KFC XÃ ĐÀN</item>
+        <item>KFC MÊ LINH HÀ ĐÔNG</item>
+        <item>KFC LẠC LONG QUÂN</item>
+        <item>KFC INDOCHINA PLAZA</item>
+    </string-array>
+
+    <string-array name="restaurantAddressInHaNoi">
+        <item>Kiosk 8, Tầng 1, TTTM Hồ Gươm Plaza, KDT Mỗ Lao, phường Mỗ Lao, quận Hà Đông, TP. Hà Nội</item>
+        <item>Gian hàng B2-R2-15, tầng B2, Royal City Mega Mall Trade Central, 72A Nguyễn Trãi, Q.Thanh Xuân, Tp. Hà Nội</item>
+        <item>Kiốt 30, Tầng 1 B14 Kim Liên, Phạm Ngọc Thạch, P.Kim Liên, Q.Đống Đa, Hà Nội</item>
+        <item>476 Xã Đàn (Kim Liên Mới), Q.Đống Đa, Hà Nội</item>
+        <item>Tầng 4, TTTM Mê Linh Hà Đông, Q.Hà Đông, Hà Nội</item>
+        <item>481 Lạc Long Quân, P.Xuân La, Q.Tây Hồ, Hà Nội</item>
+        <item>Tầng 1 - Trung tâm thương mại Indochina Plaza, 239 Xuân Thủy, P. Dịch Vọng Hậu, Q.Cầu Giấy, Hà Nội</item>
+    </string-array>
+
+    <string-array name="restaurantNameInVungTau">
+        <item>KFC LOTTEMART VŨNG TÀU</item>
+        <item>KFC CO.OP MART BÀ RỊA</item>
+        <item>KFC CO.OPMART VŨNG TÀU</item>
+        <item>KFC VŨNG TÀU BA MƯƠI THÁNG TƯ</item>
+    </string-array>
+
+    <string-array name="restaurantAddressInVungtau">
+        <item>TTTM Lotte, Vòng xoay đài liệt sĩ, thành phố Vũng Tàu</item>
+        <item>Trung Tâm Mua Sắm, Siêu Thị Co.opmart, Phường Phước Trung, Bà Rịa, Tp. Vũng Tàu</item>
+        <item>Siêu Thị Co.op Mart, 36 Nguyễn Thái Học, Phường 7, Tp. Vũng Tàu</item>
+        <item>494 đường 30/04, P. Rạch Dừa, TP. Vũng Tàu</item>
+    </string-array>
+
+    <string-array name="restaurantNameInNhaTrang">
+        <item>KFC LÊ THÀNH PHƯƠNG</item>
+        <item>KFC HOÀN CẦU</item>
+    </string-array>
+
+    <string-array name="restaurantAddressInNhaTrang">
+        <item>67 Lê Thành Phương, P. Phương Sài, Nha Trang, Khánh Hòa</item>
+        <item>20 Trần Phú, Phường Lộc Thọ, Nha Trang - Khánh Hòa</item>
+    </string-array>
+
+    <string-array name="restaurantNameInDaNang">
+        <item>KFC NGUYỄN THỊ MINH KHAI</item>
+        <item>KFC NGUYỄN VĂN LINH - ĐÀ NẴNG</item>
+        <item>KFC CO.OP MART ĐÀ NẴNG</item>
+        <item>KFC BIG C ĐÀ NẴNG</item>
+        <item>KFC LOTTE ĐÀ NẴNG</item>
+        <item>KFC NGUYỄN VĂN THOẠI</item>
+    </string-array>
+
+    <string-array name="restaurantAddressInDaNang">
+        <item>116 Nguyễn Thị Minh Khai, quận Hải Châu, thành phố Đà Nẵng</item>
+        <item>148(104 cũ) Nguyễn Văn Linh, phường Nam Dương, quận Hải Châu, thành phố Đà Nẵng</item>
+        <item>478 Điện Biên Phủ, Quận Thanh Khê, Tp. Đà Nẵng</item>
+        <item>Vĩnh Trung Plaza, Đường Hùng Vương, Quận Thanh Khê, Tp. Đà Nẵng</item>
+        <item>Siêu thị Lotte Đà Nẵng, 6 Nại Nam, P.Hòa Cường Bắc, Q.Hải Châu, TP Đà Nẵng</item>
+        <item>125 Nguyễn Văn Thoại, P. An Hải Đông, Q. Sơn Trà, TP. Đà Nẵng</item>
+    </string-array>
+
 </resources>
