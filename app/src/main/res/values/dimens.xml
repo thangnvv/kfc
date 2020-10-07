@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="margin_left_parent">@dimen/_8sdp</dimen>
-    <dimen name="margin_right_parent">@dimen/_8sdp</dimen>
+    <dimen name="margin_left_parent">@dimen/_12sdp</dimen>
+    <dimen name="margin_right_parent">@dimen/_12sdp</dimen>
     <dimen name="h0">@dimen/_14sdp</dimen>
     <dimen name="h1">@dimen/_16sdp</dimen>
     <dimen name="h2">@dimen/_18sdp</dimen>

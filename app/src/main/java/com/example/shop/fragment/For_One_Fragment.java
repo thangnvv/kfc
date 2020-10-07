@@ -1,38 +1,62 @@
 package com.example.shop.fragment;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.example.shop.R;
+import com.example.shop.activity.SettingProductActivity;
 import com.example.shop.adapter.ProductAdapter;
+import com.example.shop.interfaces.OnProductClickListener;
 import com.example.shop.ultil.BannerImage;
 import com.example.shop.ultil.Product;
+import com.example.shop.ultil.Util;
+import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;
 
+import javax.security.auth.callback.Callback;
 
-public class For_One_Fragment extends Fragment {
 
-    GridView gridView;
+public class For_One_Fragment extends Fragment implements OnProductClickListener{
+
+    RecyclerView recyclerViewProductForOne;
     ArrayList<Product> mListProduct;
     ProductAdapter mProductAdapter;
     ArrayList<BannerImage> ComboChickenA, ComboChickenB, ComboChickenC, ComboChickenD, ComboRiceA, ComboRiceB, ComboRiceC;
+    OnProductClickListener onProductClickListener;
+    Context context;
 
-    public For_One_Fragment() {
+    public For_One_Fragment(){
         // Required empty public constructor
+    }
+
+    public For_One_Fragment(Context context){
+        this.context = context;
+    }
+
+    public void setProductClickListener(OnProductClickListener onProductClickListener){
+        this.onProductClickListener = onProductClickListener;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         createBannerListForProduct();
 
-        View view = inflater.inflate(R.layout.fragment_combo_one_person_old, container, false);
+        View view = inflater.inflate(R.layout.fragment_combo_one_person, container, false);
 
         mListProduct = new ArrayList<>();
 
@@ -40,28 +64,23 @@ public class For_One_Fragment extends Fragment {
         addProductInfo();
 
         mProductAdapter = new ProductAdapter(mListProduct, getContext());
-
-        gridView = view.findViewById(R.id.gridViewProduct);
-        gridView.setAdapter(mProductAdapter);
-
+        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        recyclerViewProductForOne = view.findViewById(R.id.recyclerViewProduct);
+        recyclerViewProductForOne.setLayoutManager(staggeredGridLayoutManager);
+        recyclerViewProductForOne.setAdapter(mProductAdapter);
+        mProductAdapter.setOnProductClickListener(this);
 
         return view;
     }
 
     private void addProductInfo(){
-        mListProduct.add(new Product(ComboChickenA, "COMBO GÀ RÁN A", "79.000đ", "* 2 Miếng Gà Giòn Cay/ 2 Miếng Gà Giòn Không Cay/ 2 Miếng Gà Truyền Thống\n" +
-                "* 1 Pepsi Lon" ));
-
-        mListProduct.add(new Product(ComboChickenB, "COMBO GÀ RÁN B", "79.000đ", "* 1 Phần Hot Wings 3 Miếng\n"+ "* 1 Khoai Tây Chiên (Lớn)\n" + "* 1 Pepsi Lon"));
-
-        mListProduct.add(new Product(ComboChickenC, "COMBO GÀ RÁN C", "85.000đ", "* 1 Miếng Gà Giòn Cay / 1 Miếng Gà Giòn Không Cay / 1 Miếng Gà Truyền Thống\n" +
-                "* 1 Burger Tôm \n* 1 Pepsi Lon "));
-
-        mListProduct.add(new Product(ComboChickenD, "COMBO GÀ RÁN D", "89.000đ", "* 1 Miếng Gà Giòn Cay \n" + "* 1 Burger Zinger\n* 1 Pepsi Lon "));
-
-        mListProduct.add(new Product(ComboRiceA, "COMBO CƠM A", "69.000đ", "* 1 Cơm Gà Giòn Cay / 1 Cơm Gà Giòn Không Cay / 1 Cơm Gà Truyền Thống / 1 Cơm Phi-lê Gà Quay Flava / 1 Cơm Phi-lê Gà Quay Tiêu / 1 Cơm Phi-lê Gà Giòn / 1 Cơm Gà Xào Xốt Nhật / 1 Cơm Gà Xiên Que \n" + "* 1 Súp Gà\n* 1 Pepsi Lon "));
-        mListProduct.add(new Product(ComboRiceB, "COMBO CƠM B", "89.000đ", "* 1 Cơm Gà Giòn Cay / 1 Cơm Gà Giòn Không Cay / 1 Cơm Gà Truyền Thống / 1 Cơm Phi-lê Gà Quay Flava / 1 Cơm Phi-lê Gà Quay Tiêu / 1 Cơm Phi-lê Gà Giòn / 1 Cơm Gà Xào Xốt Nhật / 1 Cơm Gà Xiên Que \n" + "* 1 Miếng Gà Giòn Cay / 1 Miếng Gà Truyền Thống / 1 Miếng Gà Giòn Không Cay\n* 1 Pepsi Lon "));
-        mListProduct.add(new Product(ComboRiceC, "COMBO CƠM C", "95.000đ", "* 1 Cơm Gà Giòn Cay / 1 Cơm Gà Giòn Không Cay / 1 Cơm Gà Truyền Thống / 1 Cơm Phi-lê Gà Quay Flava / 1 Cơm Phi-lê Gà Quay Tiêu / 1 Cơm Phi-lê Gà Giòn / 1 Cơm Gà Xào Xốt Nhật / 1 Cơm Gà Xiên Que \n" + "* 1 Burger Gà Quay Flava / 1 Burger Zinger\n* 1 Pepsi Lon "));
+        mListProduct.add(new Product(ComboChickenA, "COMBO GÀ RÁN A", "79.000đ", "* 2 Miếng Gà Giòn Cay / 2 Miếng Gà Giòn Không Cay / 2 Miếng Gà Truyền Thống \n* 1 Pepsi Lon", 1 ));
+        mListProduct.add(new Product(ComboChickenB, "COMBO GÀ RÁN B", "79.000đ", "* 1 Phần Hot Wings 3 Miếng \n"+ "* 1 Khoai Tây Chiên (Lớn)/ \n* 1 Pepsi Lon" , 1));
+        mListProduct.add(new Product(ComboChickenC, "COMBO GÀ RÁN C", "85.000đ", "* 1 Miếng Gà Giòn Cay / 1 Miếng Gà Giòn Không Cay / 1 Miếng Gà Truyền Thống \n" + "* 1 Burger Tôm \n* 1 Pepsi Lon ", 1));
+        mListProduct.add(new Product(ComboChickenD, "COMBO GÀ RÁN D", "89.000đ", "* 1 Miếng Gà Giòn Cay \n" + "* 1 Burger Zinger \n* 1 Pepsi Lon ", 1));
+        mListProduct.add(new Product(ComboRiceA, "COMBO CƠM A", "69.000đ", "* 1 Cơm Gà Giòn Cay / 1 Cơm Gà Giòn Không Cay / 1 Cơm Gà Truyền Thống / 1 Cơm Phi-lê Gà Quay Flava / 1 Cơm Phi-lê Gà Quay Tiêu / 1 Cơm Phi-lê Gà Giòn / 1 Cơm Gà Xào Xốt Nhật / 1 Cơm Gà Xiên Que \n" + "* 1 Súp Gà \n* 1 Pepsi Lon ", 1));
+        mListProduct.add(new Product(ComboRiceB, "COMBO CƠM B", "89.000đ", "* 1 Cơm Gà Giòn Cay / 1 Cơm Gà Giòn Không Cay / 1 Cơm Gà Truyền Thống / 1 Cơm Phi-lê Gà Quay Flava / 1 Cơm Phi-lê Gà Quay Tiêu / 1 Cơm Phi-lê Gà Giòn / 1 Cơm Gà Xào Xốt Nhật / 1 Cơm Gà Xiên Que \n" + "* 1 Miếng Gà Giòn Cay / 1 Miếng Gà Truyền Thống / 1 Miếng Gà Giòn Không Cay \n* 1 Pepsi Lon ", 1));
+        mListProduct.add(new Product(ComboRiceC, "COMBO CƠM C", "95.000đ", "* 1 Cơm Gà Giòn Cay / 1 Cơm Gà Giòn Không Cay / 1 Cơm Gà Truyền Thống / 1 Cơm Phi-lê Gà Quay Flava / 1 Cơm Phi-lê Gà Quay Tiêu / 1 Cơm Phi-lê Gà Giòn / 1 Cơm Gà Xào Xốt Nhật / 1 Cơm Gà Xiên Que \n" + "* 1 Burger Gà Quay Flava / 1 Burger Zinger \n* 1 Pepsi Lon ", 1));
     }
 
     private void createBannerListForProduct(){
@@ -101,5 +120,16 @@ public class For_One_Fragment extends Fragment {
         ComboRiceC.add(new BannerImage("https://kfcvietnam.com.vn/uploads/combo/948be97cbd084a138bd223db33dee102.png"));
 
 
+    }
+
+    @Override
+    public void onProductDetailClickListener(Product product) {
+        Hawk.put("productSetting", product);
+        startActivity(new Intent(context , SettingProductActivity.class));
+    }
+
+    @Override
+    public void onProductOrderClickListener(Product product) {
+        onProductClickListener.onProductOrderClickListener(product);
     }
 }

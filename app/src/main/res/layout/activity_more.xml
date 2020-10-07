@@ -201,7 +201,7 @@
                             android:background="@drawable/youtube_logo" />
 
                         <ImageButton
-                            android:id="@+id/imageButtonInsta"
+                            android:id="@+id/imageButtonInstagram"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/_12sdp"

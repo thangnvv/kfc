@@ -1,17 +1,9 @@
 <resources>
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+    <style name="myTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimaryDark">@color/red</item>
+
     </style>
-    <style name="AppTheme.PopupOverlay">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>
+
 
     <style name="BottomNavigationView">
         <item name="itemBackground">@drawable/background_bottom_nav_item</item>
@@ -25,4 +17,12 @@
     <style name="SwitchTheme" parent="Theme.AppCompat.Light">
         <item name="android:colorControlActivated">#E4002B</item>
     </style>
+
+    <style name="TextInputLayoutTheme" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="backgroundColor">@color/white</item>
+        <item name="boxBackgroundMode">filled</item>
+        <item name="boxStrokeColor">@color/red</item>
+        <item name="boxBackgroundColor">@color/white</item>
+    </style>
+
 </resources>

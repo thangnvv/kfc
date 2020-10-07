@@ -1,38 +1,52 @@
 package com.example.shop.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.example.shop.R;
 import com.example.shop.adapter.ProductAdapter;
+import com.example.shop.interfaces.OnProductClickListener;
 import com.example.shop.ultil.BannerImage;
 import com.example.shop.ultil.Product;
 
 import java.util.ArrayList;
 
-public class Hot_Deals_Fragment extends Fragment {
+public class Hot_Deals_Fragment extends Fragment implements OnProductClickListener {
 
-    GridView gridViewHotDeal;
+    RecyclerView recyclerViewProdutHotDeals;
     ArrayList<Product> mListProduct;
     ProductAdapter mProductAdapter;
     ArrayList<BannerImage> CheesePumpkinBar2PC, CheesePumpkinBar3PC, CheesePumpkinBar5PC, ComboCheesePumkinBarHDA,
             ComboCheesePumkinBarHDB, ComboCheesePumkinBarHDC, SteakWithRice, SteakWithFries, ZingerSteakHDA, ZingerSteakHDB ;
+    OnProductClickListener onProductClickListener;
+    Context context;
 
     public Hot_Deals_Fragment() {
         // Required empty public constructor
     }
 
+    public Hot_Deals_Fragment(Context context){
+        this.context = context;
+    }
+    public void setProductClickListener(OnProductClickListener onProductClickListener){
+        this.onProductClickListener = onProductClickListener;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_hot_deals_old, container, false);
+        View view = inflater.inflate(R.layout.fragment_hot_deals, container, false);
 
         mListProduct = new ArrayList<>();
 
@@ -40,41 +54,43 @@ public class Hot_Deals_Fragment extends Fragment {
         addProductInfo();
 
         mProductAdapter = new ProductAdapter(mListProduct, getContext());
-
-        gridViewHotDeal = view.findViewById(R.id.gridViewHotDeal);
-        gridViewHotDeal.setAdapter(mProductAdapter);
+        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        recyclerViewProdutHotDeals = view.findViewById(R.id.recyclerViewHotDeals);
+        recyclerViewProdutHotDeals.setLayoutManager(staggeredGridLayoutManager);
+        recyclerViewProdutHotDeals.setAdapter(mProductAdapter);
+        mProductAdapter.setOnProductClickListener(this);
 
         return view;
     }
 
     private void addProductInfo() {
 
-        mListProduct.add(new Product(CheesePumpkinBar2PC, "THANH BÍ PHÔ-MAI (2 THANH)", "26.000đ", "* 2 Thanh Bí Phô-mai"));
-        mListProduct.add(new Product(CheesePumpkinBar3PC, "THANH BÍ PHÔ-MAI (3 THANH)", "32.000đ", "* 3 Thanh Bí Phô-mai"));
-        mListProduct.add(new Product(CheesePumpkinBar5PC, "THANH BÍ PHÔ-MAI (5 THANH)", "52.000đ", "* 5 Thanh Bí Phô-mai"));
+        mListProduct.add(new Product(CheesePumpkinBar2PC, "THANH BÍ PHÔ-MAI (2 THANH)", "26.000đ", "* 2 Thanh Bí Phô-mai", 1));
+        mListProduct.add(new Product(CheesePumpkinBar3PC, "THANH BÍ PHÔ-MAI (3 THANH)", "32.000đ", "* 3 Thanh Bí Phô-mai", 1));
+        mListProduct.add(new Product(CheesePumpkinBar5PC, "THANH BÍ PHÔ-MAI (5 THANH)", "52.000đ", "* 5 Thanh Bí Phô-mai", 1));
 
         mListProduct.add(new Product(ComboCheesePumkinBarHDA, "COMBO THANH BÍ PHÔ-MAI HDA", "94.000đ",
-                "* 2 Miếng Gà Giòn Cay / 2 Miếng Gà Truyền thống / 2 Miếng Gà Truyền thống\n" + "* 2 Thanh Bí Phô-mai\n" + "* 1 Pepsi Lon"));
+                "* 2 Miếng Gà Giòn Cay / 2 Miếng Gà Truyền thống / 2 Miếng Gà Truyền thống\n" + "* 2 Thanh Bí Phô-mai\n" + "* 1 Pepsi Lon", 1));
 
         mListProduct.add(new Product(ComboCheesePumkinBarHDB, "COMBO THANH BÍ PHÔ-MAI HDB", "74.000đ",
-                "* 1 Burger Gà Quay Flava / 1 Burger Zinger / 1 Burger Tôm\n" + "* 2 Thanh Bí Phô-mai\n" + "* 1 Pepsi Lon"));
+                "* 1 Burger Gà Quay Flava / 1 Burger Zinger / 1 Burger Tôm\n" + "* 2 Thanh Bí Phô-mai\n" + "* 1 Pepsi Lon", 1));
 
         mListProduct.add(new Product(ComboCheesePumkinBarHDC, "COMBO THANH BÍ PHÔ-MAI HDC", "189.000đ",
-                "* 4 Miếng Gà Giòn Cay / 4 Miếng Gà Truyền thống / 4 Miếng Gà Giòn Không Cay\n" + "* 4 Thanh Bí Phô-mai\n" + "* 2 Pepsi Lon"));
+                "* 4 Miếng Gà Giòn Cay / 4 Miếng Gà Truyền thống / 4 Miếng Gà Giòn Không Cay\n" + "* 4 Thanh Bí Phô-mai\n" + "* 2 Pepsi Lon", 1));
 
         mListProduct.add(new Product(SteakWithRice, "GÀ BÍT-TẾT VỚI CƠM", "39.000đ",
-                "* 1 Phần Gà Bít-tết với Cơm"));
+                "* 1 Phần Gà Bít-tết với Cơm", 1));
 
         mListProduct.add(new Product(SteakWithFries, "GÀ BÍT-TẾT VỚI KHOAI TÂY CHIÊN", "39.000đ",
-                "* 1 Phần Gà Bít-tết với Khoai Tây Chiên"));
+                "* 1 Phần Gà Bít-tết với Khoai Tây Chiên", 1));
 
         mListProduct.add(new Product(ZingerSteakHDA, "COMBO GÀ BÍT-TẾT HDA", "81.000đ",
                 "* 1 Phần Gà Bít-tết với Khoai Tây Chiên\n" + "* 1 Miếng Gà Giòn Cay / 1 Miếng Gà Giòn Không Cay / 1 Miếng Gà Truyền Thống\n"+
-                "* 1 Pepsi Lon"));
+                "* 1 Pepsi Lon", 1));
 
         mListProduct.add(new Product(ZingerSteakHDB, "COMBO GÀ BÍT-TẾT HDB", "81.000đ",
                 "* 1 Phần Gà Bít-tết với Cơm\n" + "* 1 Miếng Gà Giòn Cay / 1 Miếng Gà Giòn Không Cay / 1 Miếng Gà Truyền Thống\n"+
-                        "* 1 Pepsi Lon"));
+                        "* 1 Pepsi Lon", 1));
     }
 
     private void createBannerListForProduct() {
@@ -110,4 +126,13 @@ public class Hot_Deals_Fragment extends Fragment {
         ZingerSteakHDB.add(new BannerImage("https://kfcvietnam.com.vn/uploads/combo/74cf3d0e2cc7b0fc8f9d9134ad140d5b.png"));
     }
 
+    @Override
+    public void onProductDetailClickListener(Product product) {
+
+    }
+
+    @Override
+    public void onProductOrderClickListener(Product product) {
+        onProductClickListener.onProductOrderClickListener(product);
+    }
 }

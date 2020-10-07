@@ -3,6 +3,7 @@ package com.example.shop.activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
@@ -47,4 +48,5 @@ public class SettingActivity extends AppCompatActivity{
         mImgButtonClose = findViewById(R.id.imageButtonClose);
         mSwtReceiveNotification = findViewById(R.id.switchReceiveNotifi);
     }
+
 }

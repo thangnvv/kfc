@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.AccountRegisterActivity"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:focusableInTouchMode="true"
+        android:focusable="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:elevation="@dimen/_8sdp"
+            android:layout_marginRight="@dimen/_16sdp"
+            android:background="@drawable/curved_bottom_right_header"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_150sdp">
+
+            <TextView
+                android:layout_marginLeft="@dimen/margin_left_parent"
+                android:layout_centerVertical="true"
+                android:textStyle="bold"
+                android:textSize="@dimen/h2"
+                android:textColor="@color/black"
+                android:text="HÃY LÀ THÀNH VIÊN\nKFC NGAY HÔM NAY"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <ImageView
+                android:src="@drawable/happy_man"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:id="@+id/linear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_left_parent"
+            android:layout_marginRight="@dimen/margin_right_parent"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:text="Tận hưởng thành viên KFC với các ưu đãi và khuyến mãi đặc biệt!"
+                android:textColor="@color/black"
+                android:textSize="@dimen/h0"
+                android:textStyle="bold" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayoutName"
+                style="@style/TextInputLayoutTheme"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginTop="@dimen/_16sdp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edittextName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_8sdp"
+                    android:paddingRight="@dimen/_8sdp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayoutEmail"
+                style="@style/TextInputLayoutTheme"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginTop="@dimen/_16sdp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edittextEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_8sdp"
+                    android:paddingRight="@dimen/_8sdp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayoutPassword"
+                style="@style/TextInputLayoutTheme"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                app:passwordToggleEnabled="true"
+
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edittextPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:paddingLeft="@dimen/_8sdp"
+                    android:paddingRight="@dimen/_8sdp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayoutRepeat"
+                style="@style/TextInputLayoutTheme"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                app:passwordToggleEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edittextRepeat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:paddingLeft="@dimen/_8sdp"
+                    android:paddingRight="@dimen/_8sdp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayoutPhone"
+                style="@style/TextInputLayoutTheme"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginTop="@dimen/_16sdp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edittextPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone"
+                    android:paddingLeft="@dimen/_8sdp"
+                    android:paddingRight="@dimen/_8sdp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/textViewNotice"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_52sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:textSize="@dimen/h0" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_36sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/checkBoxAcceptPolicy"
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:layout_gravity="top" />
+
+                <TextView
+                    android:id="@+id/textViewAcceptPolicy"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/h0" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_52sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/checkBoxAcceptReceiptPromo"
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:layout_gravity="top" />
+
+                <TextView
+                    android:id="@+id/textViewAcceptReceiptPromo"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/h0" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/buttonRegister"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:background="@drawable/background_red_thick"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:text="ĐĂNG KÝ"
+                android:textSize="@dimen/h1" />
+
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <View
+                    android:background="@color/darkGrey"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_1sdp"/>
+
+                <TextView
+                    android:layout_marginRight="@dimen/_6sdp"
+                    android:layout_marginLeft="@dimen/_6sdp"
+                    android:textSize="@dimen/h0"
+                    android:textStyle="bold"
+                    android:textColor="@color/darkGrey"
+                    android:text="hoặc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <View
+                    android:background="@color/darkGrey"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_1sdp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:padding="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:gravity="center_vertical"
+                android:background="@drawable/background_facebook"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:background="@drawable/facebook_blue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/textViewRegisterViaFacebook"
+                    android:gravity="center_horizontal"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/h1"
+                    android:textColor="@color/white"
+                    android:text="Đăng ký với Facebook"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:padding="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:gravity="center_vertical"
+                android:background="@drawable/background_black_thin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:background="@drawable/google"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/textViewRegisterViaGoogle"
+                    android:gravity="center_horizontal"
+                    android:textSize="@dimen/h1"
+                    android:textColor="@color/darkGrey"
+                    android:text="Đăng ký với Google"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textViewAcceptSignUp"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:textSize="@dimen/h0"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_36sdp"/>
+
+            <LinearLayout
+                android:layout_marginLeft="@dimen/_16sdp"
+                android:layout_marginRight="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_32sdp"
+                android:layout_marginBottom="@dimen/_32sdp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_20sdp"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/imageButtonQuestion"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/question"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:layout_marginLeft="@dimen/_6sdp"
+                    android:textColor="#000"
+                    android:text="Bạn đã có tài khoản?"
+                    android:textSize="@dimen/h0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/textViewSignIn"
+                    android:layout_marginLeft="@dimen/_6sdp"
+                    android:text="@string/signIn"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/h0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+
+            </LinearLayout>
+
+            <com.facebook.login.widget.LoginButton
+                android:id="@+id/signInFacebookButton"
+                android:paddingTop="@dimen/_6sdp"
+                android:paddingBottom="@dimen/_6sdp"
+                xmlns:facebook="http://schemas.android.com/apk/res-auto"
+                facebook:com_facebook_login_text="Đăng nhập bằng Facebook"
+                facebook:com_facebook_logout_text="Đăng xuất"
+                android:background="@drawable/background_button_facebook"
+                android:textColor="@color/white"
+                android:textSize="@dimen/h1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_16sdp"/>
+
+            <com.google.android.gms.common.SignInButton
+                android:id="@+id/signInGoogleButton"
+                android:background="@drawable/background_black_thin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_marginBottom="@dimen/_16sdp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

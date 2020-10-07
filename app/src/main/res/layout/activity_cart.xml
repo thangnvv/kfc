@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".activity.CartActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:gravity="center_vertical">
+
+        <ImageButton
+            android:id="@+id/imageButtonQuitCart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_16sdp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/left_arrow" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="ĐƠN HÀNG CỦA BẠN"
+            android:textColor="@color/red"
+            android:textSize="@dimen/h3"
+            android:textStyle="bold" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/darkGrey" />
+
+    <LinearLayout
+        android:id="@+id/linearLayoutHasItem"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginLeft="@dimen/margin_left_parent"
+            android:layout_marginRight="@dimen/margin_right_parent"
+            android:layout_weight="1"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <include
+                    layout="@layout/layout_deliver_to"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/_4sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginRight="@dimen/_4sdp"
+                    android:background="@color/darkGrey" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_4sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginRight="@dimen/_4sdp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textViewProductCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Product Count"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/h1" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/textViewCartTotal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cart Total"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/h1"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/buttonGotoPay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:background="@drawable/background_red_thick"
+                    android:text="TIẾN HÀNH THANH TOÁN"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/h1"
+                    android:textStyle="bold" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewProuctInCart"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:elevation="@dimen/_8sdp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:padding="@dimen/_12sdp">
+
+            <Button
+                android:id="@+id/buttonKeepShopping"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/_4sdp"
+                android:layout_weight="1"
+                android:background="@drawable/background_black_thick"
+                android:padding="@dimen/_8sdp"
+                android:text="TIẾP TỤC MUA HÀNG"
+                android:textColor="@color/black"
+                android:textSize="@dimen/h1"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/buttonPay"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_4sdp"
+                android:layout_weight="1"
+                android:background="@drawable/background_red_thick"
+                android:padding="@dimen/_8sdp"
+                android:text="TIẾN HÀNH THANH TOÁN"
+                android:textColor="@color/white"
+                android:textSize="@dimen/h1"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutCartEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_marginTop="@dimen/_60sdp"
+            android:background="@drawable/cart_empty"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_180sdp"/>
+
+        <TextView
+            android:layout_marginTop="@dimen/_12sdp"
+            android:gravity="center_horizontal"
+            android:textColor="@color/black"
+            android:textSize="@dimen/h0"
+            android:textStyle="bold"
+            android:text="Giỏ hàng của bạn trống"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_marginRight="@dimen/margin_right_parent"
+            android:layout_marginLeft="@dimen/margin_left_parent"
+            android:gravity="center_horizontal"
+            android:textColor="@color/black"
+            android:textSize="@dimen/h0"
+            android:text = "Đặt hàng để thưởng thức công thức đặc biệt của KFC"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <View
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"/>
+
+        <Button
+            android:id="@+id/buttonOrderNow"
+            android:layout_marginBottom="@dimen/_16sdp"
+            android:layout_marginRight="@dimen/margin_right_parent"
+            android:layout_marginLeft="@dimen/margin_left_parent"
+            android:paddingBottom="@dimen/_4sdp"
+            android:paddingTop="@dimen/_4sdp"
+            android:textStyle="bold"
+            android:textSize="@dimen/h1"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:text="ĐẶT HÀNG NGAY"
+            android:background="@drawable/background_red_thick"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -72,6 +73,13 @@ public class PromotionNewsAdapter extends RecyclerView.Adapter<PromotionNewsAdap
             mBtnSeeMore             = itemView.findViewById(R.id.buttonSeeMore);
             mImgButtonCalendar      = itemView.findViewById(R.id.imageButtonCalendar);
             mImgButtonHeart         = itemView.findViewById(R.id.imageButtonHeart);
+
+            mBtnSeeMore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(context , "Hello", Toast.LENGTH_LONG).show();
+                }
+            });
         }
     }
 }

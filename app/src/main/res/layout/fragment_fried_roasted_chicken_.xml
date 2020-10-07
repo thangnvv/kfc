@@ -6,15 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".fragment.Fried_RoastedChicken_Fragment">
 
-    <GridView
-        android:id="@+id/gridViewFriedRoastedChicken"
-        android:numColumns="2"
-        android:verticalSpacing="@dimen/_8sdp"
-        android:horizontalSpacing="@dimen/_8sdp"
-        android:layout_marginRight="@dimen/margin_right_parent"
-        android:layout_marginLeft="@dimen/margin_left_parent"
-        android:stretchMode="columnWidth"
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewFriedRoastedChicken"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        />
 
 </LinearLayout>

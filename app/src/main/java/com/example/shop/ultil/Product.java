@@ -8,12 +8,22 @@ public class Product {
     private String foodName;
     private String foodPrice;
     private String foodDescrip;
+    private int portion;
 
-    public Product(ArrayList<BannerImage> urlImageBanner, String foodName, String foodPrice, String foodDescrip) {
+    public Product(ArrayList<BannerImage> urlImageBanner, String foodName, String foodPrice, String foodDescrip, int portion) {
         this.urlImageBanner = urlImageBanner;
         this.foodName = foodName;
         this.foodPrice = foodPrice;
         this.foodDescrip = foodDescrip;
+        this.portion = portion;
+    }
+
+    public int getPortion() {
+        return portion;
+    }
+
+    public void setPortion(int portion) {
+        this.portion = portion;
     }
 
     public List<BannerImage> getUrlImageBanner() {

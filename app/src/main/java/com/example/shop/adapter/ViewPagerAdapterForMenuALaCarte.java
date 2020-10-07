@@ -1,5 +1,6 @@
 package com.example.shop.adapter;
 
+import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -18,11 +19,13 @@ public class ViewPagerAdapterForMenuALaCarte extends FragmentPagerAdapter{
 
     private FragmentManager fragmentManager;
     private int numOfTabs;
+    private Context context;
 
-    public ViewPagerAdapterForMenuALaCarte(FragmentManager fragmentManager, int numOfTabs){
+    public ViewPagerAdapterForMenuALaCarte(FragmentManager fragmentManager, int numOfTabs, Context context){
         super(fragmentManager, numOfTabs);
         this.fragmentManager = fragmentManager;
         this.numOfTabs = numOfTabs;
+        this.context = context;
     }
 
     @NonNull
@@ -31,13 +34,13 @@ public class ViewPagerAdapterForMenuALaCarte extends FragmentPagerAdapter{
 
         switch (position){
             case 0:
-                return new Fried_RoastedChicken_Fragment();
+                return new Fried_RoastedChicken_Fragment(context);
             case 1:
-                return new Rice_Burger_Fragment();
+                return new Rice_Burger_Fragment(context);
             case 2:
-                return new Snacks_Fragment();
+                return new Snacks_Fragment(context);
             case 3:
-                return new Desserts_And_Drinks_Fragment();
+                return new Desserts_And_Drinks_Fragment(context);
             default:
                 Log.d("DDD",  "Check tab 1");
                 return null;

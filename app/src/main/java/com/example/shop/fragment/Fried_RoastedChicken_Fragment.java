@@ -1,31 +1,48 @@
 package com.example.shop.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.example.shop.R;
 import com.example.shop.adapter.ProductAdapter;
+import com.example.shop.interfaces.OnProductClickListener;
 import com.example.shop.ultil.BannerImage;
 import com.example.shop.ultil.Product;
 
 import java.util.ArrayList;
 
-public class Fried_RoastedChicken_Fragment extends Fragment {
+public class Fried_RoastedChicken_Fragment extends Fragment implements OnProductClickListener{
 
-    GridView mGridViewFriedRoastedChicken;
+    RecyclerView recyclerViewProductFriedRoastedChicken;
     ArrayList<Product> mListProduct;
     ProductAdapter mProductAdapter;
     ArrayList<BannerImage> FriedChicken1PC, FriedChicken2PC, FriedChicken3PC, FriedChicken6PC,
             FriedChicken9PC, FriedChicken12PC, RoastedChicken1PC, HotWings3PC, HotWings5PC;
+    OnProductClickListener onProductClickListener;
+    Context context;
 
     public Fried_RoastedChicken_Fragment() {
         // Required empty public constructor
+    }
+
+    public Fried_RoastedChicken_Fragment(Context context) {
+        this.context = context;
+    }
+
+
+    public void setProductClickListener(OnProductClickListener onProductClickListener){
+        this.onProductClickListener = onProductClickListener;
     }
 
     @Override
@@ -40,27 +57,28 @@ public class Fried_RoastedChicken_Fragment extends Fragment {
         addProductInfo();
 
         mProductAdapter = new ProductAdapter(mListProduct, getContext());
-
-        mGridViewFriedRoastedChicken = view.findViewById(R.id.gridViewFriedRoastedChicken);
-        mGridViewFriedRoastedChicken.setAdapter(mProductAdapter);
-
+        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        recyclerViewProductFriedRoastedChicken = view.findViewById(R.id.recyclerViewFriedRoastedChicken);
+        recyclerViewProductFriedRoastedChicken.setLayoutManager(staggeredGridLayoutManager);
+        recyclerViewProductFriedRoastedChicken.setAdapter(mProductAdapter);
+        mProductAdapter.setOnProductClickListener(this);
 
         return view;
     }
 
     private void addProductInfo() {
 
-        mListProduct.add(new Product(FriedChicken1PC, "Gà Rán (1 Miếng)", "36.000đ", "* 1 Miếng Gà Giòn Cay / 1 Miếng Gà Giòn Không Cay / 1 Miếng Gà Truyền Thống"));
-        mListProduct.add(new Product(FriedChicken2PC, "Gà Rán (2 Miếng)", "68.000đ", "* 2 Miếng Gà Giòn Cay / 2 Miếng Gà Giòn Không Cay / 2 Miếng Gà Truyền Thống"));
-        mListProduct.add(new Product(FriedChicken3PC, "Gà Rán (3 Miếng)", "99.000đ", "* 3 Miếng Gà Giòn Cay / 3 Miếng Gà Giòn Không Cay / 3 Miếng Gà Truyền Thống"));
-        mListProduct.add(new Product(FriedChicken6PC, "Gà Rán (6 Miếng)", "195.000đ", "* 6 Miếng Gà Giòn Cay / 6 Miếng Gà Giòn Không Cay / 6 Miếng Gà Truyền Thống"));
-        mListProduct.add(new Product(FriedChicken9PC, "Gà Rán (9 Miếng)", "289.000đ", "* 9 Miếng Gà Giòn Cay / 9 Miếng Gà Giòn Không Cay / 9 Miếng Gà Truyền Thống"));
-        mListProduct.add(new Product(FriedChicken12PC, "Gà Rán (12 Miếng)", "379.000đ", "* 12 Miếng Gà Giòn Cay / 12 Miếng Gà Giòn Không Cay / 12 Miếng Gà Truyền Thống"));
+        mListProduct.add(new Product(FriedChicken1PC, "Gà Rán (1 Miếng)", "36.000đ", "* 1 Miếng Gà Giòn Cay / 1 Miếng Gà Giòn Không Cay / 1 Miếng Gà Truyền Thống", 1));
+        mListProduct.add(new Product(FriedChicken2PC, "Gà Rán (2 Miếng)", "68.000đ", "* 2 Miếng Gà Giòn Cay / 2 Miếng Gà Giòn Không Cay / 2 Miếng Gà Truyền Thống", 1));
+        mListProduct.add(new Product(FriedChicken3PC, "Gà Rán (3 Miếng)", "99.000đ", "* 3 Miếng Gà Giòn Cay / 3 Miếng Gà Giòn Không Cay / 3 Miếng Gà Truyền Thống", 1));
+        mListProduct.add(new Product(FriedChicken6PC, "Gà Rán (6 Miếng)", "195.000đ", "* 6 Miếng Gà Giòn Cay / 6 Miếng Gà Giòn Không Cay / 6 Miếng Gà Truyền Thống", 1));
+        mListProduct.add(new Product(FriedChicken9PC, "Gà Rán (9 Miếng)", "289.000đ", "* 9 Miếng Gà Giòn Cay / 9 Miếng Gà Giòn Không Cay / 9 Miếng Gà Truyền Thống", 1));
+        mListProduct.add(new Product(FriedChicken12PC, "Gà Rán (12 Miếng)", "379.000đ", "* 12 Miếng Gà Giòn Cay / 12 Miếng Gà Giòn Không Cay / 12 Miếng Gà Truyền Thống", 1));
 
-        mListProduct.add(new Product(RoastedChicken1PC, "Gà Quay (1 Miếng)", "68.000đ", "* 1 Miếng Gà Quay Giấy Bạc / 1 Miếng Gà Quay Tiêu"));
+        mListProduct.add(new Product(RoastedChicken1PC, "Gà Quay (1 Miếng)", "68.000đ", "* 1 Miếng Gà Quay Giấy Bạc / 1 Miếng Gà Quay Tiêu", 1));
 
-        mListProduct.add(new Product(HotWings3PC, "Phần Hot Wings 3 Miếng", "49.000đ", "* Phần Hot Wings 3 Miếng"));
-        mListProduct.add(new Product(HotWings3PC, "Phần Hot Wings 5 Miếng", "71.000đ", "* Phần Hot Wings 5 Miếng"));
+        mListProduct.add(new Product(HotWings3PC, "Phần Hot Wings 3 Miếng", "49.000đ", "* Phần Hot Wings 3 Miếng", 1));
+        mListProduct.add(new Product(HotWings3PC, "Phần Hot Wings 5 Miếng", "71.000đ", "* Phần Hot Wings 5 Miếng", 1));
 
     }
 
@@ -97,4 +115,13 @@ public class Fried_RoastedChicken_Fragment extends Fragment {
         HotWings5PC.add(new BannerImage("https://kfcvietnam.com.vn/uploads/combo/b25e3cd3548d8669e2cbc28bcaff8993.jpg"));
     }
 
+    @Override
+    public void onProductDetailClickListener(Product product) {
+        Toast.makeText(getContext() , "Setting:" + product.getFoodName(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onProductOrderClickListener(Product product) {
+        onProductClickListener.onProductOrderClickListener(product);
+    }
 }

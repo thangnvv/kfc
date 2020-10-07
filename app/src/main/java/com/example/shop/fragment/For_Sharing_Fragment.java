@@ -1,37 +1,51 @@
 package com.example.shop.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.example.shop.R;
 import com.example.shop.adapter.ProductAdapter;
+import com.example.shop.interfaces.OnProductClickListener;
 import com.example.shop.ultil.BannerImage;
 import com.example.shop.ultil.Product;
 
 import java.util.ArrayList;
 
-public class For_Sharing_Fragment extends Fragment {
+public class For_Sharing_Fragment extends Fragment implements OnProductClickListener{
 
-    GridView gridViewComboGroup;
+    RecyclerView recyclerViewProductGroup;
     ArrayList<Product> mListProduct;
     ProductAdapter mProductAdapter;
     ArrayList<BannerImage> ComboGroupA, ComboGroupB, ComboGroupC, ComboGroupD, ComboGroupE, ComboGroupF, ComboFamilyA, ComboFamilyB;
-
+    OnProductClickListener onProductClickListener;
+    Context context;
     public For_Sharing_Fragment() {
         // Required empty public constructor
+    }
+    public For_Sharing_Fragment(Context context) {
+        this.context = context;
+    }
+
+    public void setProductClickListener(OnProductClickListener onProductClickListener){
+        this.onProductClickListener = onProductClickListener;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_combo_group_old, container, false);
+        View view = inflater.inflate(R.layout.fragment_combo_group, container, false);
 
         mListProduct = new ArrayList<>();
 
@@ -39,32 +53,34 @@ public class For_Sharing_Fragment extends Fragment {
         addProductInfo();
 
         mProductAdapter = new ProductAdapter(mListProduct, getContext());
-
-        gridViewComboGroup = view.findViewById(R.id.gridViewComboGroup);
-        gridViewComboGroup.setAdapter(mProductAdapter);
+        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        recyclerViewProductGroup = view.findViewById(R.id.recyclerViewComboGroup);
+        recyclerViewProductGroup.setLayoutManager(staggeredGridLayoutManager);
+        recyclerViewProductGroup.setAdapter(mProductAdapter);
+        mProductAdapter.setOnProductClickListener(this);
 
         return view;
     }
 
     private void addProductInfo() {
         mListProduct.add(new Product(ComboGroupA , "COMBO NHÓM A", "129.000đ", "* 2 Miếng Gà Giòn Cay / 2 Miếng Gà Giòn Không Cay / 2 Miếng Gà Truyền thống\n"+
-                "* 1 Burger Tôm\n" + "* 2 Pepsi Lon"));
+                "* 1 Burger Tôm\n" + "* 2 Pepsi Lon", 1));
         mListProduct.add(new Product(ComboGroupB , "COMBO NHÓM B", "149.000đ", "* 3 Miếng Gà Giòn Cay / 3 Miếng Gà Giòn Không Cay / 3 Miếng Gà Truyền Thống\n"+
-                "* 1 Khoai Tây Chiên (Lớn)\n" + "* 2 Pepsi Lon"));
+                "* 1 Khoai Tây Chiên (Lớn)\n" + "* 2 Pepsi Lon", 1));
         mListProduct.add(new Product(ComboGroupC , "COMBO NHÓM C", "185.000đ", "* 4 Miếng Gà Giòn Cay / 4 Miếng Gà Giòn Không Cay / 4 Miếng Gà Truyền thống\n"+
-                "* 1 Khoai Tây Chiên (Lớn)\n" + "* 2 Pepsi Lon"));
+                "* 1 Khoai Tây Chiên (Lớn)\n" + "* 2 Pepsi Lon", 1));
         mListProduct.add(new Product(ComboGroupD , "COMBO NHÓM D", "185.000đ", "* 2 Miếng Gà Giòn Cay / 2 Miếng Gà Giòn Không Cay / 2 Miếng Gà Truyền thống\n"+
-                "* 1 Miếng Gà Quay Giấy Bạc / 1 Miếng Gà Quay Tiêu\n" + "* 1 Khoai Tây Chiên (Lớn)\n" + "* 2 Pepsi Lon"));
+                "* 1 Miếng Gà Quay Giấy Bạc / 1 Miếng Gà Quay Tiêu\n" + "* 1 Khoai Tây Chiên (Lớn)\n" + "* 2 Pepsi Lon", 1));
         mListProduct.add(new Product(ComboGroupE , "COMBO NHÓM E", "199.000đ", "* 3 Miếng Gà Giòn Cay / 3 Miếng Gà Giòn Không Cay / 3 Miếng Gà Truyền Thống\n"+
-                "* 1 Burger Gà Quay Flava / 1 Burger Zinger\n" + "* 1 Khoai Tây Chiên (Lớn)\n" + "* 2 Pepsi Lon"));
+                "* 1 Burger Gà Quay Flava / 1 Burger Zinger\n" + "* 1 Khoai Tây Chiên (Lớn)\n" + "* 2 Pepsi Lon", 1));
         mListProduct.add(new Product(ComboGroupF , "COMBO NHÓM F", "205.000đ", "* 3 Miếng Gà Giòn Cay / 3 Miếng Gà Giòn Không Cay / 3 Miếng Gà Truyền Thống\n"+
-                "* 1 Popcorn (Lớn)\n" + "* 1 Khoai Tây Chiên (Lớn)\n" + "* 2 Pepsi Lon"));
+                "* 1 Popcorn (Lớn)\n" + "* 1 Khoai Tây Chiên (Lớn)\n" + "* 2 Pepsi Lon", 1));
 
         mListProduct.add(new Product(ComboFamilyA , "COMBO GIA ĐÌNH A", "359.000đ", "* 8 Miếng Gà Giòn Cay / 8 Miếng Gà Giòn Không Cay / 8 Miếng Gà Truyền Thống\n"+
-               "* 2 Khoai Tây Chiên (Lớn)\n" + "* 4 Pepsi Lon"));
+               "* 2 Khoai Tây Chiên (Lớn)\n" + "* 4 Pepsi Lon", 1));
 
         mListProduct.add(new Product(ComboFamilyB , "COMBO GIA ĐÌNH B", "359.000đ", "* 5 Miếng Gà Giòn Cay / 5 Miếng Gà Giòn Không Cay / 5 Miếng Gà Truyền Thống\n"+
-                "2 Burger Gà Quay Flava / 2 Burger Zinger\n"  +"* 2 Khoai Tây Chiên (Lớn)\n" + "* 3 Pepsi Lon"));
+                "2 Burger Gà Quay Flava / 2 Burger Zinger\n"  +"* 2 Khoai Tây Chiên (Lớn)\n" + "* 3 Pepsi Lon", 1));
     }
 
     private void createBannerListForProduct() {
@@ -108,5 +124,15 @@ public class For_Sharing_Fragment extends Fragment {
         ComboFamilyB.add(new BannerImage("https://kfcvietnam.com.vn/uploads/combo/0646342ebaf0a9a188573c63b867fea6.jpg"));
         ComboFamilyB.add(new BannerImage("https://kfcvietnam.com.vn/uploads/combo/1f70b3a0a80f8b18503025a541cc14a2.png"));
         ComboFamilyB.add(new BannerImage("https://kfcvietnam.com.vn/uploads/combo/bb1eafba47bb009b6b269fdc2b796dfa.png"));
+    }
+
+    @Override
+    public void onProductDetailClickListener(Product product) {
+
+    }
+
+    @Override
+    public void onProductOrderClickListener(Product product) {
+        onProductClickListener.onProductOrderClickListener(product);
     }
 }

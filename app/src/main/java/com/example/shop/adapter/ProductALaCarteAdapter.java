@@ -1,37 +1,33 @@
 package com.example.shop.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
-import android.os.strictmode.WebViewMethodCalledOnWrongThreadViolation;
-import android.text.Layout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.shop.R;
+import com.example.shop.interfaces.OnALaCarteProductClickListener;
 import com.example.shop.ultil.DownloadImageTask;
-import com.example.shop.ultil.Product;
 import com.example.shop.ultil.ProductALaCarte;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 
-public class ProductALaCarteAdapter extends BaseAdapter {
+public class ProductALaCarteAdapter extends RecyclerView.Adapter<ProductALaCarteAdapter.ViewHolder>{
 
     private ArrayList<ProductALaCarte> mProductList;
     private Context context;
-    TextView mTextViewFoodName, mTextViewFoodPrice, mTextViewPortion;
-    ImageView mImageViewBanner;
-    Button mButtonOrder;
-    ImageButton mImageButtonPlus, mImageButtonMinus;
+    OnALaCarteProductClickListener onALaCarteProductClickListener;
+
+    public void setOnALaCarteProductClickListener(OnALaCarteProductClickListener onALaCarteProductClickListener){
+        this.onALaCarteProductClickListener = onALaCarteProductClickListener;
+    }
 
     public ProductALaCarteAdapter(ArrayList<ProductALaCarte> mProductList, Context context) {
         this.mProductList = mProductList;
@@ -54,14 +50,45 @@ public class ProductALaCarteAdapter extends BaseAdapter {
         this.context = context;
     }
 
+    @NonNull
     @Override
-    public int getCount() {
-        return mProductList.size();
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_product_alacarte, parent, false));
     }
 
     @Override
-    public Object getItem(int position) {
-        return null;
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
+        final ProductALaCarte productALaCarte = mProductList.get(position);
+
+        holder.mTextViewFoodName.setText(productALaCarte.getFoodName());
+        holder.mTextViewFoodPrice.setText(productALaCarte.getFoodPrice());
+        holder.mTextViewPortion.setText(productALaCarte.getPortion() + "");
+        new DownloadImageTask(holder.mImgViewBanner).execute(productALaCarte.getUrlImageBanner());
+
+        holder.mImgButtonMinus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(productALaCarte.getPortion() <= 1){
+
+                }else{
+                    productALaCarte.setPortion(productALaCarte.getPortion() - 1);
+                    holder.mTextViewPortion.setText(productALaCarte.getPortion() + "");
+                }
+            }
+        });
+        holder.mImgButtonPlus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                productALaCarte.setPortion(productALaCarte.getPortion() + 1);
+                holder.mTextViewPortion.setText(productALaCarte.getPortion() + "");
+            }
+        });
+        holder.mBtnOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onALaCarteProductClickListener.onALaCarteOrderClickListener(mProductList.get(position).getFoodPrice());
+            }
+        });
     }
 
     @Override
@@ -70,55 +97,25 @@ public class ProductALaCarteAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-
-        ProductALaCarte productALaCarte = mProductList.get(position);
-
-        View view = LayoutInflater.from(context).inflate(R.layout.layout_product_alacarte, null);
-        initView(view);
-
-
-        mTextViewFoodName.setText(productALaCarte.getFoodName());
-        mTextViewFoodPrice.setText(productALaCarte.getFoodPrice());
-        mTextViewPortion.setText(productALaCarte.getPortion() + "");
-        new DownloadImageTask((ImageView) view.findViewById(R.id.imgViewBanner))
-                .execute(productALaCarte.getUrlImageBanner());
-
-        return view;
+    public int getItemCount() {
+        return mProductList.size();
     }
 
-    private void initView(View view){
-        mTextViewFoodName  = view.findViewById(R.id.txtViewProductName);
-        mTextViewFoodPrice = view.findViewById(R.id.txtViewProductPrice);
-        mTextViewPortion   = view.findViewById(R.id.txtViewPortion);
-        mImageButtonMinus  = view.findViewById(R.id.imgButtonMinus);
-        mImageButtonPlus   = view.findViewById(R.id.imgButtonPlus);
-        mButtonOrder       = view.findViewById(R.id.btnOrderProduct);
+    public class ViewHolder extends RecyclerView.ViewHolder{
+        TextView mTextViewFoodName, mTextViewFoodPrice, mTextViewPortion;
+        ImageView mImgViewBanner;
+        Button mBtnOrder;
+        ImageButton mImgButtonPlus, mImgButtonMinus;
 
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            mTextViewFoodName = itemView.findViewById(R.id.txtViewProductName);
+            mTextViewFoodPrice = itemView.findViewById(R.id.txtViewProductPrice);
+            mTextViewPortion = itemView.findViewById(R.id.txtViewPortion);
+            mImgButtonMinus = itemView.findViewById(R.id.imgButtonMinus);
+            mImgButtonPlus = itemView.findViewById(R.id.imgButtonPlus);
+            mBtnOrder = itemView.findViewById(R.id.btnOrderProduct);
+            mImgViewBanner = itemView.findViewById(R.id.imgViewBanner);
+        }
     }
-
-//    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-//        ImageView bmImage;
-//
-//        public DownloadImageTask(ImageView bmImage) {
-//            this.bmImage = bmImage;
-//        }
-//
-//        protected Bitmap doInBackground(String... urls) {
-//            String urldisplay = urls[0];
-//            Bitmap mIcon11 = null;
-//            try {
-//                InputStream in = new java.net.URL(urldisplay).openStream();
-//                mIcon11 = BitmapFactory.decodeStream(in);
-//            } catch (Exception e) {
-//                Log.e("Error", e.getMessage());
-//                e.printStackTrace();
-//            }
-//            return mIcon11;
-//        }
-//
-//        protected void onPostExecute(Bitmap result) {
-//            bmImage.setImageBitmap(result);
-//        }
-//    }
 }

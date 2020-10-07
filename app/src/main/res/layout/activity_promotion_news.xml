@@ -8,12 +8,10 @@
     tools:context=".activity.PromotionNewsActivity">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:background="@color/red"
         android:id="@+id/appbarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_scrollFlags="scroll|exitUntilCollapsed">
-
+        android:background="@color/red">
 
         <ImageView
             android:id="@+id/imageViewCollaps"
@@ -22,38 +20,43 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed" />
 
         <TextView
+            android:id="@+id/textViewTitle"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_36sdp"
+            android:layout_height="@dimen/_66sdp"
+            android:background="@color/red"
             android:gravity="center"
+            android:paddingTop="@dimen/_8sdp"
+            android:paddingBottom="@dimen/_8sdp"
             android:text="TIN KHUYẾN MÃI"
             android:textColor="@color/white"
             android:textSize="@dimen/h6"
-            android:textStyle="bold"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:layout_marginBottom="@dimen/_18sdp"/>
+            android:textStyle="bold" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <RelativeLayout
-        android:layout_marginBottom="@dimen/_60sdp"
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:background="@color/red"
+        android:paddingTop="@dimen/_30sdp"
+        app:layout_anchor="@id/scrollview"
+        app:layout_anchorGravity="top" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:layout_marginLeft="@dimen/margin_left_parent"
+        android:layout_marginRight="@dimen/margin_right_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_60sdp"
-            android:background="@color/red" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewPromotionNews"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_left_parent"
-            android:layout_marginRight="@dimen/margin_right_parent" />
+            android:layout_marginBottom="@dimen/_60sdp" />
 
-    </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
 
     <include
         layout="@layout/layout_bottom_navigation"

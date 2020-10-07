@@ -1,31 +1,48 @@
 package com.example.shop.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.example.shop.R;
 import com.example.shop.adapter.ProductALaCarteAdapter;
 import com.example.shop.adapter.ProductAdapter;
+import com.example.shop.interfaces.OnALaCarteProductClickListener;
+import com.example.shop.interfaces.OnProductClickListener;
 import com.example.shop.ultil.BannerImage;
 import com.example.shop.ultil.Product;
 import com.example.shop.ultil.ProductALaCarte;
 
 import java.util.ArrayList;
 
-public class Snacks_Fragment extends Fragment {
+public class Snacks_Fragment extends Fragment implements OnALaCarteProductClickListener {
 
-    GridView mGridViewSnacks;
+    RecyclerView recyclerViewProductSnacks;
     ArrayList<ProductALaCarte> mListProduct;
     ProductALaCarteAdapter mProductAdapter;
-
+    OnALaCarteProductClickListener onALaCarteProductClickListener;
+    Context context;
 
     public Snacks_Fragment() {
         // Required empty public constructor
+    }
+
+    public Snacks_Fragment(Context context){
+        this.context = context;
+    }
+
+    public void setOnALaCarteProductClickListener(OnALaCarteProductClickListener onALaCarteProductClickListener){
+        this.onALaCarteProductClickListener = onALaCarteProductClickListener;
     }
 
     @Override
@@ -35,9 +52,13 @@ public class Snacks_Fragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_snacks, container, false);
         mListProduct = new ArrayList<>();
         addProductInfo();
+        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         mProductAdapter = new ProductALaCarteAdapter(mListProduct, getContext());
-        mGridViewSnacks = view.findViewById(R.id.gridViewSnacks);
-        mGridViewSnacks.setAdapter(mProductAdapter);
+        recyclerViewProductSnacks = view.findViewById(R.id.recyclerViewSnacks);
+        recyclerViewProductSnacks.setLayoutManager(staggeredGridLayoutManager);
+        recyclerViewProductSnacks.setAdapter(mProductAdapter);
+        mProductAdapter.setOnALaCarteProductClickListener(this);
+
         return view;
     }
 
@@ -89,4 +110,8 @@ public class Snacks_Fragment extends Fragment {
     }
 
 
+    @Override
+    public void onALaCarteOrderClickListener(String foodPrice) {
+        onALaCarteProductClickListener.onALaCarteOrderClickListener(foodPrice);
+    }
 }

@@ -1,32 +1,48 @@
 package com.example.shop.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.example.shop.R;
 import com.example.shop.adapter.ProductAdapter;
+import com.example.shop.interfaces.OnProductClickListener;
 import com.example.shop.ultil.BannerImage;
 import com.example.shop.ultil.Product;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 
 import java.util.ArrayList;
 
-public class Rice_Burger_Fragment extends Fragment {
+public class Rice_Burger_Fragment extends Fragment implements OnProductClickListener {
 
-    GridView mGridViewRiceBurger;
+    RecyclerView recyclerViewProductRiceBurger;
     ArrayList<Product> mListProduct;
     ProductAdapter mProductAdapter;
     ArrayList<BannerImage> ComboTemika1, ComboTemikaA, ComboTemikaB, ComboTemikaC, ComboTemikaD, TraditionalChickenRice1Pc,
              SpicyChickenRice1Pc, NoneSpicyChickenRice1Pc, BlackRicePepper1Pc, FlavaRoastFillerRice1Pc,
              ToridonRice1Pc, TeriyakiRice1Pc, ChickenSkewerRice1Pc, ShrimpBurger1Pc, FlavaRoastBurger1Pc, ZingerBurger1Pc;
+    OnProductClickListener onProductClickListener;
+    Context context;
 
     public Rice_Burger_Fragment() {
         // Required empty public constructor
+    }
+
+    public Rice_Burger_Fragment(Context context){
+        this.context = context;
+    }
+
+    public void setProductClickListener(OnProductClickListener onProductClickListener){
+        this.onProductClickListener = onProductClickListener;
     }
 
     @Override
@@ -38,35 +54,38 @@ public class Rice_Burger_Fragment extends Fragment {
         createBannerListForProduct();
         addProductInfo();
         mProductAdapter = new ProductAdapter(mListProduct, getContext());
-        mGridViewRiceBurger = view.findViewById(R.id.gridViewRiceBurger);
-        mGridViewRiceBurger.setAdapter(mProductAdapter);
+        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        recyclerViewProductRiceBurger = view.findViewById(R.id.recyclerViewRiceBurger);
+        recyclerViewProductRiceBurger.setLayoutManager(staggeredGridLayoutManager);
+        recyclerViewProductRiceBurger.setAdapter(mProductAdapter);
+        mProductAdapter.setOnProductClickListener(this);
         return view;
     }
 
     private void addProductInfo() {
-        mListProduct.add(new Product(ComboTemika1, "COMBO TEMAKI 1", "34.000đ", "* 1 Phần Temaki"));
+        mListProduct.add(new Product(ComboTemika1, "COMBO TEMAKI 1", "34.000đ", "* 1 Phần Temaki", 1));
         mListProduct.add(new Product(ComboTemikaA, "COMBO TEMAKI A", "61.000đ", "* 2 Phần Temaki\n"+
-                "* 1 Miếng Gà Giòn Cay / 1 Miếng Gà Giòn Không Cay / 1 Miếng Gà Truyền Thống\n" + "* 1 Pepsi Lon"));
+                "* 1 Miếng Gà Giòn Cay / 1 Miếng Gà Giòn Không Cay / 1 Miếng Gà Truyền Thống\n" + "* 1 Pepsi Lon", 1));
         mListProduct.add(new Product(ComboTemikaB, "COMBO TEMAKI B", "83.000đ", "* 2 Phần Temaki\n"+
-                "* 1 Miếng Gà Giòn Cay / 1 Miếng Gà Giòn Không Cay / 1 Miếng Gà Truyền Thống\n" + "* 1 Pepsi Lon"));
+                "* 1 Miếng Gà Giòn Cay / 1 Miếng Gà Giòn Không Cay / 1 Miếng Gà Truyền Thống\n" + "* 1 Pepsi Lon", 1));
         mListProduct.add(new Product(ComboTemikaC, "COMBO TEMAKI C", "86.000đ", "* 2 Phần Temaki\n"+
-                "* 1 Khoai Tây Chiên (Vừa)\n" + "* 1 Pepsi Lon"));
+                "* 1 Khoai Tây Chiên (Vừa)\n" + "* 1 Pepsi Lon", 1));
         mListProduct.add(new Product(ComboTemikaD, "COMBO TEMAKI D", "199.000đ", "* 3 Phần Temaki\n"+
-                "* 3 Miếng Gà Giòn Cay / 3 Miếng Gà Giòn Không Cay / 3 Miếng Gà Truyền Thống\n" + "* 2 Pepsi Lon"));
+                "* 3 Miếng Gà Giòn Cay / 3 Miếng Gà Giòn Không Cay / 3 Miếng Gà Truyền Thống\n" + "* 2 Pepsi Lon", 1));
 
-        mListProduct.add(new Product(TraditionalChickenRice1Pc,"Cơm Gà Truyền Thống (1 Phần)" ,"41.000đ", "* Cơm Gà Truyền Thống (1 Phần)"));
+        mListProduct.add(new Product(TraditionalChickenRice1Pc,"Cơm Gà Truyền Thống (1 Phần)" ,"41.000đ", "* Cơm Gà Truyền Thống (1 Phần)", 1));
 
-        mListProduct.add(new Product(SpicyChickenRice1Pc, "Cơm Gà Giòn Cay (1 Phần)" ,"41.000đ", "* Cơm Gà Giòn Cay (1 Phần)"));
-        mListProduct.add(new Product(NoneSpicyChickenRice1Pc, "Cơm Gà Giòn Không Cay (1 Phần)" ,"41.000đ", "* Cơm Gà Giòn Không Cay (1 Phần)"));
-        mListProduct.add(new Product(BlackRicePepper1Pc, "Cơm Phi Lê Gà Quay Tiêu (1 Phần)", "41.000đ", "* Cơm Phi Lê Gà Quay Tiêu (1 Phần)"));
-        mListProduct.add(new Product(FlavaRoastFillerRice1Pc, "Cơm Phi Lê Gà Quay Flava (1 Phần)", "41.000đ", "* Cơm Phi Lê Gà Quay Flava (1 Phần)"));
-        mListProduct.add(new Product(ToridonRice1Pc, "Cơm Gà Xào Sốt Nhật (1 Phần)", "41.000đ", "* Cơm Gà Xào Xốt Nhật (1 Phần)"));
-        mListProduct.add(new Product(TeriyakiRice1Pc, "Cơm Phi Lê Gà Giòn (1 Phần)", "41.000đ", "* Cơm Phi Lê Gà Giòn (1 Phần)"));
-        mListProduct.add(new Product(ChickenSkewerRice1Pc, "Cơm Gà Xiên Que (1 Phần)", "41.000đ", "* Cơm Gà Xiên Que (1 Phần)"));
+        mListProduct.add(new Product(SpicyChickenRice1Pc, "Cơm Gà Giòn Cay (1 Phần)" ,"41.000đ", "* Cơm Gà Giòn Cay (1 Phần)", 1));
+        mListProduct.add(new Product(NoneSpicyChickenRice1Pc, "Cơm Gà Giòn Không Cay (1 Phần)" ,"41.000đ", "* Cơm Gà Giòn Không Cay (1 Phần)", 1));
+        mListProduct.add(new Product(BlackRicePepper1Pc, "Cơm Phi Lê Gà Quay Tiêu (1 Phần)", "41.000đ", "* Cơm Phi Lê Gà Quay Tiêu (1 Phần)", 1));
+        mListProduct.add(new Product(FlavaRoastFillerRice1Pc, "Cơm Phi Lê Gà Quay Flava (1 Phần)", "41.000đ", "* Cơm Phi Lê Gà Quay Flava (1 Phần)", 1));
+        mListProduct.add(new Product(ToridonRice1Pc, "Cơm Gà Xào Sốt Nhật (1 Phần)", "41.000đ", "* Cơm Gà Xào Xốt Nhật (1 Phần)", 1));
+        mListProduct.add(new Product(TeriyakiRice1Pc, "Cơm Phi Lê Gà Giòn (1 Phần)", "41.000đ", "* Cơm Phi Lê Gà Giòn (1 Phần)", 1));
+        mListProduct.add(new Product(ChickenSkewerRice1Pc, "Cơm Gà Xiên Que (1 Phần)", "41.000đ", "* Cơm Gà Xiên Que (1 Phần)", 1));
 
-        mListProduct.add(new Product(ShrimpBurger1Pc, "Burger Tôm (1 Phần)", "42.000đ", "* Burger Tôm" ));
-        mListProduct.add(new Product(FlavaRoastBurger1Pc, "Burger Gà Quay Flava (1 Phần)", "47.000đ", "* Burger Gà Quay Flava (1 Phần)" ));
-        mListProduct.add(new Product(ZingerBurger1Pc, "Burger Zinger (1 Phần)", "51.000đ", "* Burger Zinger (1 Phần)" ));
+        mListProduct.add(new Product(ShrimpBurger1Pc, "Burger Tôm (1 Phần)", "42.000đ", "* Burger Tôm", 1 ));
+        mListProduct.add(new Product(FlavaRoastBurger1Pc, "Burger Gà Quay Flava (1 Phần)", "47.000đ", "* Burger Gà Quay Flava (1 Phần)" ,1 ));
+        mListProduct.add(new Product(ZingerBurger1Pc, "Burger Zinger (1 Phần)", "51.000đ", "* Burger Zinger (1 Phần)", 1 ));
 
     }
 
@@ -122,4 +141,13 @@ public class Rice_Burger_Fragment extends Fragment {
 
     }
 
+    @Override
+    public void onProductDetailClickListener(Product product) {
+        Toast.makeText(getContext() , "Setting:" + product.getFoodName(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onProductOrderClickListener(Product product) {
+        onProductClickListener.onProductOrderClickListener(product);
+    }
 }

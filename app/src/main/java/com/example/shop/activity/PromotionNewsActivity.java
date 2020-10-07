@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.shop.R;
 import com.example.shop.adapter.PromotionNewsAdapter;
@@ -25,6 +27,8 @@ public class PromotionNewsActivity extends AppCompatActivity implements BottomNa
     RecyclerView.LayoutManager mLayoutManager;
     RecyclerView mRecyclerViewPromotionNews;
     BottomNavigationView mBtmNavigationView;
+    private boolean doubleBackToExitPressedOnce;
+    private Handler mHandlerQuiteApp = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,5 +90,30 @@ public class PromotionNewsActivity extends AppCompatActivity implements BottomNa
         }
 
         return true;
+    }
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Nhấn thêm lần nữa để thoát App", Toast.LENGTH_SHORT).show();
+
+        mHandlerQuiteApp.postDelayed(mRunnable, 2000);
+    }
+
+    private final Runnable mRunnable = new Runnable() {
+        @Override
+        public void run() {
+            doubleBackToExitPressedOnce = false;
+        }
+    };
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mHandlerQuiteApp != null) { mHandlerQuiteApp.removeCallbacks(mRunnable); }
     }
 }

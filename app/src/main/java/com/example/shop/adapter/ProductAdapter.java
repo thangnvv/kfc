@@ -1,39 +1,36 @@
 package com.example.shop.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.shop.R;
+import com.example.shop.interfaces.OnProductClickListener;
 import com.example.shop.ultil.Product;
-import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
-import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;
 
-public class ProductAdapter extends BaseAdapter {
+public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
     private ArrayList<Product> mProductList;
     private Context context;
     private boolean expandTextStatus = false;
+    OnProductClickListener onProductClickListener;
+
+    public void setOnProductClickListener(OnProductClickListener onProductClickListener){
+        this.onProductClickListener = onProductClickListener;
+    }
 
     public ProductAdapter(ArrayList<Product> mProductList, Context context) {
         this.mProductList = mProductList;
         this.context = context;
-    }
-
-    public ArrayList<Product> getmProductList() {
-        return mProductList;
-    }
-
-    public void setmProductList(ArrayList<Product> mProductList) {
-        this.mProductList = mProductList;
     }
 
     public Context getContext() {
@@ -44,14 +41,52 @@ public class ProductAdapter extends BaseAdapter {
         this.context = context;
     }
 
+    @NonNull
     @Override
-    public int getCount() {
-        return mProductList.size();
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_product, parent, false));
     }
 
     @Override
-    public Object getItem(int i) {
-        return null;
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
+        Product product = mProductList.get(position);
+        AdapterForSlider adapter = new AdapterForSlider(getContext(), product.getUrlImageBanner() );
+
+        holder.sliderView.setSliderAdapter(adapter);
+
+        holder.txtViewProductName.setText(product.getFoodName());
+        holder.txtViewProductPrice.setText(product.getFoodPrice());
+        holder.txtViewProductDescript.setText(product.getFoodDescrip());
+
+        holder.btnExpandText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(expandTextStatus){
+                    holder.txtViewProductDescript.setMaxLines(3);
+                    holder.btnExpandText.setImageResource(R.drawable.arrow_down);
+                    expandTextStatus = false;
+                }else {
+                    holder.txtViewProductDescript.setMaxLines(Integer.MAX_VALUE);
+                    holder.btnExpandText.setImageResource(R.drawable.arrow_up);
+                    expandTextStatus = true;
+                }
+            }
+        });
+
+        holder.btnOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onProductClickListener.onProductOrderClickListener(mProductList.get(position));
+            }
+        });
+
+        holder.btnSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onProductClickListener.onProductDetailClickListener(mProductList.get(position));
+            }
+        });
+
     }
 
     @Override
@@ -60,45 +95,26 @@ public class ProductAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-
-        Product product = mProductList.get(i);
-
-        view                                    = LayoutInflater.from(context).inflate(R.layout.layout_product, null);
-
-        SliderView sliderView                   = view.findViewById(R.id.sliderViewProduct);
-        final TextView txtViewProductName       = view.findViewById(R.id.textViewProductName);
-        TextView txtViewProductPrice            = view.findViewById(R.id.textViewProductPrice);
-        final TextView txtViewProductDescript   = view.findViewById(R.id.textViewDiscrip);
-        Button btnSetting                       = view.findViewById(R.id.buttonSettingProduct);
-        Button btnOrder                         = view.findViewById(R.id.buttonOrderProduct);
-        final ImageButton btnExpandText         = view.findViewById(R.id.imageButtonExpandText);
-
-        AdapterForSlider adapter = new AdapterForSlider(getContext(), product.getUrlImageBanner() );
-
-        sliderView.setSliderAdapter(adapter);
-
-
-
-        txtViewProductName.setText(product.getFoodName());
-        txtViewProductPrice.setText(product.getFoodPrice());
-        txtViewProductDescript.setText(product.getFoodDescrip());
-
-        btnExpandText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(expandTextStatus){
-                    txtViewProductDescript.setMaxLines(3);
-                    btnExpandText.setImageResource(R.drawable.arrow_down);
-                    expandTextStatus = false;
-                }else {
-                    txtViewProductDescript.setMaxLines(Integer.MAX_VALUE);
-                    btnExpandText.setImageResource(R.drawable.arrow_up);
-                    expandTextStatus = true;
-                }
-            }
-        });
-
-        return view;
+    public int getItemCount() {
+        return mProductList.size();
     }
+
+    public class ViewHolder extends RecyclerView.ViewHolder{
+        SliderView sliderView ;
+        TextView txtViewProductName, txtViewProductPrice, txtViewProductDescript;
+        Button btnSetting, btnOrder;
+        ImageButton btnExpandText;
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            sliderView               = itemView.findViewById(R.id.sliderViewProduct);
+            txtViewProductName       = itemView.findViewById(R.id.textViewProductName);
+            txtViewProductPrice      = itemView.findViewById(R.id.textViewProductPrice);
+            txtViewProductDescript   = itemView.findViewById(R.id.textViewDiscrip);
+            btnSetting               = itemView.findViewById(R.id.buttonSettingProduct);
+            btnOrder                 = itemView.findViewById(R.id.buttonOrderProduct);
+            btnExpandText            = itemView.findViewById(R.id.imageButtonExpandText);
+        }
+    }
+
 }

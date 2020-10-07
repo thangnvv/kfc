@@ -5,7 +5,9 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:elevation="@dimen/_8sdp"
-    app:cardCornerRadius="5dp">
+    app:cardCornerRadius="5dp"
+    android:layout_margin="@dimen/_6sdp"
+    >
 
     <LinearLayout
         android:background="#16DFB0"
@@ -46,38 +48,38 @@
             android:layout_height="wrap_content"/>
 
         <LinearLayout
-            android:gravity="center_vertical"
-            android:layout_marginTop="@dimen/_16sdp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+        android:gravity="center_vertical"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-            <ImageButton
-                android:id="@+id/imgButtonMinus"
-                android:layout_marginLeft="@dimen/margin_left_parent"
-                android:background="@android:color/transparent"
-                android:src="@drawable/minus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+        <ImageButton
+            android:id="@+id/imgButtonMinus"
+            android:layout_marginLeft="@dimen/margin_left_parent"
+            android:background="@android:color/transparent"
+            android:src="@drawable/minus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
-            <TextView
-                android:id="@+id/txtViewPortion"
-                android:layout_marginRight="@dimen/_16sdp"
-                android:layout_marginLeft="@dimen/_16sdp"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:textSize="@dimen/h2"
-                android:text="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/txtViewPortion"
+            android:layout_marginRight="@dimen/_16sdp"
+            android:layout_marginLeft="@dimen/_16sdp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="@dimen/h2"
+            android:text="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
-            <ImageButton
-                android:id="@+id/imgButtonPlus"
-                android:background="@android:color/transparent"
-                android:src="@drawable/plus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
+        <ImageButton
+            android:id="@+id/imgButtonPlus"
+            android:background="@android:color/transparent"
+            android:src="@drawable/plus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
 
         <Button
             android:id="@+id/btnOrderProduct"

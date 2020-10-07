@@ -7,6 +7,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.google.android.material.tabs.TabLayout
+        android:background="@drawable/cart_ripple"
+        app:tabIndicatorHeight="@dimen/_2sdp"
+        app:tabSelectedTextColor="@color/black"
+        app:tabTextColor="#CDCDCD"
+        app:tabIndicatorColor="@color/red"
         app:tabMode="scrollable"
         app:tabGravity="center"
         android:id="@+id/tabLayoutALaCarteLine"

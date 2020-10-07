@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:elevation="@dimen/_16sdp"
+    android:layout_marginTop="@dimen/_8sdp"
+    android:layout_marginBottom="@dimen/_8sdp"
+    app:cardCornerRadius="@dimen/_8sdp"
+    app:cardPreventCornerOverlap="false">
+
+    <LinearLayout
+        android:padding="@dimen/_8sdp"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            
+            <TextView
+                android:id="@+id/textViewSingleProductName"
+                android:textAllCaps="true"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="@dimen/h3"
+                android:text="Product Name"
+                android:paddingRight="@dimen/_30sdp"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"/>
+            
+            <ImageButton
+                android:id="@+id/imageButtonEditProduct"
+                android:background="@android:color/transparent"
+                android:src="@drawable/edit_cart"
+                android:layout_marginRight="@dimen/_16sdp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <ImageButton
+                android:id="@+id/imageButtonDeleteProduct"
+                android:background="@android:color/transparent"
+                android:src="@drawable/cancel"
+                android:layout_marginRight="@dimen/_8sdp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textViewSingleProductInfo"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:textSize="@dimen/h0"
+            android:textColor="@color/darkGrey"
+            android:text="Product Info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        
+        <View
+            android:layout_marginTop="@dimen/_16sdp"
+            android:background="@color/darkGrey"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+
+        <LinearLayout
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/imageButtonSingleProductMinus"
+                android:layout_marginLeft="@dimen/margin_left_parent"
+                android:background="@android:color/transparent"
+                android:src="@drawable/minus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/textViewSingleProductPortion"
+                android:layout_marginRight="@dimen/_16sdp"
+                android:layout_marginLeft="@dimen/_16sdp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="@dimen/h2"
+                android:text="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <ImageButton
+                android:id="@+id/imageButtonSingleProductPlus"
+                android:background="@android:color/transparent"
+                android:src="@drawable/plus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <View
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="1dp"/>
+
+            <TextView
+                android:id="@+id/textViewSingleProductPrice"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="@dimen/h1"
+                android:text="Product Price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+    </LinearLayout>
+    
+</androidx.cardview.widget.CardView>
+
+

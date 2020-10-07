@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:id="@+id/productAddedToCart"
+    android:padding="@dimen/_12sdp">
+
+    <TextView
+        android:id="@+id/textViewTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:textSize="@dimen/h4"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:text="BẠN ĐÃ THÊM:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <ImageButton
+        android:id="@+id/imageButtonCancel"
+        android:background="@android:color/transparent"
+        android:src="@drawable/cancel"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewOrderInfo"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:layout_below="@+id/textViewTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/buttonCheckOut"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:layout_below="@id/recyclerViewOrderInfo"
+        android:background="@drawable/background_red_thick"
+        android:textSize="@dimen/h1"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:text="THANH TOÁN"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</RelativeLayout>

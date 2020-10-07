@@ -1,7 +1,7 @@
 package com.example.shop.ultil;
 
-import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -11,20 +11,22 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import com.example.shop.R;
 import com.example.shop.interfaces.OnSpinnerItemSelectedListener;
 
 public class CustomDialogChooseCity extends Dialog implements View.OnClickListener,
         AdapterView.OnItemSelectedListener{
 
-    Activity hostActivity;
+    Context context;
     Button mBtnChoose;
     Spinner mSpinnerCity;
     OnSpinnerItemSelectedListener mListener;
 
-    public CustomDialogChooseCity(Activity activity){
-        super(activity);
-        hostActivity = activity;
+    public CustomDialogChooseCity(@NonNull Context context) {
+        super(context);
+        this.context = context;
     }
 
     @Override
@@ -32,14 +34,14 @@ public class CustomDialogChooseCity extends Dialog implements View.OnClickListen
         super.onCreate(savedInstanceState);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.layout_custom_dialog_choose_city);
+        setContentView(R.layout.dialog_choose_city);
         mBtnChoose   = findViewById(R.id.buttonChoose);
         mSpinnerCity = findViewById(R.id.spinnerCity);
         mBtnChoose.setOnClickListener(this);
 
-        String[] city = hostActivity.getResources().getStringArray(R.array.city);
+        String[] city = context.getResources().getStringArray(R.array.city);
 
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(hostActivity.getBaseContext(),R.layout.layout_selected_city,
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(context,R.layout.layout_selected_city,
                 R.id.textViewCity, city);
 
         dataAdapter.setDropDownViewResource(R.layout.layout_spinner_single_line);
@@ -49,8 +51,8 @@ public class CustomDialogChooseCity extends Dialog implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-        mListener.onItemSelectedListener(mSpinnerCity.getSelectedItem().toString());
-        Toast.makeText(hostActivity.getBaseContext(), "" + mSpinnerCity.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+        mListener.onItemSelectedListener(mSpinnerCity.getSelectedItemPosition());
+        Toast.makeText(context, "" + mSpinnerCity.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
         dismiss();
     }
 

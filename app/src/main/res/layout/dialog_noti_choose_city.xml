@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/_8sdp"
+    android:paddingRight="@dimen/_8sdp">
+
+    <include
+        layout="@layout/layout_red_columns"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_16sdp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="THÔNG BÁO"
+        android:textColor="@color/black"
+        android:textSize="@dimen/h6"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_24sdp"
+        android:gravity="center_horizontal"
+        android:text="Vui lòng chọn Tỉnh/Thành Phố"
+        android:textColor="@color/red"
+        android:textSize="@dimen/h0" />
+
+    <Button
+        android:id="@+id/buttonChoose"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/_24sdp"
+        android:background="@drawable/background_red_thick"
+        android:text="OK"
+        android:textColor="@color/white"
+        android:textSize="@dimen/h0"
+        android:textStyle="bold" />
+
+</LinearLayout>

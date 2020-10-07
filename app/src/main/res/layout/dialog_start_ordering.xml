@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/_280sdp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_gravity="center_horizontal">
+
+    <include
+        android:layout_marginBottom="@dimen/_16sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/layout_red_columns"/>
+
+    <TextView
+        android:gravity="center_horizontal"
+        android:text="BẮT ĐẦU ĐẶT HÀNG"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="@dimen/h5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:layout_marginTop="@dimen/_8sdp"
+        android:gravity="center_horizontal"
+        android:text="Vui lòng chọn khu vực quý khách muốn đặt hàng"
+        android:textColor="@color/darkGrey"
+        android:textSize="@dimen/h1"
+        android:layout_marginRight="@dimen/_16sdp"
+        android:layout_marginLeft="@dimen/_16sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Spinner
+        android:background="@drawable/background_black_thin"
+        android:id="@+id/spinnerCity"
+        android:layout_margin="@dimen/_16sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/buttonChoose"
+        android:layout_marginBottom="@dimen/_16sdp"
+        android:layout_marginRight="@dimen/_16sdp"
+        android:layout_marginLeft="@dimen/_16sdp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/h0"
+        android:textStyle="bold"
+        android:text="BẮT ĐẦU ĐẶT HÀNG"
+        android:layout_gravity="center"
+        android:background="@drawable/background_red_thick"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

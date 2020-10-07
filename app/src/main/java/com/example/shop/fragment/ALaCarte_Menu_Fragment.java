@@ -1,29 +1,52 @@
 package com.example.shop.fragment;
 
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.shop.R;
 import com.example.shop.adapter.ViewPagerAdapterForMenuALaCarte;
+import com.example.shop.interfaces.OnALaCarteProductClickListener;
+import com.example.shop.interfaces.OnProductClickListener;
+import com.example.shop.ultil.Product;
 import com.google.android.material.tabs.TabLayout;
 
-public class ALaCarte_Menu_Fragment extends Fragment {
+public class ALaCarte_Menu_Fragment extends Fragment implements OnProductClickListener, OnALaCarteProductClickListener{
 
     public static ViewPager mViewPagerMenuAlaCarte;
 
     static ViewPagerAdapterForMenuALaCarte mViewPagerAdapterMenuAlaCarte;
     FragmentManager mFragmentManagerMenuAlaCarte;
     View view;
+    OnALaCarteProductClickListener onALaCarteProductClickListener;
+    OnProductClickListener onProductClickListener;
+    Context context;
 
     public ALaCarte_Menu_Fragment() {
         // Required empty public constructor
+    }
+
+    public ALaCarte_Menu_Fragment(Context context) {
+        this.context = context;
+    }
+
+    public void setOnProductClickListener(OnProductClickListener onProductClickListener){
+        this.onProductClickListener = onProductClickListener;
+    }
+
+    public void setOnALaCarteProductClickListener(OnALaCarteProductClickListener onALaCarteProductClickListener){
+        this.onALaCarteProductClickListener = onALaCarteProductClickListener;
     }
 
     @Override
@@ -34,7 +57,7 @@ public class ALaCarte_Menu_Fragment extends Fragment {
 
         mViewPagerMenuAlaCarte = view.findViewById(R.id.viewPagerMenuAlaCarte);
         mFragmentManagerMenuAlaCarte = getChildFragmentManager();
-        mViewPagerAdapterMenuAlaCarte = new ViewPagerAdapterForMenuALaCarte(mFragmentManagerMenuAlaCarte, 4);
+        mViewPagerAdapterMenuAlaCarte = new ViewPagerAdapterForMenuALaCarte(mFragmentManagerMenuAlaCarte, 4, context);
         mViewPagerMenuAlaCarte.setAdapter(mViewPagerAdapterMenuAlaCarte);
         mViewPagerMenuAlaCarte.setOffscreenPageLimit(1);
         mViewPagerMenuAlaCarte.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -57,5 +80,47 @@ public class ALaCarte_Menu_Fragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onAttachFragment(@NonNull Fragment childFragment) {
+        super.onAttachFragment(childFragment);
+        childFragment = setChildFragment(childFragment);
+    }
 
+    public Fragment setChildFragment(Fragment fragment){
+        if(fragment instanceof Fried_RoastedChicken_Fragment){
+            Fried_RoastedChicken_Fragment fried_roastedChicken = (Fried_RoastedChicken_Fragment) fragment;
+            fried_roastedChicken.setProductClickListener(this);
+            return fried_roastedChicken;
+        }else if(fragment instanceof Rice_Burger_Fragment){
+            Rice_Burger_Fragment rice_burger = (Rice_Burger_Fragment) fragment;
+            rice_burger.setProductClickListener(this);
+            return rice_burger;
+        }else if(fragment instanceof Snacks_Fragment){
+            Snacks_Fragment snacks_fragment = (Snacks_Fragment) fragment;
+            snacks_fragment.setOnALaCarteProductClickListener(this);
+            return snacks_fragment;
+        }else if(fragment instanceof Desserts_And_Drinks_Fragment){
+            Desserts_And_Drinks_Fragment desserts_and_drinks_fragment = (Desserts_And_Drinks_Fragment) fragment;
+            desserts_and_drinks_fragment.setOnALaCarteProductClickListener(this);
+            return desserts_and_drinks_fragment;
+        } else{
+            Log.d("DDD", "Fragment is null");
+            return null;
+        }
+    }
+
+    @Override
+    public void onProductDetailClickListener(Product product) {
+
+    }
+
+    @Override
+    public void onProductOrderClickListener(Product product) {
+        onALaCarteProductClickListener.onALaCarteOrderClickListener(product.getFoodPrice());
+    }
+
+    @Override
+    public void onALaCarteOrderClickListener(String foodPrice) {
+        onALaCarteProductClickListener.onALaCarteOrderClickListener(foodPrice);
+    }
 }

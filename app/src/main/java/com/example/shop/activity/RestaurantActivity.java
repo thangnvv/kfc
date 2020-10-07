@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -16,7 +18,12 @@ import android.widget.Toast;
 import com.example.shop.R;
 import com.example.shop.adapter.RestaurantAdapter;
 import com.example.shop.interfaces.OnSpinnerItemSelectedListener;
+import com.example.shop.ultil.CreateDistrictList;
+import com.example.shop.ultil.CreateHtmlText;
+import com.example.shop.ultil.CreateRestaurantListWithCity;
+import com.example.shop.ultil.CreateRestaurantListWithDistrict;
 import com.example.shop.ultil.CustomDialogChooseCity;
+import com.example.shop.ultil.CustomDialogChooseDistrict;
 import com.example.shop.ultil.Restaurant;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -26,43 +33,38 @@ public class RestaurantActivity extends AppCompatActivity implements BottomNavig
         View.OnClickListener{
 
     BottomNavigationView mBtmNavigationView;
-    TextView mTxtViewCity, mTxtViewDistrict;
+    TextView mTxtViewCity, mTxtViewDistrict, mTxtViewFind;
     RecyclerView mRecyclerView;
     RestaurantAdapter mRestaurantAdapter;
     RecyclerView.LayoutManager mLayoutManager;
-    ArrayList<Restaurant> mArrayListRestaurant;
+    ArrayList<Restaurant> mArrayListRestaurant, holdResData;
+
     LinearLayout mLinearLayoutCity, mLinearLayoutDistrict;
-    Boolean citySelected = false;
+    private boolean doubleBackToExitPressedOnce;
+    private Handler mHandlerQuiteApp = new Handler();
+    private String[] cityList;
+    private String[] districtList;
+    private int cityPosition = 0;
+    private int districtPosition = 0;
+    private Boolean citySelected = false;
+    private Boolean districtSelected = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant);
 
-        createRestaurantList();
         initView();
-
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setAdapter(mRestaurantAdapter);
 
         mBtmNavigationView.setSelectedItemId(R.id.restaurant);
         mBtmNavigationView.setOnNavigationItemSelectedListener(this);
         mLinearLayoutCity.setOnClickListener(this);
         mLinearLayoutDistrict.setOnClickListener(this);
+        mTxtViewFind.setOnClickListener(this);
         mLinearLayoutDistrict.setClickable(false);
-    }
 
-    private void createRestaurantList() {
-        mArrayListRestaurant = new ArrayList<>();
-
-        mArrayListRestaurant.add(new Restaurant("KFC LOTTE GÒ VẤP", "Lô 1F17, tầng 1 , Lotte mart Gò Vấp, số 18, Phan Văn Trị, Phường 10, Gò Vấp, TP.HCM"));
-        mArrayListRestaurant.add(new Restaurant("KFC EMART GÒ VẤP", "366 Phan Văn Trị,Phường 5,Quận Gò Vấp"));
-        mArrayListRestaurant.add(new Restaurant("KFC LŨY BÁN BÍCH", "Số 01, Vườn Lài, Phường Phú Thọ Hòa, Quận Tân Phú, Tp.HCM"));
-        mArrayListRestaurant.add(new Restaurant("KFC LÝ THƯỜNG KIỆT", "446 - 446A Lý Thường Kiệt, phường 7, quận Tân Bình, TPHCM"));
-        mArrayListRestaurant.add(new Restaurant("KFC AEON MALL TÂN PHÚ", "Trung tâm mua sắm Aeon, số 30 đường Bờ Bao Tân Thắng, P.Sơn Kỳ, Q.Tân Phú, TP. HCM"));
-        mArrayListRestaurant.add(new Restaurant("KFC HÓC MÔN", "Khu phố 5, Thị trấn Hóc Môn, huyện Hóc Môn, TP. HCM"));
-        mArrayListRestaurant.add(new Restaurant("KFC PHÚ MỸ HƯNG - HCM", "số 11 (S41-1), Bùi Bằng Đoàn, Khu Phố Hưng Vượng 2 (R13), P.Tân Phong, Q.7, TPHCM"));
-        mArrayListRestaurant.add(new Restaurant("KFC TRẦN NÃO", "72 Trần Não, P.Bình An, Quận 2, Tp. HCM"));
+        mTxtViewDistrict.setText(CreateHtmlText.createTextRequired("Quận/Huyện"));
+        cityList = this.getResources().getStringArray(R.array.city);
 
     }
 
@@ -71,10 +73,12 @@ public class RestaurantActivity extends AppCompatActivity implements BottomNavig
         mLinearLayoutDistrict = findViewById(R.id.linearLayoutDistrict);
         mTxtViewCity        = findViewById(R.id.textViewCity);
         mTxtViewDistrict    = findViewById(R.id.textViewDisTrict);
+        mTxtViewFind        = findViewById(R.id.textViewFind);
         mBtmNavigationView  = findViewById(R.id.bottomNavigationView);
         mRecyclerView       = findViewById(R.id.recyclerViewRestaurant);
         mLayoutManager      = new LinearLayoutManager(RestaurantActivity.this, LinearLayoutManager.HORIZONTAL, false);
-        mRestaurantAdapter  = new RestaurantAdapter(mArrayListRestaurant, RestaurantActivity.this);
+        mArrayListRestaurant = new ArrayList<>();
+        holdResData         = new ArrayList<>();
     }
 
     @Override
@@ -109,15 +113,31 @@ public class RestaurantActivity extends AppCompatActivity implements BottomNavig
                 chooseCityDialog.setCancelable(false);
                 chooseCityDialog.setOnItemSelectedListener(new OnSpinnerItemSelectedListener() {
                     @Override
-                    public void onItemSelectedListener(String cityName) {
-                        if(!cityName.equals("Chọn Tỉnh/Thành Phố")){
-                            mTxtViewCity.setText("Tỉnh/Thành Phố" + "\n" + cityName);
+                    public void onItemSelectedListener(int position) {
+                        if(position != 0){
+                            mTxtViewCity.setText("Tỉnh/Thành Phố" + "\n" + cityList[position]);
                             citySelected = true;
+                            cityPosition = position;
                             mLinearLayoutDistrict.setClickable(citySelected);
+                            if(districtSelected){
+                                mTxtViewDistrict.setText(CreateHtmlText.createTextRequired("Quận/Huyện"));
+                                districtSelected = false;
+                                districtPosition = 0;
+                            }
+                            if(holdResData != null){
+                                holdResData.clear();
+                            }
+                            holdResData.addAll(CreateRestaurantListWithCity.createRestaurantList(RestaurantActivity.this, position));
                         }else{
                             mTxtViewCity.setText("Tỉnh/Thành Phố");
                             citySelected = false;
+                            cityPosition = 0;
                             mLinearLayoutDistrict.setClickable(citySelected);
+                            if(districtSelected == true){
+                                mTxtViewDistrict.setText(CreateHtmlText.createTextRequired("Quận/Huyện"));
+                                districtSelected = false;
+                                districtPosition = 0;
+                            }
                         }
                     }
                 });
@@ -125,11 +145,72 @@ public class RestaurantActivity extends AppCompatActivity implements BottomNavig
                 break;
 
             case R.id.linearLayoutDistrict:
-                String cityName = mTxtViewCity.getText().toString().trim();
-                Toast.makeText(RestaurantActivity.this,"It's Works", Toast.LENGTH_LONG).show();
+                CustomDialogChooseDistrict chooseDistrictDialog = new CustomDialogChooseDistrict(RestaurantActivity.this, cityPosition);
+                chooseDistrictDialog.setCancelable(false);
+                chooseDistrictDialog.setOnItemSelectedListener(new OnSpinnerItemSelectedListener() {
+                    @Override
+                    public void onItemSelectedListener(int position) {
+                        if(position != 0){
+                            mTxtViewDistrict.setText(Html.fromHtml("<font color='#707070'>Quận/Huyện </font><font color='#e4002b'>*</font>") + "\n" + CreateDistrictList.getDistrict(position));
+                            districtSelected = true;
+                            districtPosition = position;
+                        }else{
+                            mTxtViewDistrict.setText(CreateHtmlText.createTextRequired("Quận/Huyện"));
+                            districtSelected = false;
+                            districtPosition = 0;
+                        }
+                    }
+                });
+                chooseDistrictDialog.show();
+                break;
+            case R.id.textViewFind:
+                if(citySelected == true &&  districtSelected == false ){
+                    if(mArrayListRestaurant !=null){
+                        mArrayListRestaurant.clear();
+                        mArrayListRestaurant.addAll(CreateRestaurantListWithCity.createRestaurantList(RestaurantActivity.this, cityPosition));
+                    }else{
+                        mArrayListRestaurant = CreateRestaurantListWithCity.createRestaurantList(RestaurantActivity.this, cityPosition);
+                    }
+                }
+                if(citySelected == true &&  districtSelected == true ){
+                    if(mArrayListRestaurant !=null){
+                        mArrayListRestaurant.clear();
+                        mArrayListRestaurant.addAll(CreateRestaurantListWithDistrict.createRestaurantListWithDistrict(holdResData,CreateDistrictList.getDistrict(districtPosition)));
+                    }else{
+                        mArrayListRestaurant.addAll(CreateRestaurantListWithDistrict.createRestaurantListWithDistrict(holdResData,CreateDistrictList.getDistrict(districtPosition)));
+                    }
+                }
+                if(mRestaurantAdapter == null){
+                    mRestaurantAdapter  = new RestaurantAdapter(mArrayListRestaurant, RestaurantActivity.this);
+                    mRecyclerView.setLayoutManager(mLayoutManager);
+                    mRecyclerView.setAdapter(mRestaurantAdapter);
+                }
+                mRestaurantAdapter.notifyDataSetChanged();
                 break;
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Nhấn thêm lần nữa để thoát App", Toast.LENGTH_SHORT).show();
+        mHandlerQuiteApp.postDelayed(mRunnable, 2000);
+    }
 
+    private final Runnable mRunnable = new Runnable() {
+        @Override
+        public void run() {
+            doubleBackToExitPressedOnce = false;
+        }
+    };
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mHandlerQuiteApp != null) { mHandlerQuiteApp.removeCallbacks(mRunnable); }
+    }
 }
