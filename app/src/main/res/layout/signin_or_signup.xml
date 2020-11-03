@@ -21,12 +21,12 @@
         android:layout_height="@dimen/_70sdp">
 
         <Button
+            android:id="@+id/buttonSignUp"
             android:layout_weight="5"
             android:paddingRight="@dimen/_8sdp"
             android:paddingLeft="@dimen/_8sdp"
             android:paddingBottom="@dimen/_4sdp"
             android:paddingTop="@dimen/_4sdp"
-            android:id="@+id/buttonSignUp"
             android:layout_gravity="center"
             android:textSize="@dimen/h0"
             android:textColor="@color/white"

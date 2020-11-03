@@ -1,44 +1,44 @@
 package com.example.shop.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shop.R;
-import com.example.shop.interfaces.OnALaCarteProductClickListener;
-import com.example.shop.ultil.DownloadImageTask;
-import com.example.shop.ultil.ProductALaCarte;
+import com.example.shop.interfaces.OnProductClickListener;
+import com.example.shop.ultil.Product;
+import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;
 
 public class ProductALaCarteAdapter extends RecyclerView.Adapter<ProductALaCarteAdapter.ViewHolder>{
 
-    private ArrayList<ProductALaCarte> mProductList;
+    private ArrayList<Product> mProductList;
     private Context context;
-    OnALaCarteProductClickListener onALaCarteProductClickListener;
+    OnProductClickListener onProductClickListener;
 
-    public void setOnALaCarteProductClickListener(OnALaCarteProductClickListener onALaCarteProductClickListener){
-        this.onALaCarteProductClickListener = onALaCarteProductClickListener;
+    public void setOnProductClickListener(OnProductClickListener onProductClickListener){
+        this.onProductClickListener = onProductClickListener;
     }
 
-    public ProductALaCarteAdapter(ArrayList<ProductALaCarte> mProductList, Context context) {
+    public ProductALaCarteAdapter(ArrayList<Product> mProductList, Context context) {
         this.mProductList = mProductList;
         this.context = context;
     }
 
-    public ArrayList<ProductALaCarte> getmProductList() {
+    public ArrayList<Product> getmProductList() {
         return mProductList;
     }
 
-    public void setmProductList(ArrayList<ProductALaCarte> mProductList) {
+    public void setmProductList(ArrayList<Product> mProductList) {
         this.mProductList = mProductList;
     }
 
@@ -58,12 +58,14 @@ public class ProductALaCarteAdapter extends RecyclerView.Adapter<ProductALaCarte
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
-        final ProductALaCarte productALaCarte = mProductList.get(position);
+        final Product productALaCarte = mProductList.get(position);
 
         holder.mTextViewFoodName.setText(productALaCarte.getFoodName());
         holder.mTextViewFoodPrice.setText(productALaCarte.getFoodPrice());
         holder.mTextViewPortion.setText(productALaCarte.getPortion() + "");
-        new DownloadImageTask(holder.mImgViewBanner).execute(productALaCarte.getUrlImageBanner());
+
+        AdapterForSlider adapter = new AdapterForSlider(getContext(), productALaCarte.getUrlImageBanner() );
+        holder.mSliderViewBanner.setSliderAdapter(adapter);
 
         holder.mImgButtonMinus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,7 +88,8 @@ public class ProductALaCarteAdapter extends RecyclerView.Adapter<ProductALaCarte
         holder.mBtnOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onALaCarteProductClickListener.onALaCarteOrderClickListener(mProductList.get(position).getFoodPrice());
+                Log.d("EEE", "At Product ALaCarte Adapter");
+                onProductClickListener.onOrderProduct(mProductList.get(position));
             }
         });
     }
@@ -103,7 +106,7 @@ public class ProductALaCarteAdapter extends RecyclerView.Adapter<ProductALaCarte
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView mTextViewFoodName, mTextViewFoodPrice, mTextViewPortion;
-        ImageView mImgViewBanner;
+        SliderView mSliderViewBanner;
         Button mBtnOrder;
         ImageButton mImgButtonPlus, mImgButtonMinus;
 
@@ -115,7 +118,7 @@ public class ProductALaCarteAdapter extends RecyclerView.Adapter<ProductALaCarte
             mImgButtonMinus = itemView.findViewById(R.id.imgButtonMinus);
             mImgButtonPlus = itemView.findViewById(R.id.imgButtonPlus);
             mBtnOrder = itemView.findViewById(R.id.btnOrderProduct);
-            mImgViewBanner = itemView.findViewById(R.id.imgViewBanner);
+            mSliderViewBanner = itemView.findViewById(R.id.sliderViewProduct);
         }
     }
 }

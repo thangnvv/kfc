@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/_4sdp"
+    android:paddingTop="@dimen/_8sdp"
+    android:paddingRight="@dimen/_4sdp"
+    android:orientation="horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:id="@+id/textViewLineInfo"
+        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:textStyle="bold"
+        android:text="Product Count"
+        android:textColor="@color/black"
+        android:textSize="@dimen/h0" />
+
+    <View
+        android:layout_width="@dimen/_24sdp"
+        android:layout_height="1dp" />
+
+    <TextView
+        android:id="@+id/textViewLinePrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cart Total"
+        android:textColor="@color/black"
+        android:textSize="@dimen/h1"
+        android:textStyle="bold" />
+</LinearLayout>

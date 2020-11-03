@@ -17,7 +17,7 @@
         <com.smarteist.autoimageslider.SliderView
             android:id="@+id/sliderViewProduct"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_120sdp"
+            android:layout_height="@dimen/_100sdp"
             app:sliderIndicatorMarginBottom="@dimen/_20sdp"
             app:sliderIndicatorEnabled="true"
             app:sliderIndicatorGravity="center_horizontal|bottom"

@@ -8,8 +8,6 @@
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPagerMenuAlaCarte"
-        android:layout_marginRight="@dimen/_6sdp"
-        android:layout_marginLeft="@dimen/_6sdp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

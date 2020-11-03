@@ -63,7 +63,7 @@ public class CustomDialogStartOrdering extends Dialog implements View.OnClickLis
             customDialogNotiChooseCity.setCancelable(false);
             customDialogNotiChooseCity.show();
         }else {
-            mListener.onItemSelectedListener(mSpinnerCity.getSelectedItemPosition());
+            mListener.onItemSelected(mSpinnerCity.getSelectedItemPosition());
             Toast.makeText(context, "" + mSpinnerCity.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
             dismiss();
         }

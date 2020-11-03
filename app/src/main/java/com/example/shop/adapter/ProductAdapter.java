@@ -1,6 +1,7 @@
 package com.example.shop.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     private boolean expandTextStatus = false;
     OnProductClickListener onProductClickListener;
 
+    // This method set callback for fragment
     public void setOnProductClickListener(OnProductClickListener onProductClickListener){
         this.onProductClickListener = onProductClickListener;
     }
@@ -76,14 +78,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.btnOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onProductClickListener.onProductOrderClickListener(mProductList.get(position));
+                onProductClickListener.onOrderProduct(mProductList.get(position));
             }
         });
 
         holder.btnSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onProductClickListener.onProductDetailClickListener(mProductList.get(position));
+                onProductClickListener.onSettingProduct(mProductList.get(position));
+                Log.d("EEE", "At button Setting in Product Adapter");
             }
         });
 

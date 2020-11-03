@@ -10,15 +10,13 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.GridView;
-import android.widget.Toast;
 
 import com.example.shop.R;
 import com.example.shop.adapter.ProductAdapter;
 import com.example.shop.interfaces.OnProductClickListener;
 import com.example.shop.ultil.BannerImage;
 import com.example.shop.ultil.Product;
+import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;
 
@@ -48,11 +46,8 @@ public class Fried_RoastedChicken_Fragment extends Fragment implements OnProduct
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_fried_roasted_chicken_, container, false);
-
         mListProduct = new ArrayList<>();
-
         createBannerListForProduct();
         addProductInfo();
 
@@ -116,12 +111,13 @@ public class Fried_RoastedChicken_Fragment extends Fragment implements OnProduct
     }
 
     @Override
-    public void onProductDetailClickListener(Product product) {
-        Toast.makeText(getContext() , "Setting:" + product.getFoodName(), Toast.LENGTH_SHORT).show();
+    public void onSettingProduct(Product product) {
+        Hawk.put("productSetting", product);
+        onProductClickListener.onSettingProduct(product);
     }
 
     @Override
-    public void onProductOrderClickListener(Product product) {
-        onProductClickListener.onProductOrderClickListener(product);
+    public void onOrderProduct(Product product) {
+        onProductClickListener.onOrderProduct(product);
     }
 }

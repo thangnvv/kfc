@@ -69,7 +69,7 @@ public class AccountRegisterActivity extends AppCompatActivity implements View.O
         setClickAbleAcceptSignUp(acceptSignUp, acceptSignUp.indexOf("Điều"),
                 acceptSignUp.indexOf("và"), acceptSignUp.indexOf("Chính"), acceptSignUp.length());
 
-        mSignInFacebookButton.setReadPermissions(Arrays.asList("email", "public_profile"));
+        mSignInFacebookButton.setPermissions(Arrays.asList("email", "public_profile"));
         mSignInFacebookButton.setText("Đăng nhập bằng Facebook");
         mSignInFacebookButton.registerCallback(mCallBackManager, new FacebookCallback<LoginResult>() {
             @Override

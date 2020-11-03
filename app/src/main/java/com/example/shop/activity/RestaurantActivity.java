@@ -113,7 +113,7 @@ public class RestaurantActivity extends AppCompatActivity implements BottomNavig
                 chooseCityDialog.setCancelable(false);
                 chooseCityDialog.setOnItemSelectedListener(new OnSpinnerItemSelectedListener() {
                     @Override
-                    public void onItemSelectedListener(int position) {
+                    public void onItemSelected(int position) {
                         if(position != 0){
                             mTxtViewCity.setText("Tỉnh/Thành Phố" + "\n" + cityList[position]);
                             citySelected = true;
@@ -149,7 +149,7 @@ public class RestaurantActivity extends AppCompatActivity implements BottomNavig
                 chooseDistrictDialog.setCancelable(false);
                 chooseDistrictDialog.setOnItemSelectedListener(new OnSpinnerItemSelectedListener() {
                     @Override
-                    public void onItemSelectedListener(int position) {
+                    public void onItemSelected(int position) {
                         if(position != 0){
                             mTxtViewDistrict.setText(Html.fromHtml("<font color='#707070'>Quận/Huyện </font><font color='#e4002b'>*</font>") + "\n" + CreateDistrictList.getDistrict(position));
                             districtSelected = true;

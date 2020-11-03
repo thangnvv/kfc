@@ -9,25 +9,24 @@
 
     <TextView
         android:id="@+id/textViewProductInfo"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
         android:textColor="@color/black"
         android:textSize="@dimen/h0"
         android:text="Order Infomation"
-        android:layout_weight="6"
+        android:textStyle="bold"
+        android:layout_weight="1"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:paddingRight="@dimen/_30sdp"
-        />
+        android:layout_height="wrap_content"/>
+
+    <View
+        android:layout_width="@dimen/_24sdp"
+        android:layout_height="1dp"/>
 
     <TextView
         android:id="@+id/textViewProductPrice"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
+        android:textStyle="bold"
         android:textColor="@color/black"
         android:textSize="@dimen/h0"
         android:text="Order Price"
-        android:layout_weight="2"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 </LinearLayout>

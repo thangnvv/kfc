@@ -7,8 +7,8 @@
     <color name="colorAccent">#03DAC5</color>
     <color name="red">#e4002b</color>
     <color name="grey">#F1F1F1</color>
-    <color name="darkGrey">#676666</color>
+    <color name="darkGrey">#707070</color>
     <color name="backgroundFacebook">#4267B2</color>
-
+    <color name="green">#0BAD5B</color>
 
 </resources>

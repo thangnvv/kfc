@@ -18,7 +18,7 @@
         <RelativeLayout
             android:elevation="@dimen/_8sdp"
             android:layout_marginRight="@dimen/_16sdp"
-            android:background="@drawable/curved_bottom_right_header"
+            android:background="@drawable/background_curved_bottom_right"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_150sdp">
 

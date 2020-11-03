@@ -1,7 +1,6 @@
 <resources>
-    <style name="myTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
+    <style name="myTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
         <item name="colorPrimaryDark">@color/red</item>
-
     </style>
 
 
@@ -23,6 +22,18 @@
         <item name="boxBackgroundMode">filled</item>
         <item name="boxStrokeColor">@color/red</item>
         <item name="boxBackgroundColor">@color/white</item>
+    </style>
+
+    <style name="my_button" parent="Widget.AppCompat.Button">
+        <item name="android:paddingRight">@dimen/_8sdp</item>
+        <item name="android:paddingLeft">@dimen/_8sdp</item>
+        <item name="android:paddingBottom">@dimen/_4sdp</item>
+        <item name="android:paddingTop">@dimen/_4sdp</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textSize">@dimen/h0</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="background">@drawable/background_red_thick</item>
     </style>
 
 </resources>

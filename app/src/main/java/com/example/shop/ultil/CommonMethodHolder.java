@@ -1,11 +1,20 @@
 package com.example.shop.ultil;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.CountDownTimer;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.example.shop.activity.MainActivity;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.orhanobut.hawk.Hawk;
 
-public class Util {
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+
+public class CommonMethodHolder {
     public static int convertStringToInt(String price) {
         String result = "";
         for (int i = 0; i < price.length(); i++) {
@@ -45,14 +54,38 @@ public class Util {
                     }
                 }
                 if(isEnd){
-                    result = result + fullCourse.substring(i, fullCourse.length() - 3);
+//                    result = result + fullCourse.substring(i, fullCourse.length() - 3);
+                    result = result + fullCourse.substring(i);
                     break;
                 }
             }
         }
-
         return result;
+    }
 
+    public static String[] seperateAsterisk(String productName){
+        String[] result = productName.split("\\*");
+        return result;
+    }
+
+    public static String[] seperateSlash(String productName){
+        String[] result = productName.split("/");
+        return result;
+    }
+
+    public static String[] deleteNextLine(String[] strArr){
+        for(int i = 0 ; i < strArr.length; i++){
+            strArr[i] = strArr[i].replace("\n" , "");
+        }
+        return strArr;
+    }
+
+    public static void saveCart(ArrayList<Product> arrListCart, int cartCount, String cartTotal, boolean isRequireFromEditProduct, Cart cart){
+        cart.setArrListProductInCart(arrListCart);
+        cart.setCartCount(cartCount);
+        cart.setCartTotal(cartTotal);
+        cart.setRequireFromEditProduct(isRequireFromEditProduct);
+        Hawk.put("cart", cart);
     }
 
 }

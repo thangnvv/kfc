@@ -1,11 +1,9 @@
 package com.example.shop.fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
@@ -13,22 +11,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.GridView;
-import android.widget.Toast;
 
 import com.example.shop.R;
-import com.example.shop.activity.SettingProductActivity;
 import com.example.shop.adapter.ProductAdapter;
 import com.example.shop.interfaces.OnProductClickListener;
 import com.example.shop.ultil.BannerImage;
 import com.example.shop.ultil.Product;
-import com.example.shop.ultil.Util;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;
-
-import javax.security.auth.callback.Callback;
 
 
 public class For_One_Fragment extends Fragment implements OnProductClickListener{
@@ -59,7 +50,6 @@ public class For_One_Fragment extends Fragment implements OnProductClickListener
         View view = inflater.inflate(R.layout.fragment_combo_one_person, container, false);
 
         mListProduct = new ArrayList<>();
-
         createBannerListForProduct();
         addProductInfo();
 
@@ -123,13 +113,14 @@ public class For_One_Fragment extends Fragment implements OnProductClickListener
     }
 
     @Override
-    public void onProductDetailClickListener(Product product) {
+    public void onSettingProduct(Product product) {
         Hawk.put("productSetting", product);
-        startActivity(new Intent(context , SettingProductActivity.class));
+        onProductClickListener.onSettingProduct(product);
     }
 
     @Override
-    public void onProductOrderClickListener(Product product) {
-        onProductClickListener.onProductOrderClickListener(product);
+    public void onOrderProduct(Product product) {
+        onProductClickListener.onOrderProduct(product);
     }
+
 }

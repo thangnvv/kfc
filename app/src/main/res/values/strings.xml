@@ -8,6 +8,12 @@
     <string name="facebook_app_id">253853735928879</string>
     <string name="fb_login_protocol_scheme">fb253853735928879</string>
 
+    <string name="addToCart">THÊM VÀO GIỎ HÀNG</string>
+    <string name="returnMenu">QUAY LẠI THỰC ĐƠN</string>
+    <string name="returnCart">QUAY LẠI GIỎ HÀNG</string>
+    <string name= "updateCart">CẬP NHẬT</string>
+
+
     <string name="registerNotice">
         <![CDATA[
             <p><font color="#000>(</font><font color="#e4002b">*</font><font color="#000000>) Thông tin cần thiết</font>

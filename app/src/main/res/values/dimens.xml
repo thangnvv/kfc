@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="margin_left_parent">@dimen/_12sdp</dimen>
-    <dimen name="margin_right_parent">@dimen/_12sdp</dimen>
-    <dimen name="h0">@dimen/_14sdp</dimen>
-    <dimen name="h1">@dimen/_16sdp</dimen>
-    <dimen name="h2">@dimen/_18sdp</dimen>
-    <dimen name="h3">@dimen/_20sdp</dimen>
-    <dimen name="h4">@dimen/_22sdp</dimen>
-    <dimen name="h5">@dimen/_24sdp</dimen>
-    <dimen name="h6">@dimen/_26sdp</dimen>
-    <dimen name="nameRestaurant">@dimen/_12sdp</dimen>
-    <dimen name="addressRestaurant">@dimen/_10sdp</dimen>
-</resources>
+    <dimen name="margin_left_parent">@dimen/_8sdp</dimen>
+    <dimen name="margin_right_parent">@dimen/_8sdp</dimen>
+    <dimen name="h0">@dimen/_14ssp</dimen>
+    <dimen name="h1">@dimen/_16ssp</dimen>
+    <dimen name="h2">@dimen/_18ssp</dimen>
+    <dimen name="h3">@dimen/_20ssp</dimen>
+    <dimen name="h4">@dimen/_22ssp</dimen>
+    <dimen name="h5">@dimen/_24ssp</dimen>
+    <dimen name="h6">@dimen/_26ssp</dimen>
+    <dimen name="nameRestaurant">@dimen/_12ssp</dimen>
+    <dimen name="addressRestaurant">@dimen/_10ssp</dimen>
+    </resources>

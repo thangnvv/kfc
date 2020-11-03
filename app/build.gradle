@@ -47,9 +47,9 @@ dependencies {
     implementation "androidx.cardview:cardview:1.0.0"
     implementation 'com.google.android.gms:play-services-maps:10.0.1'
     //TabLayout
-    implementation 'com.android.support:design:28.0.0'
+//    implementation 'com.android.support:design:28.0.0'
     //View pager
-    implementation 'com.android.support:support-v4:23.0.1'
+//    implementation 'com.android.support:support-v4:23.0.1'
     //Auto slide banner main
     implementation 'com.github.smarteist:autoimageslider:1.3.9-appcompat'
     //Glide.with()
@@ -58,6 +58,8 @@ dependencies {
     implementation "androidx.coordinatorlayout:coordinatorlayout:1.1.0"
     // sdp
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
+    // ssp
+    implementation 'com.intuit.ssp:ssp-android:1.0.6'
     // Hawk librabry for save information in app
     implementation "com.orhanobut:hawk:2.0.1"
     // Realtime firebase

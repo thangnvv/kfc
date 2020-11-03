@@ -22,7 +22,7 @@
                 android:orientation="vertical">
 
                 <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_left_parent"
                     android:layout_marginTop="@dimen/_16sdp"
@@ -31,8 +31,8 @@
 
                     <com.smarteist.autoimageslider.SliderView
                         android:id="@+id/imageSlider"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_150sdp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_210sdp"
                         app:sliderAnimationDuration="600"
                         app:sliderAutoCycleDirection="back_and_forth"
                         app:sliderAutoCycleEnabled="true"
@@ -59,8 +59,9 @@
 
                     <TextView
                         android:id="@+id/textViewProductName"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:text="Product Name"
                         android:textAllCaps="true"
                         android:textColor="@color/black"
@@ -68,14 +69,14 @@
                         android:textStyle="bold" />
 
                     <View
-                        android:layout_width="0dp"
-                        android:layout_height="1dp"
-                        android:layout_weight="1" />
+                        android:layout_width="20dp"
+                        android:layout_height="1dp" />
 
                     <TextView
                         android:id="@+id/textViewProductPrice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/_8sdp"
                         android:text="Product Price"
                         android:textColor="@color/black"
                         android:textSize="@dimen/h1"
@@ -98,10 +99,17 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/recyclerViewProductInfo"
+                        <androidx.core.widget.NestedScrollView
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content">
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/recyclerViewProductInfo"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+
+                        </androidx.core.widget.NestedScrollView>
+
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -112,7 +120,7 @@
                             android:orientation="horizontal">
 
                             <ImageButton
-                                android:id="@+id/imageButtonSingleProductMinus"
+                                android:id="@+id/imageButtonProductMinus"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/margin_left_parent"
@@ -120,7 +128,7 @@
                                 android:src="@drawable/minus" />
 
                             <TextView
-                                android:id="@+id/textViewSingleProductPortion"
+                                android:id="@+id/textViewProductPortion"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/_16sdp"
@@ -131,65 +139,83 @@
                                 android:textStyle="bold" />
 
                             <ImageButton
-                                android:id="@+id/imageButtonSingleProductPlus"
+                                android:id="@+id/imageButtonProductPlus"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:background="@android:color/transparent"
                                 android:src="@drawable/plus" />
 
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="1dp"
+                                android:layout_weight="1" />
+
+                            <TextView
+                                android:id="@+id/textViewProductTotalPrice"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Total Price"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/h2"
+                                android:textStyle="bold"
+                                android:visibility="visible" />
                         </LinearLayout>
                     </LinearLayout>
 
-
                 </androidx.cardview.widget.CardView>
 
-                <TextView
+                <LinearLayout
+                    android:id="@+id/llAddsOnAndGoesGreate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_left_parent"
-                    android:layout_marginTop="@dimen/_16sdp"
-                    android:layout_marginRight="@dimen/margin_right_parent"
-                    android:text="Add-Ons:"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/h2"
-                    android:textStyle="bold" />
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_left_parent"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:layout_marginRight="@dimen/margin_right_parent"
+                        android:text="Add-Ons:"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/h2"
+                        android:textStyle="bold" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerViewAddOns"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_left_parent"
-                    android:layout_marginTop="@dimen/_12sdp"
-                    android:layout_marginRight="@dimen/margin_right_parent" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerViewAddOns"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_left_parent"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:layout_marginRight="@dimen/margin_right_parent" />
 
-                <TextView
-                    android:id="@+id/textViewGoGreatWith"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_left_parent"
-                    android:layout_marginTop="@dimen/_16sdp"
-                    android:layout_marginRight="@dimen/margin_right_parent"
-                    android:text="Sẽ tuyệt hơn nếu bạn chọn thêm:"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/h2"
-                    android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/textViewGoGreatWith"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_left_parent"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:layout_marginRight="@dimen/margin_right_parent"
+                        android:text="Sẽ tuyệt hơn nếu bạn chọn thêm:"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/h2"
+                        android:textStyle="bold" />
 
-                <include
-                    layout="@layout/item_add_ons"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_left_parent"
-                    android:layout_marginTop="@dimen/_12sdp"
-                    android:layout_marginRight="@dimen/margin_right_parent"
-                    android:layout_marginBottom="@dimen/_12sdp" />
+                    <include
+                        layout="@layout/item_goes_greate_with"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_left_parent"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:layout_marginRight="@dimen/margin_right_parent"
+                        android:layout_marginBottom="@dimen/_12sdp" />
 
+                </LinearLayout>
             </LinearLayout>
-
         </ScrollView>
-
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayoutFromMain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -201,29 +227,69 @@
         <Button
             android:id="@+id/buttonReturnMenu"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/_52sdp"
             android:layout_marginRight="@dimen/_4sdp"
             android:layout_weight="1"
             android:background="@drawable/background_black_thick"
-            android:paddingTop="@dimen/_8sdp"
-            android:paddingBottom="@dimen/_8sdp"
-            android:text="QUAY LẠI THỰC ĐƠN"
+            android:padding="@dimen/_8sdp"
+            android:text="@string/returnMenu"
             android:textColor="@color/black"
-            android:textSize="@dimen/h1"
+            android:textSize="@dimen/h0"
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/buttonPay"
+            android:id="@+id/buttonAddToCart"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/_52sdp"
+            android:layout_gravity="center"
             android:layout_marginLeft="@dimen/_4sdp"
             android:layout_weight="1"
             android:background="@drawable/background_red_thick"
             android:paddingTop="@dimen/_8sdp"
             android:paddingBottom="@dimen/_8sdp"
-            android:text="THÊM VÀO GIỎ HÀNG"
+            android:text="@string/addToCart"
             android:textColor="@color/white"
-            android:textSize="@dimen/h1"
+            android:textSize="@dimen/_13sdp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutFromCart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:elevation="@dimen/_8sdp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:padding="@dimen/_12sdp">
+
+        <Button
+            android:id="@+id/buttonReturnCart"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_52sdp"
+            android:layout_marginRight="@dimen/_4sdp"
+            android:layout_weight="1"
+            android:background="@drawable/background_black_thick"
+            android:padding="@dimen/_8sdp"
+            android:text="@string/returnCart"
+            android:textColor="@color/black"
+            android:textSize="@dimen/h0"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/buttonUpdateCart"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_52sdp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/_4sdp"
+            android:layout_weight="1"
+            android:background="@drawable/background_red_thick"
+            android:paddingTop="@dimen/_8sdp"
+            android:paddingBottom="@dimen/_8sdp"
+            android:text="@string/updateCart"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_13sdp"
             android:textStyle="bold" />
 
     </LinearLayout>

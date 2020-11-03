@@ -5,9 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.GridView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,7 +15,7 @@ import com.example.shop.adapter.ProductAdapter;
 import com.example.shop.interfaces.OnProductClickListener;
 import com.example.shop.ultil.BannerImage;
 import com.example.shop.ultil.Product;
-import com.google.android.material.bottomnavigation.BottomNavigationItemView;
+import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;
 
@@ -142,12 +139,13 @@ public class Rice_Burger_Fragment extends Fragment implements OnProductClickList
     }
 
     @Override
-    public void onProductDetailClickListener(Product product) {
-        Toast.makeText(getContext() , "Setting:" + product.getFoodName(), Toast.LENGTH_SHORT).show();
+    public void onSettingProduct(Product product) {
+        Hawk.put("productSetting", product);
+        onProductClickListener.onSettingProduct(product);
     }
 
     @Override
-    public void onProductOrderClickListener(Product product) {
-        onProductClickListener.onProductOrderClickListener(product);
+    public void onOrderProduct(Product product) {
+        onProductClickListener.onOrderProduct(product);
     }
 }

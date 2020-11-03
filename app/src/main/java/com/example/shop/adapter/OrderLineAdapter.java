@@ -11,12 +11,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shop.R;
 import com.example.shop.ultil.Product;
+import com.example.shop.ultil.ProductALaCarte;
 
 import java.util.ArrayList;
 
 public class OrderLineAdapter extends RecyclerView.Adapter<OrderLineAdapter.ViewHolder>{
 
-    ArrayList<Product> mProductArrList;
+    ArrayList mProductArrList;
     Context context;
 
     public OrderLineAdapter(ArrayList<Product> mProductArrList, Context context) {
@@ -32,7 +33,7 @@ public class OrderLineAdapter extends RecyclerView.Adapter<OrderLineAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Product product = mProductArrList.get(position);
+        Product product = (Product) mProductArrList.get(position);
         holder.mTxtViewProductInfo.setText(product.getPortion() + "x " + product.getFoodName());
         holder.mTxtViewProductPrice.setText(product.getFoodPrice());
     }
