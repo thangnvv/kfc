@@ -3,6 +3,8 @@ package com.example.shop.fragment;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
@@ -17,6 +19,14 @@ import com.example.shop.adapter.ProductAdapter;
 import com.example.shop.interfaces.OnProductClickListener;
 import com.example.shop.ultil.BannerImage;
 import com.example.shop.ultil.Product;
+import com.example.shop.ultil.ProductALaCarte;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;
@@ -30,6 +40,38 @@ public class For_One_Fragment extends Fragment implements OnProductClickListener
     ArrayList<BannerImage> ComboChickenA, ComboChickenB, ComboChickenC, ComboChickenD, ComboRiceA, ComboRiceB, ComboRiceC;
     OnProductClickListener onProductClickListener;
     Context context;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference().child("product/for_one_combo");
+
+        myRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                ProductALaCarte product = snapshot.getValue(ProductALaCarte.class);
+                Log.d("HHH", product.getFood_name() + "\n");
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+    }
 
     public For_One_Fragment(){
         // Required empty public constructor

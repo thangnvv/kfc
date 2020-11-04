@@ -1,40 +1,56 @@
 package com.example.shop.ultil;
 
+import java.util.ArrayList;
+
 public class ProductALaCarte {
-    private String urlImageBanner;
-    private String foodName;
-    private String foodPrice;
+    private ArrayList<String> urls_banner;
+    private String food_name;
+    private String food_price;
+    private String food_descript;
     private int portion;
 
-    public ProductALaCarte(String urlImageBanner, String foodName, String foodPrice, int portion) {
-        this.urlImageBanner = urlImageBanner;
-        this.foodName = foodName;
-        this.foodPrice = foodPrice;
+    public ProductALaCarte(){
+
+    }
+
+    public ProductALaCarte(ArrayList<String> urls_banner, String food_name, String food_price, String food_descript, int portion) {
+        this.urls_banner = urls_banner;
+        this.food_name = food_name;
+        this.food_price = food_price;
+        this.food_descript = food_descript;
         this.portion = portion;
     }
 
-    public String getUrlImageBanner() {
-        return urlImageBanner;
+    public ArrayList<String> getUrls_banner() {
+        return urls_banner;
     }
 
-    public void setUrlImageBanner(String urlImageBanner) {
-        this.urlImageBanner = urlImageBanner;
+    public void setUrls_banner(ArrayList<String> urls_banner) {
+        this.urls_banner = urls_banner;
     }
 
-    public String getFoodName() {
-        return foodName;
+    public String getFood_name() {
+        return food_name;
     }
 
-    public void setFoodName(String foodName) {
-        this.foodName = foodName;
+    public void setFood_name(String food_name) {
+        this.food_name = food_name;
     }
 
-    public String getFoodPrice() {
-        return foodPrice;
+    public String getFood_price() {
+        return food_price;
     }
 
-    public void setFoodPrice(String foodPrice) {
-        this.foodPrice = foodPrice;
+    public void setFood_price(String food_price) {
+        this.food_price = food_price;
+    }
+
+    public String getFood_descript() {
+        return food_descript;
+    }
+
+    public void setFood_descript(String food_descript) {
+        this.food_descript = food_descript;
     }
 
     public int getPortion() {

@@ -45,6 +45,10 @@ import com.example.shop.ultil.BannerImage;
 import com.example.shop.ultil.noneAllowSwipeViewPager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.orhanobut.hawk.Hawk;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
@@ -92,75 +96,16 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private boolean doubleBackToExitPressedOnce;
     private Handler mHandlerQuiteApp = new Handler();
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (cart.isRequireFromEditProduct()) {
-            CommonMethodHolder.saveCart(mProductAddedToCartArrList, cartCount,
-                    mTxtViewCartTotal.getText().toString(), false, cart);
-        }
-        Log.d("EEE", "At Pause Main");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        CommonMethodHolder.saveCart(mProductAddedToCartArrList, cartCount,
-                mTxtViewCartTotal.getText().toString(), false, cart);
-//        Log.d("EEE", "At Stop Main");
-        Log.d("EEE", "At Stop Main: " + mTxtViewCartTotal.getText().toString() + "; " + mTxtViewCartTotal.getText());
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.d("EEE", "At Resume Main");
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Log.d("EEE", "At Main Restart");
-        // Check if the cart has been change and set up cart layout
-        cart = Hawk.get("cart");
-        if (cart != null) {
-            setUpCart();
-            if(Hawk.get("isKeepShopping")!=null){
-                boolean isKeepShopping = Hawk.get("isKeepShopping");
-                if(isKeepShopping && atSettingProduct){
-                    hideSettingProductFragment();
-                }
-            }
-        }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.d("EEE", "At Start Main");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-//        if(cart.isRequireFromEditProduct()){
-//            cart.setRequireFromEditProduct(false);
-//            CommonMethodHolder.saveCart();
-//        }
-        CommonMethodHolder.saveCart(mProductAddedToCartArrList, cartCount,
-                mTxtViewCartTotal.getText().toString() , cart.isRequireFromEditProduct(), cart);
-        Log.d("EEE", "At Destroy Main: " + mTxtViewCartTotal.getText().toString() + "; " + mTxtViewCartTotal.getText());
-
-        if (mHandlerQuiteApp != null) {
-            mHandlerQuiteApp.removeCallbacks(mRunnable);
-        }
-    }
+    private StorageReference mStorageRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mStorageRef = FirebaseStorage.getInstance().getReference();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference().child("product/for_one_combo");
+
         initView();
         createCartInstance();
 //        Hawk.deleteAll();
@@ -169,7 +114,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         setViewOnClick();
         //If create not from edit product
         if (!cart.isRequireFromEditProduct()) {
-            Log.d("EEE", "At Main Create is not require edit product");
             setUpSliderBanner();
             setUpNavigationView();
             setUpViewPagerALaCarte();
@@ -189,7 +133,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
         // If main is create from edit product
         else {
-            Log.d("EEE", "At Main create is required from edit");
             // get the last position of tab
             if (Hawk.get("mainTabPosition") != null) {
                 mainTabPosition = Hawk.get("mainTabPosition");
@@ -200,7 +143,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             showSettingProduct();
         }
     }
-
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
@@ -428,8 +370,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     }
 
-
-
     @Override
     public void onAttachFragment(@NonNull Fragment fragment) {
         super.onAttachFragment(fragment);
@@ -628,4 +568,45 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (cart.isRequireFromEditProduct()) {
+            CommonMethodHolder.saveCart(mProductAddedToCartArrList, cartCount,
+                    mTxtViewCartTotal.getText().toString(), false, cart);
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        CommonMethodHolder.saveCart(mProductAddedToCartArrList, cartCount,
+                mTxtViewCartTotal.getText().toString(), false, cart);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        // Check if the cart has been change and set up cart layout
+        cart = Hawk.get("cart");
+        if (cart != null) {
+            setUpCart();
+            if(Hawk.get("isKeepShopping")!=null){
+                boolean isKeepShopping = Hawk.get("isKeepShopping");
+                if(isKeepShopping && atSettingProduct){
+                    hideSettingProductFragment();
+                }
+            }
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        CommonMethodHolder.saveCart(mProductAddedToCartArrList, cartCount,
+                mTxtViewCartTotal.getText().toString() , cart.isRequireFromEditProduct(), cart);
+        if (mHandlerQuiteApp != null) {
+            mHandlerQuiteApp.removeCallbacks(mRunnable);
+        }
+    }
 }
