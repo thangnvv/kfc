@@ -20,7 +20,6 @@ import com.example.shop.adapter.AdapterForSlider;
 import com.example.shop.adapter.AddsOnAdapter;
 import com.example.shop.adapter.SeperateProductAdapter;
 import com.example.shop.interfaces.OnProductClickListener;
-import com.example.shop.ultil.BannerImage;
 import com.example.shop.ultil.Product;
 import com.example.shop.ultil.ProductSeperated;
 import com.example.shop.ultil.CommonMethodHolder;
@@ -54,14 +53,14 @@ public class Setting_Product_Fragment extends Fragment implements View.OnClickLi
     TextView mTxtViewGoesGreateWithName, mTxtViewGoesGreateWithPrice, mTxtViewGoesGreateWithTotalPrice, mTxtViewGoesGreateWithPortion;
     ImageButton mImgButtonGoesGreateWithMinus, mImgButtonGoesGreateWithPlus;
     Product productGoesGreateWith;
-    ArrayList<BannerImage> ProductGoesGreateWithBanner;
+    ArrayList<String> ProductGoesGreateWithBanner;
 
     // Adds On
     LinearLayoutManager mLLManagerAddsOn;
     ArrayList<Product> mArrListAddsOn;
     AddsOnAdapter addsOnAdapter;
     RecyclerView mRclViewAddsOn;
-    ArrayList<BannerImage> FriesAndPepsiAddsOnBanner, CheeseAddsOnBanner;
+    ArrayList<String> FriesAndPepsiAddsOnBanner, CheeseAddsOnBanner;
     OnProductClickListener onProductClickListener;
 
     ArrayList<Product> mProductAddsOnForAddingToCartList;
@@ -99,7 +98,7 @@ public class Setting_Product_Fragment extends Fragment implements View.OnClickLi
                 if (productSetting.getPortion() > 1) {
                     productSetting.setPortion(productSetting.getPortion() - 1);
                     mTxtViewProductPortion.setText((productSetting.getPortion() + ""));
-                    totalProductPrice = totalProductPrice - CommonMethodHolder.convertStringToInt(productSetting.getFoodPrice());
+                    totalProductPrice = totalProductPrice - CommonMethodHolder.convertStringToInt(productSetting.getFood_price());
                     mTxtViewProductTotalPrice.setText(CommonMethodHolder.convertIntToString(totalProductPrice));
                     updateButton();
                 }
@@ -107,7 +106,7 @@ public class Setting_Product_Fragment extends Fragment implements View.OnClickLi
             case R.id.imageButtonProductPlus:
                 productSetting.setPortion(productSetting.getPortion() + 1);
                 mTxtViewProductPortion.setText((productSetting.getPortion() + ""));
-                totalProductPrice = totalProductPrice + CommonMethodHolder.convertStringToInt(productSetting.getFoodPrice());
+                totalProductPrice = totalProductPrice + CommonMethodHolder.convertStringToInt(productSetting.getFood_price());
                 mTxtViewProductTotalPrice.setText(CommonMethodHolder.convertIntToString(totalProductPrice));
                 updateButton();
                 break;
@@ -115,7 +114,7 @@ public class Setting_Product_Fragment extends Fragment implements View.OnClickLi
                 if (productGoesGreateWith.getPortion() > 0) {
                     productGoesGreateWith.setPortion(productGoesGreateWith.getPortion() - 1);
                     mTxtViewGoesGreateWithPortion.setText((productGoesGreateWith.getPortion() + ""));
-                    totalGoesGreateWithPrice = totalGoesGreateWithPrice - CommonMethodHolder.convertStringToInt(productGoesGreateWith.getFoodPrice());
+                    totalGoesGreateWithPrice = totalGoesGreateWithPrice - CommonMethodHolder.convertStringToInt(productGoesGreateWith.getFood_price());
                     mTxtViewGoesGreateWithTotalPrice.setText(CommonMethodHolder.convertIntToString(totalGoesGreateWithPrice));
                     updateButton();
                     if (productGoesGreateWith.getPortion() == 0) {
@@ -127,7 +126,7 @@ public class Setting_Product_Fragment extends Fragment implements View.OnClickLi
                 productGoesGreateWith.setPortion(productGoesGreateWith.getPortion() + 1);
                 mTxtViewGoesGreateWithPortion.setText((productGoesGreateWith.getPortion() + ""));
                 if (productGoesGreateWith.getPortion() > 0) {
-                    totalGoesGreateWithPrice = totalGoesGreateWithPrice + CommonMethodHolder.convertStringToInt(productGoesGreateWith.getFoodPrice()) ;
+                    totalGoesGreateWithPrice = totalGoesGreateWithPrice + CommonMethodHolder.convertStringToInt(productGoesGreateWith.getFood_price()) ;
                     mTxtViewGoesGreateWithTotalPrice.setText(CommonMethodHolder.convertIntToString(totalGoesGreateWithPrice));
                     mTxtViewGoesGreateWithTotalPrice.setVisibility(View.VISIBLE);
                     updateButton();
@@ -183,21 +182,21 @@ public class Setting_Product_Fragment extends Fragment implements View.OnClickLi
     private void settingLayout() {
         Log.d("EEE", "At Setting Layout In Setting Product Fragment");
         productSetting = Hawk.get("productSetting");
-        mAdapterSlider = new AdapterForSlider(getActivity(), productSetting.getUrlImageBanner());
+        mAdapterSlider = new AdapterForSlider(getActivity(), productSetting.getUrls_banner());
         mSliderView.setSliderAdapter(mAdapterSlider);
         mTxtViewProductPortion.setText((productSetting.getPortion() + ""));
-        mTxtViewProductName.setText(productSetting.getFoodName());
-        mTxtViewProductPrice.setText(productSetting.getFoodPrice());
-        totalProductPrice = CommonMethodHolder.convertStringToInt(productSetting.getFoodPrice())*productSetting.getPortion();
+        mTxtViewProductName.setText(productSetting.getFood_name());
+        mTxtViewProductPrice.setText(productSetting.getFood_price());
+        totalProductPrice = CommonMethodHolder.convertStringToInt(productSetting.getFood_price())*productSetting.getPortion();
         mTxtViewProductTotalPrice.setText(CommonMethodHolder.convertIntToString(totalProductPrice));
 
         // Set up Adds On Product
         mArrListAddsOn = new ArrayList<>();
         FriesAndPepsiAddsOnBanner = new ArrayList<>();
-        FriesAndPepsiAddsOnBanner.add(new BannerImage("https://kfcvietnam.com.vn/uploads/product/e9d283cd9e2bcdb3ad4c39ceb9a4e132.png"));
+        FriesAndPepsiAddsOnBanner.add("https://kfcvietnam.com.vn/uploads/product/e9d283cd9e2bcdb3ad4c39ceb9a4e132.png");
         mArrListAddsOn.add(new Product(FriesAndPepsiAddsOnBanner, "1 Khoai Tây Chiên (Vừa) & 1 Pepsi Lon", "25.000đ","",  0));
         CheeseAddsOnBanner = new ArrayList<>();
-        CheeseAddsOnBanner.add(new BannerImage("https://kfcvietnam.com.vn/uploads/product/ebc6cedf8ce80d2385be172b893ddf04.jpg"));
+        CheeseAddsOnBanner.add("https://kfcvietnam.com.vn/uploads/product/ebc6cedf8ce80d2385be172b893ddf04.jpg");
 
         setDefaultPortion();
         changeLayoutBaseOnCaller();
@@ -213,7 +212,7 @@ public class Setting_Product_Fragment extends Fragment implements View.OnClickLi
     private void setDefaultPortion() {
         // Set default for portions
         mArrListName = new ArrayList<>();
-        String[] seperateLineResult = CommonMethodHolder.seperateAsterisk(productSetting.getFoodDescrip());
+        String[] seperateLineResult = CommonMethodHolder.seperateAsterisk(productSetting.getFood_descript());
 
         seperateLineResult = CommonMethodHolder.deleteNextLine(seperateLineResult);
         for (int i = 1; i < seperateLineResult.length; i++) {
@@ -240,14 +239,14 @@ public class Setting_Product_Fragment extends Fragment implements View.OnClickLi
         addsOnAdapter.setOnAddsOnClickListener(new AddsOnAdapter.OnAddsOnClickListener() {
             @Override
             public void onMinusClick(Product productALaCarte) {
-                totalAddsOnPrice = totalAddsOnPrice - CommonMethodHolder.convertStringToInt(productALaCarte.getFoodPrice());
+                totalAddsOnPrice = totalAddsOnPrice - CommonMethodHolder.convertStringToInt(productALaCarte.getFood_price());
                 updateButton();
                 updatePortion(productALaCarte);
             }
 
             @Override
             public void onPlusClick(Product productALaCarte) {
-                totalAddsOnPrice = totalAddsOnPrice + CommonMethodHolder.convertStringToInt(productALaCarte.getFoodPrice());
+                totalAddsOnPrice = totalAddsOnPrice + CommonMethodHolder.convertStringToInt(productALaCarte.getFood_price());
                 updatePortion(productALaCarte);
                 updateButton();
             }
@@ -262,7 +261,7 @@ public class Setting_Product_Fragment extends Fragment implements View.OnClickLi
             mLLFromMain.setVisibility(View.GONE);
             mLLAddsOnAndGoesGreateWith.setVisibility(View.GONE);
         }else{
-            mBtnAddToCart.setText((getResources().getString(R.string.addToCart) + "\n" + productSetting.getFoodPrice()));
+            mBtnAddToCart.setText((getResources().getString(R.string.addToCart) + "\n" + productSetting.getFood_price()));
             mBtnReturnMenu.setText(getResources().getString(R.string.returnMenu));
             mLLFromMain.setVisibility(View.VISIBLE);
             mLLFromCart.setVisibility(View.GONE);
@@ -276,7 +275,7 @@ public class Setting_Product_Fragment extends Fragment implements View.OnClickLi
     private void setUpGoesGreateWithProduct() {
         // Goes Greate With Product
         ProductGoesGreateWithBanner = new ArrayList<>();
-        ProductGoesGreateWithBanner.add(new BannerImage("https://kfcvietnam.com.vn/uploads/product/be95ff8508fa5aacb78baba4a6b644c1.jpg"));
+        ProductGoesGreateWithBanner.add("https://kfcvietnam.com.vn/uploads/product/be95ff8508fa5aacb78baba4a6b644c1.jpg");
         productGoesGreateWith = new Product(ProductGoesGreateWithBanner, "Bánh Trứng (4 cái)", "50.000đ","", 0);
     }
 
@@ -316,7 +315,7 @@ public class Setting_Product_Fragment extends Fragment implements View.OnClickLi
 
     public void updatePortion(Product productAlaCarte){
         for(int i = 0 ; i< mArrListAddsOn.size() ; i++){
-            if(mArrListAddsOn.get(i).getFoodName().equals(productAlaCarte.getFoodName())){
+            if(mArrListAddsOn.get(i).getFood_name().equals(productAlaCarte.getFood_name())){
                 mArrListAddsOn.get(i).setPortion(productAlaCarte.getPortion());
                 break;
             }

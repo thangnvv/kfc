@@ -1,7 +1,6 @@
 package com.example.shop.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,20 +47,20 @@ public class SingleProductAdapter extends RecyclerView.Adapter<SingleProductAdap
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         final Product product = mProductArrList.get(position);
-        holder.mTxtViewProductName.setText(product.getFoodName());
-        holder.mTxtViewProductInfo.setText(product.getFoodDescrip());
+        holder.mTxtViewProductName.setText(product.getFood_name());
+        holder.mTxtViewProductInfo.setText(product.getFood_descript());
         holder.mTxtViewPortion.setText(product.getPortion() + "");
         if(product.getPortion() > 1){
-            foodPrice = calculateFoodPrice(product.getFoodPrice(), product.getPortion());
+            foodPrice = calculateFoodPrice(product.getFood_price(), product.getPortion());
             holder.mTxtViewProductPrice.setText(foodPrice);
         }else{
-            holder.mTxtViewProductPrice.setText(product.getFoodPrice());
+            holder.mTxtViewProductPrice.setText(product.getFood_price());
         }
         holder.mImgButtonPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 product.setPortion(product.getPortion() + 1);
-                foodPrice = calculateFoodPrice(product.getFoodPrice(), product.getPortion());
+                foodPrice = calculateFoodPrice(product.getFood_price(), product.getPortion());
                 holder.mTxtViewPortion.setText(product.getPortion() + "");
                 holder.mTxtViewProductPrice.setText(foodPrice);
                 onViewClickListener.onPlusPortion(product);
@@ -72,7 +71,7 @@ public class SingleProductAdapter extends RecyclerView.Adapter<SingleProductAdap
             public void onClick(View v) {
                 if(product.getPortion() > 1){
                     product.setPortion(product.getPortion() - 1);
-                    foodPrice = calculateFoodPrice(product.getFoodPrice(), product.getPortion());
+                    foodPrice = calculateFoodPrice(product.getFood_price(), product.getPortion());
                     holder.mTxtViewPortion.setText(product.getPortion() + "");
                     holder.mTxtViewProductPrice.setText(foodPrice);
                     onViewClickListener.onMinusPortion(product);

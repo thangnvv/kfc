@@ -4,18 +4,54 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Product {
-    private ArrayList<BannerImage> urlImageBanner;
-    private String foodName;
-    private String foodPrice;
-    private String foodDescrip;
+    private ArrayList<String> urls_banner;
+    private String food_name;
+    private String food_price;
+    private String food_descript;
     private int portion;
 
-    public Product(ArrayList<BannerImage> urlImageBanner, String foodName, String foodPrice, String foodDescrip, int portion) {
-        this.urlImageBanner = urlImageBanner;
-        this.foodName = foodName;
-        this.foodPrice = foodPrice;
-        this.foodDescrip = foodDescrip;
+    public Product(){
+
+    }
+
+    public Product(ArrayList<String> urls_banner, String food_name, String food_price, String food_descript, int portion) {
+        this.urls_banner = urls_banner;
+        this.food_name = food_name;
+        this.food_price = food_price;
+        this.food_descript = food_descript;
         this.portion = portion;
+    }
+
+    public ArrayList<String> getUrls_banner() {
+        return urls_banner;
+    }
+
+    public void setUrls_banner(ArrayList<String> urls_banner) {
+        this.urls_banner = urls_banner;
+    }
+
+    public String getFood_name() {
+        return food_name;
+    }
+
+    public void setFood_name(String food_name) {
+        this.food_name = food_name;
+    }
+
+    public String getFood_price() {
+        return food_price;
+    }
+
+    public void setFood_price(String food_price) {
+        this.food_price = food_price;
+    }
+
+    public String getFood_descript() {
+        return food_descript;
+    }
+
+    public void setFood_descript(String food_descript) {
+        this.food_descript = food_descript;
     }
 
     public int getPortion() {
@@ -24,37 +60,5 @@ public class Product {
 
     public void setPortion(int portion) {
         this.portion = portion;
-    }
-
-    public List<BannerImage> getUrlImageBanner() {
-        return urlImageBanner;
-    }
-
-    public void setUrlImageBanner(ArrayList<BannerImage> urlImageBanner) {
-        this.urlImageBanner = urlImageBanner;
-    }
-
-    public String getFoodName() {
-        return foodName;
-    }
-
-    public void setFoodName(String foodName) {
-        this.foodName = foodName;
-    }
-
-    public String getFoodPrice() {
-        return foodPrice;
-    }
-
-    public void setFoodPrice(String foodPrice) {
-        this.foodPrice = foodPrice;
-    }
-
-    public String getFoodDescrip() {
-        return foodDescrip;
-    }
-
-    public void setFoodDescrip(String foodDescrip) {
-        this.foodDescrip = foodDescrip;
     }
 }

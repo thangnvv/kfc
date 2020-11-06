@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,7 +15,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shop.R;
 import com.example.shop.interfaces.OnProductClickListener;
+import com.example.shop.ultil.DownloadImageTask;
 import com.example.shop.ultil.Product;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;
@@ -24,6 +28,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     private Context context;
     private boolean expandTextStatus = false;
     OnProductClickListener onProductClickListener;
+    private StorageReference mStorageRef;
 
     // This method set callback for fragment
     public void setOnProductClickListener(OnProductClickListener onProductClickListener){
@@ -33,6 +38,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     public ProductAdapter(ArrayList<Product> mProductList, Context context) {
         this.mProductList = mProductList;
         this.context = context;
+        mStorageRef = FirebaseStorage.getInstance().getReference();
     }
 
     public Context getContext() {
@@ -52,13 +58,20 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         Product product = mProductList.get(position);
-        AdapterForSlider adapter = new AdapterForSlider(getContext(), product.getUrlImageBanner() );
-
+        AdapterForSlider adapter = new AdapterForSlider(getContext(), product.getUrls_banner() );
+        if(product.getUrls_banner().size() == 1){
+            holder.sliderView.setVisibility(View.GONE);
+            holder.imgViewProductBanner.setVisibility(View.VISIBLE);
+            new DownloadImageTask(holder.imgViewProductBanner).execute(product.getUrls_banner().get(0));
+        }else{
+            holder.imgViewProductBanner.setVisibility(View.GONE);
+            holder.sliderView.setVisibility(View.VISIBLE);
+        }
         holder.sliderView.setSliderAdapter(adapter);
 
-        holder.txtViewProductName.setText(product.getFoodName());
-        holder.txtViewProductPrice.setText(product.getFoodPrice());
-        holder.txtViewProductDescript.setText(product.getFoodDescrip());
+        holder.txtViewProductName.setText(product.getFood_name());
+        holder.txtViewProductPrice.setText(product.getFood_price());
+        holder.txtViewProductDescript.setText(product.getFood_descript());
 
         holder.btnExpandText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,7 +99,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             @Override
             public void onClick(View v) {
                 onProductClickListener.onSettingProduct(mProductList.get(position));
-                Log.d("EEE", "At button Setting in Product Adapter");
             }
         });
 
@@ -104,6 +116,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         SliderView sliderView ;
+        ImageView imgViewProductBanner;
         TextView txtViewProductName, txtViewProductPrice, txtViewProductDescript;
         Button btnSetting, btnOrder;
         ImageButton btnExpandText;
@@ -111,6 +124,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             sliderView               = itemView.findViewById(R.id.sliderViewProduct);
+            imgViewProductBanner     = itemView.findViewById(R.id.imageViewProductBanner);
             txtViewProductName       = itemView.findViewById(R.id.textViewProductName);
             txtViewProductPrice      = itemView.findViewById(R.id.textViewProductPrice);
             txtViewProductDescript   = itemView.findViewById(R.id.textViewDiscrip);

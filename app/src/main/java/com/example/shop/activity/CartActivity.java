@@ -74,7 +74,7 @@ public class CartActivity extends AppCompatActivity implements OnDeleteItemClick
     protected void onPause() {
         super.onPause();
         for (int i = 0; i < mProductAddedToCartArrList.size(); i++) {
-            mProductAddedToCartArrList.get(i).setFoodDescrip(mProductShowDefaulsArrList.get(i).getFoodDescrip());
+            mProductAddedToCartArrList.get(i).setFood_descript(mProductShowDefaulsArrList.get(i).getFood_descript());
         }
         CommonMethodHolder.saveCart(mProductAddedToCartArrList, cartCount, cartTotal, editClick, cart);
         Log.d("DDD", "At On Pause Cart");
@@ -83,7 +83,7 @@ public class CartActivity extends AppCompatActivity implements OnDeleteItemClick
     private void setUpView() {
         removeRepeatProduct();
         for (int i = 0; i < mProductAddedToCartArrList.size(); i++) {
-            mProductAddedToCartArrList.get(i).setFoodDescrip(CommonMethodHolder.setDefaultCourse(mProductAddedToCartArrList.get(i).getFoodDescrip()));
+            mProductAddedToCartArrList.get(i).setFood_descript(CommonMethodHolder.setDefaultCourse(mProductAddedToCartArrList.get(i).getFood_descript()));
         }
         mSingleProductAdapter = new SingleProductAdapter(mProductAddedToCartArrList, this);
 
@@ -112,7 +112,7 @@ public class CartActivity extends AppCompatActivity implements OnDeleteItemClick
                 @Override
                 public void onMinusPortion(Product product) {
                     cartCount = cartCount - 1;
-                    cartTotal = CommonMethodHolder.convertIntToString(CommonMethodHolder.convertStringToInt(cartTotal) - CommonMethodHolder.convertStringToInt(product.getFoodPrice()));
+                    cartTotal = CommonMethodHolder.convertIntToString(CommonMethodHolder.convertStringToInt(cartTotal) - CommonMethodHolder.convertStringToInt(product.getFood_price()));
                     mTxtViewCartTotal.setText(cartTotal);
                     mTxtViewProductCount.setText(cartCount + " món");
 
@@ -125,7 +125,7 @@ public class CartActivity extends AppCompatActivity implements OnDeleteItemClick
                 @Override
                 public void onPlusPortion(Product product) {
                     cartCount = cartCount + 1;
-                    cartTotal = CommonMethodHolder.convertIntToString(CommonMethodHolder.convertStringToInt(cartTotal) + CommonMethodHolder.convertStringToInt(product.getFoodPrice()));
+                    cartTotal = CommonMethodHolder.convertIntToString(CommonMethodHolder.convertStringToInt(cartTotal) + CommonMethodHolder.convertStringToInt(product.getFood_price()));
                     mTxtViewCartTotal.setText(cartTotal);
                     mTxtViewProductCount.setText(cartCount + " món");
 
@@ -181,7 +181,7 @@ public class CartActivity extends AppCompatActivity implements OnDeleteItemClick
     private void removeRepeatProduct() {
         for (int i = 0; i < mProductAddedToCartArrList.size() - 1; i++) {
             for (int j = i + 1; j < mProductAddedToCartArrList.size(); j++) {
-                if (mProductAddedToCartArrList.get(i).getFoodName().equals(mProductAddedToCartArrList.get(j).getFoodName())) {
+                if (mProductAddedToCartArrList.get(i).getFood_name().equals(mProductAddedToCartArrList.get(j).getFood_name())) {
                     mProductAddedToCartArrList.get(i).setPortion(mProductAddedToCartArrList.get(i).getPortion() + 1);
                     mProductAddedToCartArrList.remove(j);
                     j--;

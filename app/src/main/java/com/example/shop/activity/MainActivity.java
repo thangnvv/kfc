@@ -28,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -41,10 +42,12 @@ import com.example.shop.adapter.AdapterForSlider;
 import com.example.shop.adapter.ViewPagerAdapterForTabLine;
 import com.example.shop.adapter.ViewPagerAdapterForMainTab;
 import com.example.shop.R;
-import com.example.shop.ultil.BannerImage;
 import com.example.shop.ultil.noneAllowSwipeViewPager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -89,21 +92,18 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private int mainTabPosition;
 
     //For slider banner in main
-    private List<BannerImage> bannerMain;
+    private ArrayList<String> bannerMain;
     private SliderView sliderView;
     private AdapterForSlider adapter;
 
     private boolean doubleBackToExitPressedOnce;
     private Handler mHandlerQuiteApp = new Handler();
 
-    private StorageReference mStorageRef;
-
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mStorageRef = FirebaseStorage.getInstance().getReference();
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference().child("product/for_one_combo");
 
         initView();
@@ -237,15 +237,15 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             public void onUpdateCart(Product product) {
                 for(int i = 0; i < mProductAddedToCartArrList.size(); i++){
                     Product productTemp = mProductAddedToCartArrList.get(i);
-                    if(productTemp.getFoodName().equals(product.getFoodName())){
+                    if(productTemp.getFood_name().equals(product.getFood_name())){
                         if(productTemp.getPortion() > product.getPortion()){
                             int minusPortionCount = productTemp.getPortion() - product.getPortion();
                             cartCount = cartCount - minusPortionCount;
-                            cartTotal = cartTotal - minusPortionCount * CommonMethodHolder.convertStringToInt(product.getFoodPrice());
+                            cartTotal = cartTotal - minusPortionCount * CommonMethodHolder.convertStringToInt(product.getFood_price());
                         }else if(productTemp.getPortion() < product.getPortion()){
                             int plusPortionCount = product.getPortion() - productTemp.getPortion();
                             cartCount = cartCount + plusPortionCount;
-                            cartTotal = cartTotal + plusPortionCount * CommonMethodHolder.convertStringToInt(product.getFoodPrice());
+                            cartTotal = cartTotal + plusPortionCount * CommonMethodHolder.convertStringToInt(product.getFood_price());
                         }else{
                             finish();
                         }
@@ -287,7 +287,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         int total = 0, portion = 0;
         for(int i =0; i< arrListAddToCart.size(); i++){
             Product product = arrListAddToCart.get(i);
-            total = total + product.getPortion() * CommonMethodHolder.convertStringToInt(product.getFoodPrice());
+            total = total + product.getPortion() * CommonMethodHolder.convertStringToInt(product.getFood_price());
             portion = portion + product.getPortion();
         }
        addCart(total, portion);
@@ -314,7 +314,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
 
     private void addSingleToCart(Product product) {
-        int total = CommonMethodHolder.convertStringToInt(product.getFoodPrice())*product.getPortion();
+        int total = CommonMethodHolder.convertStringToInt(product.getFood_price())*product.getPortion();
         addCart(total, product.getPortion());
     }
 
@@ -488,6 +488,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     private void setUpTabLayoutMain() {
+
         mTabLayoutMain.addTab(mTabLayoutMain.newTab().setText("Combo 1 người"));
         mTabLayoutMain.addTab(mTabLayoutMain.newTab().setText("Combo nhóm"));
         mTabLayoutMain.addTab(mTabLayoutMain.newTab().setText("Menu ưu đãi"));
@@ -509,12 +510,36 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     private void setUpSliderBanner() {
         bannerMain = new ArrayList<>();
-        bannerMain.add(new BannerImage("https://kfcvietnam.com.vn/uploads/banner/900f8a45e0d5c36e45ad0dcffd9e054f.png"));
-        bannerMain.add(new BannerImage("https://kfcvietnam.com.vn/uploads/banner/bf8393c04ca093bf595e0af0295217b0.png"));
-        bannerMain.add(new BannerImage("https://kfcvietnam.com.vn/uploads/banner/182b708be1229785fb606ac48660b852.png"));
-        bannerMain.add(new BannerImage("https://kfcvietnam.com.vn/uploads/banner/7185c7da5835e592c4b86cdd4725c171.png"));
-
         adapter = new AdapterForSlider(this, bannerMain);
+        DatabaseReference myRef = database.getReference().child("promotion_banner");
+        myRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                bannerMain.add(snapshot.getValue(String.class));
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         sliderView.setSliderAdapter(adapter);
         sliderView.setIndicatorAnimation(IndicatorAnimationType.SLIDE); //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
         sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);

@@ -60,11 +60,11 @@ public class ProductALaCarteAdapter extends RecyclerView.Adapter<ProductALaCarte
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         final Product productALaCarte = mProductList.get(position);
 
-        holder.mTextViewFoodName.setText(productALaCarte.getFoodName());
-        holder.mTextViewFoodPrice.setText(productALaCarte.getFoodPrice());
+        holder.mTextViewFoodName.setText(productALaCarte.getFood_name());
+        holder.mTextViewFoodPrice.setText(productALaCarte.getFood_price());
         holder.mTextViewPortion.setText(productALaCarte.getPortion() + "");
 
-        AdapterForSlider adapter = new AdapterForSlider(getContext(), productALaCarte.getUrlImageBanner() );
+        AdapterForSlider adapter = new AdapterForSlider(getContext(), productALaCarte.getUrls_banner() );
         holder.mSliderViewBanner.setSliderAdapter(adapter);
 
         holder.mImgButtonMinus.setOnClickListener(new View.OnClickListener() {

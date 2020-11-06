@@ -1,31 +1,42 @@
 package com.example.shop.adapter;
 
 import android.content.Context;
+import android.media.Image;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import com.bumptech.glide.Glide;
 import com.example.shop.R;
 import com.example.shop.ultil.BannerImage;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.smarteist.autoimageslider.SliderViewAdapter;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
-public class AdapterForSlider extends
-        SliderViewAdapter<AdapterForSlider.SliderAdapterVH> {
+public class AdapterForSlider extends SliderViewAdapter<AdapterForSlider.SliderAdapterVH> {
 
     private Context context;
-    private List<BannerImage> mSliderItems;
+    private ArrayList<String> mSliderItems;
 
-    public AdapterForSlider(Context context, List<BannerImage> mSliderItems) {
+    public AdapterForSlider(Context context, ArrayList<String> mSliderItems) {
         this.context        = context;
         this.mSliderItems   = mSliderItems;
     }
-
-
 
     @Override
     public SliderAdapterVH onCreateViewHolder(ViewGroup parent) {
@@ -34,15 +45,13 @@ public class AdapterForSlider extends
     }
 
     @Override
-    public void onBindViewHolder(SliderAdapterVH viewHolder, final int position) {
+    public void onBindViewHolder(final SliderAdapterVH viewHolder, final int position) {
 
-        BannerImage sliderItem = mSliderItems.get(position);
 
         Glide.with(viewHolder.itemView)
-                .load(sliderItem.getImageUrl())
+                .load(mSliderItems.get(position))
                 .fitCenter()
                 .into(viewHolder.imageBannerMain);
-
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

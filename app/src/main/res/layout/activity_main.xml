@@ -185,8 +185,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_130sdp"
                             app:sliderAnimationDuration="600"
-                            app:sliderAutoCycleDirection="back_and_forth"
-                            app:sliderAutoCycleEnabled="true"
                             app:sliderIndicatorAnimationDuration="600"
                             app:sliderIndicatorEnabled="true"
                             app:sliderIndicatorGravity="left|bottom"

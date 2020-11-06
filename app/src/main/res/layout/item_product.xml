@@ -27,6 +27,12 @@
             app:sliderIndicatorSelectedColor="@color/red"
             app:sliderIndicatorUnselectedColor="@color/grey" />
 
+        <ImageView
+            android:id="@+id/imageViewProductBanner"
+            android:scaleType="fitXY"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_100sdp"/>
+
         <TextView
             android:id="@+id/textViewProductName"
             android:layout_marginLeft="@dimen/margin_left_parent"

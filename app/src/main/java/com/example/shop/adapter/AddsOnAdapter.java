@@ -43,11 +43,12 @@ public class AddsOnAdapter extends RecyclerView.Adapter<AddsOnAdapter.ViewHolder
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         final Product productALaCarte = mArrListName.get(position);
 
-        holder.mTxtViewAddsOnName.setText(productALaCarte.getFoodName());
-        holder.mTxtViewAddsOnPrice.setText(productALaCarte.getFoodPrice());
+        holder.mTxtViewAddsOnName.setText(productALaCarte.getFood_name());
+        holder.mTxtViewAddsOnPrice.setText(productALaCarte.getFood_price());
         holder.mTxtViewAddsOnPortion.setText("0");
 
-        new DownloadImageTask(holder.mImgViewBanner).execute(productALaCarte.getUrlImageBanner().get(0).getImageUrl());
+        new DownloadImageTask(holder.mImgViewBanner).execute(productALaCarte.getUrls_banner().get(0));
+//        new DownloadImageTask(holder.mImgViewBanner).execute(productALaCarte.getUrlImageBanner().get(0).getImageUrl());
 
         holder.mImgButtonAddsOnMinus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,7 +56,7 @@ public class AddsOnAdapter extends RecyclerView.Adapter<AddsOnAdapter.ViewHolder
                 if (productALaCarte.getPortion() > 0) {
                     productALaCarte.setPortion(productALaCarte.getPortion() - 1);
                     holder.mTxtViewAddsOnPortion.setText((productALaCarte.getPortion() + ""));
-                    int totalPrice = CommonMethodHolder.convertStringToInt(productALaCarte.getFoodPrice()) * productALaCarte.getPortion();
+                    int totalPrice = CommonMethodHolder.convertStringToInt(productALaCarte.getFood_price()) * productALaCarte.getPortion();
                     holder.mTxtViewAddsOnTotalPrice.setText(CommonMethodHolder.convertIntToString(totalPrice));
                     if (productALaCarte.getPortion() == 0) {
                         holder.mTxtViewAddsOnTotalPrice.setVisibility(View.INVISIBLE);
@@ -74,7 +75,7 @@ public class AddsOnAdapter extends RecyclerView.Adapter<AddsOnAdapter.ViewHolder
 
                 productALaCarte.setPortion(productALaCarte.getPortion() + 1);
                 holder.mTxtViewAddsOnPortion.setText((productALaCarte.getPortion() + ""));
-                int totalPrice = CommonMethodHolder.convertStringToInt(productALaCarte.getFoodPrice()) * productALaCarte.getPortion();
+                int totalPrice = CommonMethodHolder.convertStringToInt(productALaCarte.getFood_price()) * productALaCarte.getPortion();
                 holder.mTxtViewAddsOnTotalPrice.setText(CommonMethodHolder.convertIntToString(totalPrice));
                 onAddsOnClickListener.onPlusClick(productALaCarte);
             }
