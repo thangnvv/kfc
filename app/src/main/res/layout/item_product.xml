@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -35,8 +36,8 @@
 
         <TextView
             android:id="@+id/textViewProductName"
-            android:layout_marginLeft="@dimen/margin_left_parent"
-            android:layout_marginRight="@dimen/margin_right_parent"
+            android:layout_marginStart="@dimen/margin_left_parent"
+            android:layout_marginEnd="@dimen/margin_right_parent"
             android:textStyle="bold"
             android:text="Product Name"
             android:textAllCaps="true"
@@ -48,8 +49,8 @@
         <TextView
             android:id="@+id/textViewProductPrice"
             android:layout_marginTop="@dimen/_12sdp"
-            android:layout_marginLeft="@dimen/margin_left_parent"
-            android:layout_marginRight="@dimen/margin_right_parent"
+            android:layout_marginStart="@dimen/margin_left_parent"
+            android:layout_marginEnd="@dimen/margin_right_parent"
             android:textStyle="bold"
             android:text="79.000đ"
             android:textColor="@color/black"
@@ -60,8 +61,8 @@
         <TextView
             android:id="@+id/textViewDiscrip"
             android:layout_marginTop="@dimen/_12sdp"
-            android:layout_marginLeft="@dimen/margin_left_parent"
-            android:layout_marginRight="@dimen/margin_right_parent"
+            android:layout_marginStart="@dimen/margin_left_parent"
+            android:layout_marginEnd="@dimen/margin_right_parent"
             android:text="* 2 Miếng Gà Giòn Cay/ 2 Miếng Gà Giòn Không Cay/ 2 Miếng Gà Truyền Thống
             \n* 1 Pepsi Lon"
             android:maxLines="3"
@@ -82,8 +83,8 @@
         <Button
             android:id="@+id/buttonSettingProduct"
             android:layout_marginTop="@dimen/_8sdp"
-            android:layout_marginRight="@dimen/margin_right_parent"
-            android:layout_marginLeft="@dimen/margin_left_parent"
+            android:layout_marginStart="@dimen/margin_left_parent"
+            android:layout_marginEnd="@dimen/margin_right_parent"
             android:textSize="@dimen/h1"
             android:textStyle="bold"
             android:textColor="@color/black"
@@ -96,8 +97,8 @@
             android:id="@+id/buttonOrderProduct"
             android:layout_marginTop="@dimen/_14sdp"
             android:layout_marginBottom="@dimen/_14sdp"
-            android:layout_marginRight="@dimen/margin_right_parent"
-            android:layout_marginLeft="@dimen/margin_left_parent"
+            android:layout_marginStart="@dimen/margin_left_parent"
+            android:layout_marginEnd="@dimen/margin_right_parent"
             android:textSize="@dimen/h1"
             android:textColor="@color/white"
             android:textStyle="bold"

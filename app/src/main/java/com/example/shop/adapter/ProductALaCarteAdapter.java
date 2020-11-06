@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shop.R;
 import com.example.shop.interfaces.OnProductClickListener;
+import com.example.shop.ultil.DownloadImageTask;
 import com.example.shop.ultil.Product;
 import com.smarteist.autoimageslider.SliderView;
 
@@ -60,12 +62,20 @@ public class ProductALaCarteAdapter extends RecyclerView.Adapter<ProductALaCarte
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         final Product productALaCarte = mProductList.get(position);
 
+        AdapterForSlider adapter = new AdapterForSlider(getContext(), productALaCarte.getUrls_banner());
+        if(productALaCarte.getUrls_banner().size() == 1){
+            holder.mSliderViewBanner.setVisibility(View.GONE);
+            holder.imgViewProductBanner.setVisibility(View.VISIBLE);
+            new DownloadImageTask(holder.imgViewProductBanner).execute(productALaCarte.getUrls_banner().get(0));
+        }else{
+            holder.imgViewProductBanner.setVisibility(View.GONE);
+            holder.mSliderViewBanner.setVisibility(View.VISIBLE);
+        }
+        holder.mSliderViewBanner.setSliderAdapter(adapter);
+
         holder.mTextViewFoodName.setText(productALaCarte.getFood_name());
         holder.mTextViewFoodPrice.setText(productALaCarte.getFood_price());
         holder.mTextViewPortion.setText(productALaCarte.getPortion() + "");
-
-        AdapterForSlider adapter = new AdapterForSlider(getContext(), productALaCarte.getUrls_banner() );
-        holder.mSliderViewBanner.setSliderAdapter(adapter);
 
         holder.mImgButtonMinus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,6 +117,7 @@ public class ProductALaCarteAdapter extends RecyclerView.Adapter<ProductALaCarte
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView mTextViewFoodName, mTextViewFoodPrice, mTextViewPortion;
         SliderView mSliderViewBanner;
+        ImageView imgViewProductBanner;
         Button mBtnOrder;
         ImageButton mImgButtonPlus, mImgButtonMinus;
 
@@ -119,6 +130,7 @@ public class ProductALaCarteAdapter extends RecyclerView.Adapter<ProductALaCarte
             mImgButtonPlus = itemView.findViewById(R.id.imgButtonPlus);
             mBtnOrder = itemView.findViewById(R.id.btnOrderProduct);
             mSliderViewBanner = itemView.findViewById(R.id.sliderViewProduct);
+            imgViewProductBanner     = itemView.findViewById(R.id.imageViewProductBanner);
         }
     }
 }

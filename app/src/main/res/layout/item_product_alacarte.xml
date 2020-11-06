@@ -28,11 +28,17 @@
             app:sliderIndicatorSelectedColor="@color/red"
             app:sliderIndicatorUnselectedColor="@color/grey" />
 
+        <ImageView
+            android:id="@+id/imageViewProductBanner"
+            android:scaleType="fitXY"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_100sdp"/>
+
         <TextView
             android:id="@+id/txtViewProductName"
             android:layout_marginTop="@dimen/_12sdp"
-            android:layout_marginLeft="@dimen/margin_left_parent"
-            android:layout_marginRight="@dimen/margin_right_parent"
+            android:layout_marginStart="@dimen/margin_left_parent"
+            android:layout_marginEnd="@dimen/margin_right_parent"
             android:textStyle="bold"
             android:text="Product Name"
             android:textAllCaps="true"
@@ -44,8 +50,8 @@
         <TextView
             android:id="@+id/txtViewProductPrice"
             android:layout_marginTop="@dimen/_12sdp"
-            android:layout_marginLeft="@dimen/margin_left_parent"
-            android:layout_marginRight="@dimen/margin_right_parent"
+            android:layout_marginStart="@dimen/margin_left_parent"
+            android:layout_marginEnd="@dimen/margin_right_parent"
             android:textStyle="bold"
             android:text="79.000đ"
             android:textColor="@color/black"
@@ -62,7 +68,7 @@
 
         <ImageButton
             android:id="@+id/imgButtonMinus"
-            android:layout_marginLeft="@dimen/margin_left_parent"
+            android:layout_marginStart="@dimen/margin_left_parent"
             android:background="@android:color/transparent"
             android:src="@drawable/minus"
             android:layout_width="wrap_content"
@@ -91,8 +97,8 @@
             android:id="@+id/btnOrderProduct"
             android:layout_marginTop="@dimen/_16sdp"
             android:layout_marginBottom="@dimen/_16sdp"
-            android:layout_marginRight="@dimen/margin_right_parent"
-            android:layout_marginLeft="@dimen/margin_left_parent"
+            android:layout_marginStart="@dimen/margin_left_parent"
+            android:layout_marginEnd="@dimen/margin_right_parent"
             android:textSize="@dimen/h1"
             android:textColor="@color/white"
             android:textStyle="bold"
