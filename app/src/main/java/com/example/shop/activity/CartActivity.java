@@ -20,6 +20,7 @@ import com.example.shop.interfaces.OnDeleteItemClickListener;
 import com.example.shop.ultil.Cart;
 import com.example.shop.ultil.Product;
 import com.example.shop.ultil.CommonMethodHolder;
+import com.example.shop.ultil.ProductALaCarte;
 import com.google.android.material.textfield.TextInputEditText;
 import com.orhanobut.hawk.Hawk;
 
@@ -29,7 +30,7 @@ public class CartActivity extends AppCompatActivity implements OnDeleteItemClick
     int cartCount;
     String cartTotal;
     Cart cart;
-    ArrayList<Product> mProductAddedToCartArrList, mProductShowDefaulsArrList;
+    ArrayList<Product> mProductAddedToCartArrList, mProductShowDefaultsArrList;
     SingleProductAdapter mSingleProductAdapter;
     RecyclerView mRecyclerViewProductInCart;
     LinearLayout mLLCartHasItem, mLLCartEmpty, mLineCartCountTop, mLineCartCountBottom, mLineCartCountGrandTotal;
@@ -57,13 +58,13 @@ public class CartActivity extends AppCompatActivity implements OnDeleteItemClick
         cartCount = cart.getCartCount();
         cartTotal = cart.getCartTotal();
         mProductAddedToCartArrList = cart.getArrListProductInCart();
-        mProductShowDefaulsArrList = new ArrayList<>();
-        mProductShowDefaulsArrList.addAll(cart.getArrListProductInCart());
+        // This array list for holding food description. If not the food descriptions will be change in the process
+        mProductShowDefaultsArrList = new ArrayList<>();
+        mProductShowDefaultsArrList.addAll(cart.getArrListProductInCart());
         if (mProductAddedToCartArrList.size() == 0) {
             mLLCartHasItem.setVisibility(View.GONE);
             mLLCartEmpty.setVisibility(View.VISIBLE);
         } else {
-            Log.d("KKK", "In Cart: " + mProductAddedToCartArrList.size());
             mLLCartEmpty.setVisibility(View.GONE);
             mLLCartHasItem.setVisibility(View.VISIBLE);
             setUpView();
@@ -73,28 +74,37 @@ public class CartActivity extends AppCompatActivity implements OnDeleteItemClick
     @Override
     protected void onPause() {
         super.onPause();
+        //Restore the food descriptions from array list holder
         for (int i = 0; i < mProductAddedToCartArrList.size(); i++) {
-            mProductAddedToCartArrList.get(i).setFood_descript(mProductShowDefaulsArrList.get(i).getFood_descript());
+            mProductAddedToCartArrList.get(i).setFood_descript(mProductShowDefaultsArrList.get(i).getFood_descript());
         }
         CommonMethodHolder.saveCart(mProductAddedToCartArrList, cartCount, cartTotal, editClick, cart);
-        Log.d("DDD", "At On Pause Cart");
     }
 
     private void setUpView() {
+//        for (int i = 0; i < mProductAddedToCartArrList.size(); i++) {
+//            mProductAddedToCartArrList.get(i)
+//                    .setFood_descript(CommonMethodHolder.setDefaultCourse(mProductAddedToCartArrList.get(i).getFood_descript()));
+//            Product product = mProductAddedToCartArrList.get(i);
+//            for(int j = 0; j < product.getAlacarte().size(); j++){
+//                ProductALaCarte aLaCarte = product.getAlacarte().get(j);
+//                if(aLaCarte.isUpgradable()){
+//
+//                }
+//            }
+//        }
+
         removeRepeatProduct();
-        for (int i = 0; i < mProductAddedToCartArrList.size(); i++) {
-            mProductAddedToCartArrList.get(i).setFood_descript(CommonMethodHolder.setDefaultCourse(mProductAddedToCartArrList.get(i).getFood_descript()));
-        }
         mSingleProductAdapter = new SingleProductAdapter(mProductAddedToCartArrList, this);
 
         mSingleProductAdapter.setOnDeleteItemClickListener(this);
         mRecyclerViewProductInCart.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerViewProductInCart.setAdapter(mSingleProductAdapter);
 
-        mTxtViewProductCount.setText(cartCount + " món");
+        mTxtViewProductCount.setText((cartCount + " món"));
         mTxtViewCartTotal.setText(cartTotal);
 
-        mTxtViewLineInfoCartBottom.setText(cartCount + " món");
+        mTxtViewLineInfoCartBottom.setText((cartCount + " món"));
         mTxtViewLinePriceCartBottom.setText(cartTotal);
         mTxtViewLinePriceCartGrandTotal.setText(cartTotal);
 
@@ -179,12 +189,31 @@ public class CartActivity extends AppCompatActivity implements OnDeleteItemClick
     }
 
     private void removeRepeatProduct() {
+        // remove and add portion if 2 product have the same name and price and alacartes
         for (int i = 0; i < mProductAddedToCartArrList.size() - 1; i++) {
+            Product productTemp1 = mProductAddedToCartArrList.get(i);
             for (int j = i + 1; j < mProductAddedToCartArrList.size(); j++) {
-                if (mProductAddedToCartArrList.get(i).getFood_name().equals(mProductAddedToCartArrList.get(j).getFood_name())) {
-                    mProductAddedToCartArrList.get(i).setPortion(mProductAddedToCartArrList.get(i).getPortion() + 1);
-                    mProductAddedToCartArrList.remove(j);
-                    j--;
+                boolean isTheSame = true;
+                Product productTemp2 = mProductAddedToCartArrList.get(j);
+                // Check if the same name and price
+                if (productTemp1.getFood_name().equals(productTemp2.getFood_name()) && productTemp1.getFood_price().equals(productTemp2.getFood_price())) {
+                    for(int k = 0 ; k < productTemp1.getAlacarte().size(); k++){
+                        // check if the same alacarte
+                        ProductALaCarte aLaCarte1 = productTemp1.getAlacarte().get(k);
+                        if(!aLaCarte1.isUpgradable()){
+                            ProductALaCarte aLaCarte2 = productTemp2.getAlacarte().get(k);
+                            if(!aLaCarte1.getChosen_alacarte().equals(aLaCarte2.getChosen_alacarte())){
+                               isTheSame = false;
+                               break;
+                            }
+                        }
+                    }
+                    // Remove the product with the same price, name, alacartes
+                    if(isTheSame){
+                        mProductAddedToCartArrList.get(i).setPortion(mProductAddedToCartArrList.get(i).getPortion() + 1);
+                        mProductAddedToCartArrList.remove(j);
+                        j--;
+                    }
                 }
             }
         }
@@ -193,7 +222,7 @@ public class CartActivity extends AppCompatActivity implements OnDeleteItemClick
     @Override
     public void onItemDeleted(int position, int portion, String totalPrice) {
         mProductAddedToCartArrList.remove(position);
-        mProductShowDefaulsArrList.remove(position);
+        mProductShowDefaultsArrList.remove(position);
         if (mProductAddedToCartArrList.size() == 0) {
             mLLCartHasItem.setVisibility(View.GONE);
             mLLCartEmpty.setVisibility(View.VISIBLE);

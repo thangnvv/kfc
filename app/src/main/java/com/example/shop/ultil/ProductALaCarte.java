@@ -1,63 +1,47 @@
 package com.example.shop.ultil;
 
+
 import java.util.ArrayList;
 
 public class ProductALaCarte {
-    private ArrayList<String> urls_banner;
-    private String food_name;
-    private String food_price;
-    private String food_descript;
-    private int portion;
+    private boolean upgradable;
+    private ArrayList<Upgrade> upgrades;
+    private String chosen_alacarte;
+    private int chosen_upgrade_position;
 
     public ProductALaCarte(){
 
     }
 
-    public ProductALaCarte(ArrayList<String> urls_banner, String food_name, String food_price, String food_descript, int portion) {
-        this.urls_banner = urls_banner;
-        this.food_name = food_name;
-        this.food_price = food_price;
-        this.food_descript = food_descript;
-        this.portion = portion;
+    public String getChosen_alacarte() {
+        return chosen_alacarte;
     }
 
-    public ArrayList<String> getUrls_banner() {
-        return urls_banner;
+    public void setChosen_alacarte(String chosen_alacarte) {
+        this.chosen_alacarte = chosen_alacarte;
     }
 
-    public void setUrls_banner(ArrayList<String> urls_banner) {
-        this.urls_banner = urls_banner;
+    public int getChosen_upgrade_position() {
+        return chosen_upgrade_position;
     }
 
-    public String getFood_name() {
-        return food_name;
+    public void setChosen_upgrade_position(int chosen_upgrade_position) {
+        this.chosen_upgrade_position = chosen_upgrade_position;
     }
 
-    public void setFood_name(String food_name) {
-        this.food_name = food_name;
+    public boolean isUpgradable() {
+        return upgradable;
     }
 
-    public String getFood_price() {
-        return food_price;
+    public void setUpgradable(boolean upgradable) {
+        this.upgradable = upgradable;
     }
 
-    public void setFood_price(String food_price) {
-        this.food_price = food_price;
+    public ArrayList<Upgrade> getUpgrades() {
+        return upgrades;
     }
 
-    public String getFood_descript() {
-        return food_descript;
-    }
-
-    public void setFood_descript(String food_descript) {
-        this.food_descript = food_descript;
-    }
-
-    public int getPortion() {
-        return portion;
-    }
-
-    public void setPortion(int portion) {
-        this.portion = portion;
+    public void setUpgrades(ArrayList<Upgrade> upgrades) {
+        this.upgrades = upgrades;
     }
 }

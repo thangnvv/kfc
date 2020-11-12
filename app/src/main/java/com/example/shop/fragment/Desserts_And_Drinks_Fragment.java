@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import com.example.shop.R;
 import com.example.shop.adapter.ProductALaCarteAdapter;
 import com.example.shop.interfaces.OnProductClickListener;
-import com.example.shop.ultil.BannerImage;
 import com.example.shop.ultil.Product;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;

@@ -1,19 +1,23 @@
 package com.example.shop.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shop.R;
 import com.example.shop.interfaces.OnDeleteItemClickListener;
 import com.example.shop.ultil.Product;
 import com.example.shop.ultil.CommonMethodHolder;
+import com.example.shop.ultil.ProductALaCarte;
 
 import java.util.ArrayList;
 
@@ -24,6 +28,7 @@ public class SingleProductAdapter extends RecyclerView.Adapter<SingleProductAdap
     Context context;
     OnDeleteItemClickListener onDeleteItemClickListener;
     OnViewClickListener onViewClickListener;
+
 
     public SingleProductAdapter(ArrayList<Product> mProductArrList, Context context) {
         this.mProductArrList = mProductArrList;
@@ -48,7 +53,11 @@ public class SingleProductAdapter extends RecyclerView.Adapter<SingleProductAdap
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         final Product product = mProductArrList.get(position);
         holder.mTxtViewProductName.setText(product.getFood_name());
-        holder.mTxtViewProductInfo.setText(product.getFood_descript());
+
+        DescriptLineAdapter descriptLineAdapter = new DescriptLineAdapter(product.getAlacarte(), context);
+        holder.mRvProductDescript.setLayoutManager(new LinearLayoutManager(context));
+        holder.mRvProductDescript.setAdapter(descriptLineAdapter);
+
         holder.mTxtViewPortion.setText(product.getPortion() + "");
         if(product.getPortion() > 1){
             foodPrice = calculateFoodPrice(product.getFood_price(), product.getPortion());
@@ -107,20 +116,20 @@ public class SingleProductAdapter extends RecyclerView.Adapter<SingleProductAdap
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        TextView mTxtViewProductName, mTxtViewProductInfo, mTxtViewProductPrice, mTxtViewPortion;
+        TextView mTxtViewProductName, mTxtViewProductPrice, mTxtViewPortion;
         ImageButton mImgButtonEditProduct, mImgButtonDeleteProduct, mImgButtonMinus, mImgButtonPlus;
-
+        RecyclerView mRvProductDescript;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             mTxtViewProductName = itemView.findViewById(R.id.textViewSingleProductName);
-            mTxtViewProductInfo = itemView.findViewById(R.id.textViewSingleProductInfo);
             mTxtViewProductPrice = itemView.findViewById(R.id.textViewSingleProductPrice);
             mTxtViewPortion = itemView.findViewById(R.id.textViewSingleProductPortion);
             mImgButtonEditProduct = itemView.findViewById(R.id.imageButtonEditProduct);
             mImgButtonDeleteProduct = itemView.findViewById(R.id.imageButtonDeleteProduct);
             mImgButtonMinus = itemView.findViewById(R.id.imageButtonSingleProductMinus);
             mImgButtonPlus = itemView.findViewById(R.id.imageButtonSingleProductPlus);
+            mRvProductDescript = itemView.findViewById(R.id.recyclerViewProductDescript);
         }
     }
 

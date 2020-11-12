@@ -15,27 +15,27 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shop.R;
-import com.example.shop.adapter.ALaCarteLineAdapter;
+import com.example.shop.adapter.ALaCarteOptionsAdapter;
 
-public class CustomDialogChooseALaCarte extends Dialog implements View.OnClickListener, ALaCarteLineAdapter.OnChooseListener {
+public class CustomDialogChooseALaCarte extends Dialog implements View.OnClickListener, ALaCarteOptionsAdapter.OnChooseListener {
     TextView mTxtViewTitle;
     ImageButton mImgButtonCancel;
     Button mBtnConfirm;
-    RecyclerView recyclerViewALaCarteProduct;
-    ALaCarteLineAdapter aLaCarteLineAdapter;
-    String choosenName;
+    RecyclerView rvALaCarteProductOptions;
+    ALaCarteOptionsAdapter aLaCarteOptionsAdapter;
+    String chosenName;
     String[] options;
     Context context;
-    OnConfirmChoosenFoodName mOnConfirmChoosenFoodName;
+    OnConfirmChosenFoodName mOnConfirmChosenFoodName;
 
-    public void setOnConfirmChoosenFoodName (OnConfirmChoosenFoodName mOnConfirmChoosenFoodName){
-        this.mOnConfirmChoosenFoodName = mOnConfirmChoosenFoodName;
+    public void setOnConfirmChosenFoodName(OnConfirmChosenFoodName mOnConfirmChosenFoodName){
+        this.mOnConfirmChosenFoodName = mOnConfirmChosenFoodName;
     }
 
     public CustomDialogChooseALaCarte(@NonNull Context context, String choosenname, String[] options) {
         super(context);
         this.context = context;
-        this.choosenName = choosenname;
+        this.chosenName = choosenname;
         this.options = options;
     }
 
@@ -43,15 +43,15 @@ public class CustomDialogChooseALaCarte extends Dialog implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.dialog_change_alacarte_product);
+        setContentView(R.layout.dialog_change_alacarte_options);
 
         initView();
         setViewClick();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
-        recyclerViewALaCarteProduct.setLayoutManager(linearLayoutManager);
-        recyclerViewALaCarteProduct.setAdapter(aLaCarteLineAdapter);
-        aLaCarteLineAdapter.setOnChooseListener(this);
-        mTxtViewTitle.setText("MỜI CHỌN 1 TRONG "+  options.length  +" MÓN DƯỚI ĐÂY");
+        rvALaCarteProductOptions.setLayoutManager(linearLayoutManager);
+        rvALaCarteProductOptions.setAdapter(aLaCarteOptionsAdapter);
+        aLaCarteOptionsAdapter.setOnChooseListener(this);
+        mTxtViewTitle.setText(("MỜI CHỌN 1 TRONG "+  options.length  +" MÓN DƯỚI ĐÂY"));
     }
 
     private void setViewClick() {
@@ -63,8 +63,8 @@ public class CustomDialogChooseALaCarte extends Dialog implements View.OnClickLi
         mTxtViewTitle = findViewById(R.id.textViewTitle);
         mImgButtonCancel = findViewById(R.id.imageButtonCancel);
         mBtnConfirm     = findViewById(R.id.buttonConfirm);
-        recyclerViewALaCarteProduct = findViewById(R.id.recyclerViewALaCarteProduct);
-        aLaCarteLineAdapter = new ALaCarteLineAdapter(context, choosenName, options);
+        rvALaCarteProductOptions = findViewById(R.id.recyclerViewALaCarteOptions);
+        aLaCarteOptionsAdapter = new ALaCarteOptionsAdapter(context, chosenName, options);
     }
 
     @Override
@@ -74,7 +74,7 @@ public class CustomDialogChooseALaCarte extends Dialog implements View.OnClickLi
                 dismiss();
                 break;
             case R.id.buttonConfirm:
-                mOnConfirmChoosenFoodName.confirmFoodName(choosenName);
+                mOnConfirmChosenFoodName.confirmFoodName(chosenName);
                 dismiss();
                 break;
         }
@@ -83,12 +83,12 @@ public class CustomDialogChooseALaCarte extends Dialog implements View.OnClickLi
     @Override
     public void unCheckFoodName(String foodName){
         for(int i  = 0; i < options.length; i++){
-            LinearLayout rootLinearLayout = (LinearLayout) recyclerViewALaCarteProduct.getChildAt(i);
+            LinearLayout rootLinearLayout = (LinearLayout) rvALaCarteProductOptions.getChildAt(i);
             if(rootLinearLayout != null){
                 LinearLayout llALaCarteLine = rootLinearLayout.findViewById(R.id.linearLayoutALaCarteLine);
                 TextView textName = llALaCarteLine.findViewById(R.id.textViewALaCarteLine);
                 if(textName.getText().equals(foodName)){
-                    choosenName = foodName;
+                    chosenName = foodName;
                 }else{
                     LinearLayout llCheckChoose = rootLinearLayout.findViewById(R.id.linearLayoutCheckChoose);
                     llCheckChoose.setVisibility(View.INVISIBLE);
@@ -98,7 +98,7 @@ public class CustomDialogChooseALaCarte extends Dialog implements View.OnClickLi
         }
     }
 
-    public interface OnConfirmChoosenFoodName{
+    public interface OnConfirmChosenFoodName {
         void confirmFoodName(String choosenFoodName);
     }
 

@@ -17,16 +17,12 @@ import android.view.ViewGroup;
 import com.example.shop.R;
 import com.example.shop.adapter.ProductAdapter;
 import com.example.shop.interfaces.OnProductClickListener;
-import com.example.shop.ultil.BannerImage;
 import com.example.shop.ultil.Product;
-import com.example.shop.ultil.ProductALaCarte;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;
@@ -72,6 +68,8 @@ public class For_One_Fragment extends Fragment implements OnProductClickListener
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+
+
     }
 
     public For_One_Fragment(){

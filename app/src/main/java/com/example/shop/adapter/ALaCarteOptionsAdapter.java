@@ -13,10 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shop.R;
 
-public class ALaCarteLineAdapter extends RecyclerView.Adapter<ALaCarteLineAdapter.ViewHolder>{
+public class ALaCarteOptionsAdapter extends RecyclerView.Adapter<ALaCarteOptionsAdapter.ViewHolder>{
     Context context;
     int currentChoosenPosition = 0;
-    String choosenName;
+    String chosenName;
     String[] aLaCarteLine;
     OnChooseListener onChooseListener;
 
@@ -25,9 +25,9 @@ public class ALaCarteLineAdapter extends RecyclerView.Adapter<ALaCarteLineAdapte
     }
 
 
-    public ALaCarteLineAdapter(Context context,String choosenName, String[] aLaCarteLine) {
+    public ALaCarteOptionsAdapter(Context context, String chosenName, String[] aLaCarteLine) {
         this.context = context;
-        this.choosenName = choosenName;
+        this.chosenName = chosenName;
         this.aLaCarteLine = aLaCarteLine;
     }
 
@@ -41,7 +41,10 @@ public class ALaCarteLineAdapter extends RecyclerView.Adapter<ALaCarteLineAdapte
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         holder.textViewALaCarteLine.setText(aLaCarteLine[position]);
-        if(aLaCarteLine[position].equals(choosenName)){
+
+        Log.d("DDD", "In Alacarte options adapter: chosen name: " + chosenName.trim() + "; current position name: " + aLaCarteLine[position].trim());
+
+        if(aLaCarteLine[position].trim().equals(chosenName.trim())){
             holder.linearLayoutCheckChoose.setVisibility(View.VISIBLE);
             currentChoosenPosition = position;
         }

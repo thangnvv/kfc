@@ -9,7 +9,7 @@ public class ProductSeperated {
         this.options = options;
     }
 
-    public String getChoosenName() {
+    public String getChosenName() {
         return choosenName;
     }
 

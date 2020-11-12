@@ -42,6 +42,7 @@ import com.example.shop.adapter.AdapterForSlider;
 import com.example.shop.adapter.ViewPagerAdapterForTabLine;
 import com.example.shop.adapter.ViewPagerAdapterForMainTab;
 import com.example.shop.R;
+import com.example.shop.ultil.ProductALaCarte;
 import com.example.shop.ultil.noneAllowSwipeViewPager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
@@ -50,15 +51,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.orhanobut.hawk.Hawk;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener,
         TabLayout.OnTabSelectedListener, View.OnClickListener, OnProductClickListener {
@@ -100,11 +98,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private Handler mHandlerQuiteApp = new Handler();
 
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        DatabaseReference myRef = database.getReference().child("product/for_one_combo");
 
         initView();
         createCartInstance();
@@ -126,7 +124,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                     mainTabPosition = Hawk.get("mainTabPosition");
                     mViewPagerMain.setCurrentItem(mainTabPosition);
                     mTabLayoutMain.getTabAt(mainTabPosition).select();
-
                 }
             }
             setUpCart();
@@ -218,14 +215,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
             @Override
             public void onAddToCart(ArrayList<Product> addToCartList) {
-                if(addToCartList.size() <= 1){
+
+                if (addToCartList.size() <= 1) {
                     addSingleToCart(addToCartList.get(0));
                     showSingleProductAddedToCart(addToCartList.get(0));
-                }else{
+                } else {
                     addMultipleToCart(addToCartList);
                     showListProductAddedToCart(addToCartList);
                 }
-
             }
 
             @Override
@@ -235,19 +232,48 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
             @Override
             public void onUpdateCart(Product product) {
-                for(int i = 0; i < mProductAddedToCartArrList.size(); i++){
+                Log.d("DDD", "At Main Update Cart: " + product.getAlacarte().get(0).getChosen_alacarte());
+
+                for (int i = 0; i < mProductAddedToCartArrList.size(); i++) {
                     Product productTemp = mProductAddedToCartArrList.get(i);
-                    if(productTemp.getFood_name().equals(product.getFood_name())){
-                        if(productTemp.getPortion() > product.getPortion()){
+                    if (productTemp.getFood_name().equals(product.getFood_name())) {
+                        // Check if product portion has been change
+                        if (productTemp.getPortion() > product.getPortion()) {
                             int minusPortionCount = productTemp.getPortion() - product.getPortion();
                             cartCount = cartCount - minusPortionCount;
                             cartTotal = cartTotal - minusPortionCount * CommonMethodHolder.convertStringToInt(product.getFood_price());
-                        }else if(productTemp.getPortion() < product.getPortion()){
+                        } else if (productTemp.getPortion() < product.getPortion()) {
                             int plusPortionCount = product.getPortion() - productTemp.getPortion();
                             cartCount = cartCount + plusPortionCount;
                             cartTotal = cartTotal + plusPortionCount * CommonMethodHolder.convertStringToInt(product.getFood_price());
-                        }else{
-                            finish();
+                        }
+
+                        // Check if porduct alacarte has been upgrade or downgrade
+                        if (!productTemp.getFood_price().equals(product.getFood_price())) {
+
+                            // Save price change to cart
+                            int lastPrice = CommonMethodHolder.convertStringToInt(productTemp.getFood_price());
+                            int currentPrice = CommonMethodHolder.convertStringToInt(product.getFood_price());
+                            if (lastPrice > currentPrice) {
+                                cartTotal = cartTotal - (lastPrice - currentPrice);
+                            } else if (lastPrice < currentPrice) {
+                                cartTotal = cartTotal + (currentPrice - lastPrice);
+                            }
+
+                            // Save change to product
+                            mProductAddedToCartArrList.get(i).setFood_price(product.getFood_price());
+                            mProductAddedToCartArrList.get(i).setAlacarte(product.getAlacarte());
+                        }
+
+                        // Check if alacarte option has been change
+                        for(int j = 0; j < productTemp.getAlacarte().size(); j++){
+                            Log.d("DDD", "j: " + j + "; alacarte size: " + productTemp.getAlacarte().size());
+                            if(!productTemp.getAlacarte().get(j).isUpgradable()){
+                                if(!productTemp.getAlacarte().get(j).getChosen_alacarte().trim()
+                                        .equals(product.getAlacarte().get(j).getChosen_alacarte().trim())){
+                                    mProductAddedToCartArrList.get(i).getAlacarte().get(j).setChosen_alacarte(product.getAlacarte().get(j).getChosen_alacarte());
+                                }
+                            }
                         }
                         mProductAddedToCartArrList.get(i).setPortion(product.getPortion());
                         CommonMethodHolder.saveCart(mProductAddedToCartArrList, cartCount, CommonMethodHolder.convertIntToString(cartTotal), false, cart);
@@ -259,41 +285,24 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         });
     }
 
-    private void showListProductAddedToCart(ArrayList<Product> arrListProductAddedToCart){
-        ShowLayoutProductAddToCart();
-        mProductArrList.addAll(arrListProductAddedToCart);
-        mProductAddedToCartArrList.addAll(arrListProductAddedToCart);
+    private void addSingleToCart(Product product) {
+        int total = CommonMethodHolder.convertStringToInt(product.getFood_price()) * product.getPortion();
+        addCart(total, product.getPortion());
     }
 
     private void showSingleProductAddedToCart(Product product) {
+
+
         ShowLayoutProductAddToCart();
         mProductArrList.add(product);
         mOrderLineAdapter.notifyDataSetChanged();
         mProductAddedToCartArrList.add(product);
+
+
     }
 
-    private void ShowLayoutProductAddToCart(){
-        relativeLayoutProductAddedToCart.setVisibility(View.VISIBLE);
-        relativeLayoutProductAddedToCart.bringToFront();
-        relativeLayoutProductAddedToCart.setElevation(getResources().getDimension(R.dimen._4sdp));
-        if (mProductArrList != null) {
-            mProductArrList.clear();
-        }
-        mOrderLineAdapter.notifyDataSetChanged();
-        isShowing = true;
-    }
 
-    private void addMultipleToCart(ArrayList<Product> arrListAddToCart){
-        int total = 0, portion = 0;
-        for(int i =0; i< arrListAddToCart.size(); i++){
-            Product product = arrListAddToCart.get(i);
-            total = total + product.getPortion() * CommonMethodHolder.convertStringToInt(product.getFood_price());
-            portion = portion + product.getPortion();
-        }
-       addCart(total, portion);
-    }
-
-    private void addCart(int total, int portion){
+    private void addCart(int total, int portion) {
 
         if (cartEmpty) {
             cartCount = portion;
@@ -312,10 +321,32 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     }
 
+    private void showListProductAddedToCart(ArrayList<Product> arrListProductAddedToCart) {
+        ShowLayoutProductAddToCart();
+        mProductArrList.addAll(arrListProductAddedToCart);
+        mProductAddedToCartArrList.addAll(arrListProductAddedToCart);
+    }
 
-    private void addSingleToCart(Product product) {
-        int total = CommonMethodHolder.convertStringToInt(product.getFood_price())*product.getPortion();
-        addCart(total, product.getPortion());
+
+    private void ShowLayoutProductAddToCart() {
+        relativeLayoutProductAddedToCart.setVisibility(View.VISIBLE);
+        relativeLayoutProductAddedToCart.bringToFront();
+        relativeLayoutProductAddedToCart.setElevation(getResources().getDimension(R.dimen._4sdp));
+        if (mProductArrList != null) {
+            mProductArrList.clear();
+        }
+        mOrderLineAdapter.notifyDataSetChanged();
+        isShowing = true;
+    }
+
+    private void addMultipleToCart(ArrayList<Product> arrListAddToCart) {
+        int total = 0, portion = 0;
+        for (int i = 0; i < arrListAddToCart.size(); i++) {
+            Product product = arrListAddToCart.get(i);
+            total = total + product.getPortion() * CommonMethodHolder.convertStringToInt(product.getFood_price());
+            portion = portion + product.getPortion();
+        }
+        addCart(total, portion);
     }
 
     private void setViewOnClick() {
@@ -429,9 +460,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 startActivity(intentMore);
                 break;
             case R.id.imageButtonHideSetting:
-                if(cart.isRequireFromEditProduct()){
+                if (cart.isRequireFromEditProduct()) {
                     finish();
-                }else{
+                } else {
                     hideSettingProductFragment();
                 }
                 break;
@@ -456,7 +487,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 isShowing = false;
                 break;
             case R.id.linearLayoutCart:
-                Log.d("KKK", "" + mProductAddedToCartArrList.size());
                 CommonMethodHolder.saveCart(mProductAddedToCartArrList, cartCount,
                         mTxtViewCartTotal.getText().toString(), false, cart);
                 Intent intentCart = new Intent(MainActivity.this, CartActivity.class);
@@ -612,13 +642,19 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     @Override
     protected void onRestart() {
         super.onRestart();
+        // Hide the Layout Product Added To Cart if it is showing
+        if(isShowing){
+            relativeLayoutProductAddedToCart.setVisibility(View.GONE);
+            isShowing = false;
+        }
+
         // Check if the cart has been change and set up cart layout
         cart = Hawk.get("cart");
         if (cart != null) {
             setUpCart();
-            if(Hawk.get("isKeepShopping")!=null){
+            if (Hawk.get("isKeepShopping") != null) {
                 boolean isKeepShopping = Hawk.get("isKeepShopping");
-                if(isKeepShopping && atSettingProduct){
+                if (isKeepShopping && atSettingProduct) {
                     hideSettingProductFragment();
                 }
             }
@@ -628,8 +664,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
         CommonMethodHolder.saveCart(mProductAddedToCartArrList, cartCount,
-                mTxtViewCartTotal.getText().toString() , cart.isRequireFromEditProduct(), cart);
+                mTxtViewCartTotal.getText().toString(), cart.isRequireFromEditProduct(), cart);
         if (mHandlerQuiteApp != null) {
             mHandlerQuiteApp.removeCallbacks(mRunnable);
         }

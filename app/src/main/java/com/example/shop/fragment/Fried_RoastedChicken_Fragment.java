@@ -16,7 +16,6 @@ import android.view.ViewGroup;
 import com.example.shop.R;
 import com.example.shop.adapter.ProductAdapter;
 import com.example.shop.interfaces.OnProductClickListener;
-import com.example.shop.ultil.BannerImage;
 import com.example.shop.ultil.Product;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;

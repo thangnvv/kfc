@@ -44,7 +44,7 @@ public class CommonMethodHolder {
         String result = "";
         for (int i = 0; i < fullCourse.length(); i++) {
             boolean isEnd = true;
-            if(fullCourse.charAt(i) == '*'){
+            if (fullCourse.charAt(i) == '*') {
                 for (int j = i + 1; j < fullCourse.length(); j++) {
                     if (fullCourse.charAt(j) == '/') {
                         result = result + fullCourse.substring(i, j) + "\n";
@@ -53,7 +53,7 @@ public class CommonMethodHolder {
                         break;
                     }
                 }
-                if(isEnd){
+                if (isEnd) {
 //                    result = result + fullCourse.substring(i, fullCourse.length() - 3);
                     result = result + fullCourse.substring(i);
                     break;
@@ -63,24 +63,24 @@ public class CommonMethodHolder {
         return result;
     }
 
-    public static String[] seperateAsterisk(String productName){
+    public static String[] seperateAsterisk(String productName) {
         String[] result = productName.split("\\*");
         return result;
     }
 
-    public static String[] seperateSlash(String productName){
+    public static String[] seperateSlash(String productName) {
         String[] result = productName.split("/");
         return result;
     }
 
-    public static String[] deleteNextLine(String[] strArr){
-        for(int i = 0 ; i < strArr.length; i++){
-            strArr[i] = strArr[i].replace("\n" , "");
+    public static String[] deleteNextLine(String[] strArr) {
+        for (int i = 0; i < strArr.length; i++) {
+            strArr[i] = strArr[i].replace("\n", "");
         }
         return strArr;
     }
 
-    public static void saveCart(ArrayList<Product> arrListCart, int cartCount, String cartTotal, boolean isRequireFromEditProduct, Cart cart){
+    public static void saveCart(ArrayList<Product> arrListCart, int cartCount, String cartTotal, boolean isRequireFromEditProduct, Cart cart) {
         cart.setArrListProductInCart(arrListCart);
         cart.setCartCount(cartCount);
         cart.setCartTotal(cartTotal);

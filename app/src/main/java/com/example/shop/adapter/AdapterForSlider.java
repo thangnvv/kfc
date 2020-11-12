@@ -15,18 +15,9 @@ import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
 import com.example.shop.R;
-import com.example.shop.ultil.BannerImage;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.FileDownloadTask;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.smarteist.autoimageslider.SliderViewAdapter;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class AdapterForSlider extends SliderViewAdapter<AdapterForSlider.SliderAdapterVH> {
 

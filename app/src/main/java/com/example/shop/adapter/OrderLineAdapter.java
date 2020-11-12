@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shop.R;
+import com.example.shop.ultil.CommonMethodHolder;
 import com.example.shop.ultil.Product;
 
 import java.util.ArrayList;
@@ -33,8 +34,9 @@ public class OrderLineAdapter extends RecyclerView.Adapter<OrderLineAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Product product = (Product) mProductArrList.get(position);
+        int foodTotalPrice = CommonMethodHolder.convertStringToInt(product.getFood_price())*product.getPortion();
         holder.mTxtViewProductInfo.setText(product.getPortion() + "x " + product.getFood_name());
-        holder.mTxtViewProductPrice.setText(product.getFood_price());
+        holder.mTxtViewProductPrice.setText(CommonMethodHolder.convertIntToString(foodTotalPrice));
     }
 
     @Override
