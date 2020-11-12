@@ -70,68 +70,31 @@ public class SeperateProductAdapter extends RecyclerView.Adapter<SeperateProduct
         } else {
             // Get and load image for upgrade product
             upgradable = true;
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference databaseReference = database.getReference().child(productALaCarte.getUpgrades().get(productALaCarte.getChosen_upgrade_position()).getProduct());
+            databaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    Product product = snapshot.getValue(Product.class);
+                    Glide.with(context)
+                            .load(product.getUrls_banner().get(0))
+                            .fitCenter()
+                            .into(holder.mImgViewProductImage);
+                    holder.mImgViewProductImage.setVisibility(View.VISIBLE);
+                    holder.mTxtViewName.setText((productALaCarte.getUpgrades().get(productALaCarte.getChosen_upgrade_position()).getPortion() + " " + product.getFood_name()));
 
-            // Test
-            ArrayList<Upgrade> upgradeList = productALaCarte.getUpgrades();
-            for(int i = 0; i < upgradeList.size(); i++){
-                if(upgradeList.get(i).getPortion() > 0){
-                    FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    DatabaseReference databaseReference = database.getReference().child(upgradeList.get(i).getProduct());
-                    databaseReference.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            Product product = snapshot.getValue(Product.class);
-                            Glide.with(context)
-                                    .load(product.getUrls_banner().get(0))
-                                    .fitCenter()
-                                    .into(holder.mImgViewProductImage);
-                            holder.mImgViewProductImage.setVisibility(View.VISIBLE);
-                            holder.mTxtViewName.setText((productALaCarte.getUpgrades().get(productALaCarte.getChosen_upgrade_position()).getPortion() + " " + product.getFood_name()));
-
-                            if (productALaCarte.getUpgrades().get(productALaCarte.getChosen_upgrade_position()).getPrice_change().equals("")) {
-                                holder.mTxtViewPriceAdded.setVisibility(View.GONE);
-                                holder.mTxtViewPriceAdded.setText((""));
-                            } else {
-                                holder.mTxtViewPriceAdded.setVisibility(View.VISIBLE);
-                                holder.mTxtViewPriceAdded.setText(("+" + productALaCarte.getUpgrades().get(productALaCarte.getChosen_upgrade_position()).getPrice_change()));
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                        }
-                    });
+                    if (productALaCarte.getUpgrades().get(productALaCarte.getChosen_upgrade_position()).getPrice_change().equals("")) {
+                        holder.mTxtViewPriceAdded.setVisibility(View.GONE);
+                        holder.mTxtViewPriceAdded.setText((""));
+                    } else {
+                        holder.mTxtViewPriceAdded.setVisibility(View.VISIBLE);
+                        holder.mTxtViewPriceAdded.setText(("+" + productALaCarte.getUpgrades().get(productALaCarte.getChosen_upgrade_position()).getPrice_change()));
+                    }
                 }
-            }
 
-            // End test
-
-
-//            FirebaseDatabase database = FirebaseDatabase.getInstance();
-//            DatabaseReference databaseReference = database.getReference().child(productALaCarte.getUpgrades().get(productALaCarte.getChosen_upgrade_position()).getProduct());
-//            databaseReference.addValueEventListener(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                    Product product = snapshot.getValue(Product.class);
-//                    Glide.with(context)
-//                            .load(product.getUrls_banner().get(0))
-//                            .fitCenter()
-//                            .into(holder.mImgViewProductImage);
-//                    holder.mImgViewProductImage.setVisibility(View.VISIBLE);
-//                    holder.mTxtViewName.setText((productALaCarte.getUpgrades().get(productALaCarte.getChosen_upgrade_position()).getPortion() + " " + product.getFood_name()));
-//
-//                    if (productALaCarte.getUpgrades().get(productALaCarte.getChosen_upgrade_position()).getPrice_change().equals("")) {
-//                        holder.mTxtViewPriceAdded.setVisibility(View.GONE);
-//                        holder.mTxtViewPriceAdded.setText((""));
-//                    } else {
-//                        holder.mTxtViewPriceAdded.setVisibility(View.VISIBLE);
-//                        holder.mTxtViewPriceAdded.setText(("+" + productALaCarte.getUpgrades().get(productALaCarte.getChosen_upgrade_position()).getPrice_change()));
-//                    }
-//                }
-//
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError error) {}
-//            });
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {}
+            });
 
             if(productALaCarte.getUpgrades().size() > 1){
                 holder.mLLChangeProduct.setVisibility(View.VISIBLE);
@@ -212,7 +175,7 @@ public class SeperateProductAdapter extends RecyclerView.Adapter<SeperateProduct
 
                             @Override
                             public void confirmChooseMultipleUpgrade(ArrayList<Upgrade> upgradeList) {
-                               onAlacarteUpgraded.onMultipleUpgrade(upgradeList, getAdapterPosition());
+                               onAlacarteUpgraded.onMultipleUpgrade(upgradeList, mProductALacartes.get(getAdapterPosition()));
                             }
                         });
                     } else {
@@ -247,6 +210,6 @@ public class SeperateProductAdapter extends RecyclerView.Adapter<SeperateProduct
     public interface OnAlacarteUpgraded {
         void onUpgraded(int priceChanged);
         void onChangeOption(String lastChosen, String newChosen);
-        void onMultipleUpgrade(ArrayList<Upgrade> upgradeList, int alacartePosition);
+        void onMultipleUpgrade(ArrayList<Upgrade> upgradeList, ProductALaCarte aLaCarte);
     }
 }

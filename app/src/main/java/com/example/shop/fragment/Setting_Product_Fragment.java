@@ -259,70 +259,8 @@ public class Setting_Product_Fragment extends Fragment implements View.OnClickLi
             }
 
             @Override
-            public void onMultipleUpgrade(ArrayList<Upgrade> upgradeList, int aLaCartePosition) {
-                    seperateProductAdapter.notifyDataSetChanged();
-//                ProductALaCarte productALaCarte = productSetting.getAlacarte().get(aLaCartePosition);
-//                Gson gson = new Gson();
-//                String productAlacarteJson = gson.toJson(productALaCarte);
-//                ProductALaCarte productAla = gson.fromJson(productAlacarteJson, ProductALaCarte.class);
-//                productSetting.getAlacarte().remove(aLaCartePosition);
-//
-//
+            public void onMultipleUpgrade(ArrayList<Upgrade> upgradeList, ProductALaCarte aLaCarte) {
 
-
-//                int position = 0;
-
-//                ArrayList<ProductALaCarte> alaArrlist = new ArrayList<>();
-//                for(int a = 0; a < productSetting.getAlacarte().get(aLaCartePosition).getUpgrades().size(); a++){
-//                    Upgrade upgrade =  productSetting.getAlacarte().get(aLaCartePosition).getUpgrades().get(a);
-//                    for(int b = 0; b < upgradeList.size(); b++){
-//                        if(upgradeList.get(b).getProduct().equals(upgrade.getProduct())){
-//                            ProductALaCarte productALaCarte = new ProductALaCarte();
-//                            productALaCarte.setChosen_upgrade_position(a);
-//                            productALaCarte.setUpgradable(true);
-//                            productALaCarte.setUpgrades(productSetting.getAlacarte().get(aLaCartePosition).getUpgrades());
-//                            productALaCarte.getUpgrades().get(productALaCarte.getChosen_upgrade_position()).setPortion(upgradeList.get(b).getPortion());
-//                            Gson gson = new Gson();
-//                            String productAlacarteJson = gson.toJson(productALaCarte);
-//                            ProductALaCarte productAla = gson.fromJson(productAlacarteJson, ProductALaCarte.class);
-//                            alaArrlist.add(productAla);
-//                            break;
-//                        }
-//                    }
-//                }
-//
-//                ArrayList<Upgrade> upgrades = productSetting.getAlacarte().get(aLaCartePosition).getUpgrades();
-//                productSetting.getAlacarte().remove(aLaCartePosition);
-//
-//                int size = upgradeList.size();
-//                if(size > 1){
-//
-//                    for(int j = 0 ; j < size; j++){
-//                        ProductALaCarte aLaCarte = new ProductALaCarte();
-//                        for(int k =0; k < productSetting.getAlacarte().size(); k++){
-//
-//                        }
-//                    }
-//
-//
-//
-//                    ProductALaCarte aLaCarte = productSetting.getAlacarte().get(aLaCartePosition);
-//
-//
-//
-//
-//
-//                    Log.d("DDD", "In Setting product fragment: ");
-//                    for(int i = 0; i < aLaCarte.getUpgrades().size(); i++){
-//                        if(i != aLaCarte.getChosen_upgrade_position()){
-//                            aLaCarte.setChosen_upgrade_position(i);
-//                        }
-//                    }
-//                    productSetting.getAlacarte().add(aLaCarte);
-//                }else{
-//
-//                }
-//                seperateProductAdapter.notifyDataSetChanged();
             }
         });
     }
