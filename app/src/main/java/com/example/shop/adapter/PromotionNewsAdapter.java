@@ -8,25 +8,24 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shop.R;
 import com.example.shop.ultil.DownloadImageTask;
-import com.example.shop.ultil.PromotionNews;
+import com.example.shop.ultil.Promotion;
 
 import java.util.ArrayList;
 
 public class PromotionNewsAdapter extends RecyclerView.Adapter<PromotionNewsAdapter.PromotionViewHolder> {
 
-    private ArrayList<PromotionNews> mPromotionNewsList;
+    private ArrayList<Promotion> mPromotionList;
     private Context context;
 
-    public PromotionNewsAdapter(ArrayList<PromotionNews> mPromotionNewsList, Context context) {
-        this.mPromotionNewsList = mPromotionNewsList;
+    public PromotionNewsAdapter(Context context, ArrayList<Promotion> mPromotionList){
         this.context = context;
+        this.mPromotionList = mPromotionList;
     }
 
     @NonNull
@@ -38,20 +37,25 @@ public class PromotionNewsAdapter extends RecyclerView.Adapter<PromotionNewsAdap
 
     @Override
     public void onBindViewHolder(@NonNull PromotionViewHolder holder, int position) {
-        PromotionNews promotionNews = mPromotionNewsList.get(position);
+        Promotion promotion = mPromotionList.get(position);
 
         new DownloadImageTask(holder.mImgViewBannerPromotion)
-                .execute(promotionNews.getImageUrl());
-        holder.mTxtViewPromotionTitle.setText(promotionNews.getTitle());
-        holder.mTxtViewPromotionDescription.setText(promotionNews.getPromotionDescription());
-        holder.mTxtViewPeriodPromotion.setText(promotionNews.getPeriodPromotion());
-        holder.mTxtViewHeartCount.setText(String.valueOf(promotionNews.getHeartCount()));
-        holder.mTxtViewPromotionDescription.setText(promotionNews.getPromotionDescription());
+                .execute(promotion.getBanner());
+        holder.mTxtViewPromotionTitle.setText(promotion.getTitle());
+        holder.mTxtViewPromotionDescription.setText(promotion.getDescript());
+        holder.mTxtViewPeriodPromotion.setText(promotion.getDate());
+        holder.mTxtViewHeartCount.setText(String.valueOf(promotion.getLikes()));
+
+        if(promotion.isLike_clicked()){
+            holder.mImgButtonHeart.setImageResource(R.drawable.heart_red);
+        }else{
+            holder.mImgButtonHeart.setImageResource(R.drawable.heart);
+        }
     }
 
     @Override
     public int getItemCount() {
-        return mPromotionNewsList.size();
+            return mPromotionList.size();
     }
 
     public class PromotionViewHolder extends RecyclerView.ViewHolder{
@@ -77,9 +81,34 @@ public class PromotionNewsAdapter extends RecyclerView.Adapter<PromotionNewsAdap
             mBtnSeeMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context , "Hello", Toast.LENGTH_LONG).show();
+                    onClickButton.onClickSeeMore(getAdapterPosition());
+                }
+            });
+
+            mImgButtonHeart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(!mPromotionList.get(getAdapterPosition()).isLike_clicked()){
+                        mImgButtonHeart.setImageResource(R.drawable.heart_red);
+                        int currentLike =  mPromotionList.get(getAdapterPosition()).getLikes();
+                        mPromotionList.get(getAdapterPosition()).setLikes(currentLike + 1);
+                        mPromotionList.get(getAdapterPosition()).setLike_clicked(true);
+                        onClickButton.onClickLike();
+                    }
                 }
             });
         }
     }
+
+    OnClickButton onClickButton;
+
+    public void setOnClickButton(OnClickButton onClickButton){
+        this.onClickButton = onClickButton;
+    }
+
+    public interface OnClickButton {
+        void onClickSeeMore(int position);
+        void onClickLike();
+    }
 }
+

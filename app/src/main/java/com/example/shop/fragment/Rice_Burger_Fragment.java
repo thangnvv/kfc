@@ -2,6 +2,7 @@ package com.example.shop.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,31 +54,35 @@ public class Rice_Burger_Fragment extends Fragment implements OnProductClickList
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference().child("product/rice_burger");
 
-        myRef.orderByChild("position").addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                mListProduct.add(snapshot.getValue(Product.class));
-                if(mProductAdapter != null){
-                    mProductAdapter.notifyDataSetChanged();
-                }
-            }
+       myRef.orderByChild("position").addChildEventListener(new ChildEventListener() {
+           @Override
+           public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+               mListProduct.add(snapshot.getValue(Product.class));
+               if(mProductAdapter != null){
+                   mProductAdapter.notifyDataSetChanged();
+               }
+           }
 
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-            }
+           @Override
+           public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-            }
+           }
 
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-            }
+           @Override
+           public void onChildRemoved(@NonNull DataSnapshot snapshot) {
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
+           }
+
+           @Override
+           public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+           }
+
+           @Override
+           public void onCancelled(@NonNull DatabaseError error) {
+
+           }
+       });
     }
 
     @Override

@@ -1,62 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+
+<LinearLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activity.PromotionNewsActivity">
+    xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbarLayout"
+    <LinearLayout
+        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/red">
+        android:layout_height="0dp"
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/imageViewCollaps"
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_20sdp"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed" />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:context=".activity.PromotionNewsActivity">
 
-        <TextView
-            android:id="@+id/textViewTitle"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_66sdp"
-            android:background="@color/red"
-            android:gravity="center"
-            android:paddingTop="@dimen/_8sdp"
-            android:paddingBottom="@dimen/_8sdp"
-            android:text="TIN KHUYẾN MÃI"
-            android:textColor="@color/white"
-            android:textSize="@dimen/h6"
-            android:textStyle="bold" />
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/appbarLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/red">
 
-    </com.google.android.material.appbar.AppBarLayout>
+                <ImageView
+                    android:id="@+id/imageViewCollaps"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_20sdp"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed" />
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
-        android:background="@color/red"
-        android:paddingTop="@dimen/_30sdp"
-        app:layout_anchor="@id/scrollview"
-        app:layout_anchorGravity="top" />
+                <TextView
+                    android:id="@+id/textViewTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_66sdp"
+                    android:background="@color/red"
+                    android:gravity="center"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:text="TIN KHUYẾN MÃI"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/h6"
+                    android:textStyle="bold" />
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/scrollview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_left_parent"
-        android:layout_marginRight="@dimen/margin_right_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewPromotionNews"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_60sdp" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:background="@color/red"
+                app:layout_anchor="@id/scrollview"
+                app:layout_anchorGravity="top" />
 
-    </androidx.core.widget.NestedScrollView>
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/scrollview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/_16sdp"
+                android:layout_marginLeft="@dimen/margin_left_parent"
+                android:layout_marginRight="@dimen/margin_right_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    >
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerViewPromotionNews"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+
+
+            </androidx.core.widget.NestedScrollView>
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    </LinearLayout>
 
     <include
         layout="@layout/layout_bottom_navigation"
@@ -64,4 +89,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</LinearLayout>
+
+
+

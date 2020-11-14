@@ -55,7 +55,6 @@ public class CustomDialogChooseDistrict extends Dialog implements View.OnClickLi
     @Override
     public void onClick(View v) {
         mListener.onItemSelected(mSpinnerDistrict.getSelectedItemPosition());
-        Toast.makeText(context, "" + mSpinnerDistrict.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
         dismiss();
     }
 

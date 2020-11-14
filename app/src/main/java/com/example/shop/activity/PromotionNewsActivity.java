@@ -1,6 +1,7 @@
 package com.example.shop.activity;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,22 +14,25 @@ import android.widget.Toast;
 
 import com.example.shop.R;
 import com.example.shop.adapter.PromotionNewsAdapter;
-import com.example.shop.ultil.PromotionNews;
+import com.example.shop.ultil.Promotion;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
-
 public class PromotionNewsActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
 
-    ArrayList<PromotionNews> mListPromotionNews;
+    ArrayList<Promotion> mListPromotion;
     PromotionNewsAdapter mPromotionNewsAdapter;
     RecyclerView.LayoutManager mLayoutManager;
     RecyclerView mRecyclerViewPromotionNews;
     BottomNavigationView mBtmNavigationView;
     private boolean doubleBackToExitPressedOnce;
-    private Handler mHandlerQuiteApp = new Handler();
+    private final Handler mHandlerQuiteApp = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,15 +45,28 @@ public class PromotionNewsActivity extends AppCompatActivity implements BottomNa
         mBtmNavigationView.setSelectedItemId(R.id.promotion);
         mBtmNavigationView.setOnNavigationItemSelectedListener(this);
 
-        mPromotionNewsAdapter      = new PromotionNewsAdapter(mListPromotionNews, getApplicationContext());
+        mPromotionNewsAdapter      = new PromotionNewsAdapter(getApplicationContext(), mListPromotion);
         mLayoutManager             = new LinearLayoutManager(getApplicationContext());
         mRecyclerViewPromotionNews.setLayoutManager(mLayoutManager);
         mRecyclerViewPromotionNews.setAdapter(mPromotionNewsAdapter);
+
+        mPromotionNewsAdapter.setOnClickButton(new PromotionNewsAdapter.OnClickButton() {
+            @Override
+            public void onClickSeeMore(int position) {
+                Intent intentSeePromotionNews = new Intent(PromotionNewsActivity.this, ViewPromotionActivity.class);
+                intentSeePromotionNews.putExtra("newsUrl", mListPromotion.get(position).getLink());
+                startActivity(intentSeePromotionNews);
+            }
+
+            @Override
+            public void onClickLike() {
+                mPromotionNewsAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
     private void intiView() {
-
-        mListPromotionNews = new ArrayList<>();
+        mListPromotion = new ArrayList<>();
         mRecyclerViewPromotionNews = findViewById(R.id.recyclerViewPromotionNews);
         mBtmNavigationView = findViewById(R.id.bottomNavigationView);
 
@@ -57,16 +74,38 @@ public class PromotionNewsActivity extends AppCompatActivity implements BottomNa
 
     private void addPromotionNews() {
 
-        mListPromotionNews.add(new PromotionNews("https://kfcvietnam.com.vn/uploads/content/a9e4b466583e753c07ddb8d2042b8b6f.png",
-                "“Giá Siêu Ưu Đãi” chỉ 18k/1 miếng gà đã trở lại!", "08/09/2020 - 22/10/2020", "Hàng ngàn miếng gà giòn tan nóng hổi chỉ 18K đang chờ bạn đến “măm” tại tất cả nhà hàng KFC từ Thứ 3 đến...", 142) );
-        mListPromotionNews.add(new PromotionNews("https://kfcvietnam.com.vn/uploads/content/4513b5869d20f3dd956f2c7ab6b6ea68.png",
-                "Gà Phủ Phê - Giá Miễn Chê!!!", "04/09/2020 - 25/10/2020", "Cơ hội ngồi nhà măm gà KFC phủ phê với giá miễn chê suốt tuần đã đến!!!", 184) );
-        mListPromotionNews.add(new PromotionNews("https://kfcvietnam.com.vn/uploads/content/9170c92e6a54a3789d19a1e947e7df39.png",
-                "Trưa Nay Ăn Gì? Thực Đơn Bữa Trưa Tiết Kiệm chỉ từ 35.000đ/phần.", "18/05/2020 - 31/12/2020", "Hãy ghé ngay các nhà hàng KFC để thưởng thức thực đơn Bữa Trưa Tiết...", 641) );
-        mListPromotionNews.add(new PromotionNews("https://kfcvietnam.com.vn/uploads/content/a122806e86b4daa89fd21fbdc77971fe.png",
-                "Ngon tuyệt đỉnh từ Trà Sữa Bạc Hà", "02/07/2020 - 31/12/2020", "Sau 1 thời gian chờ đợi, cuối cùng KFC cũng trình làng món Trà Sữa Bạc Hà ngon tuyệt đỉnh. Nước trà được làm từ", 157) );
-        mListPromotionNews.add(new PromotionNews("https://kfcvietnam.com.vn/uploads/content/a6e1db2b6df45c9e7960d4b0a7877ccd.png",
-                "Thanh Bí Phô-mai – Thơm Bùi Giòn Vị!!!", "01/06/2020 - 31/12/2020", "Món “Ăn Vặt” thần thánh đã xuất hiện tại KFC, cơ hội thưởng thức món ăn có 1-0-2 cho team nhà mình!!!", 813) );
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference dataRef = database.getReference().child("promotion_news");
+
+        dataRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                mListPromotion.add(snapshot.getValue(Promotion.class));
+                if(mPromotionNewsAdapter!= null){
+                    mPromotionNewsAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
     }
 

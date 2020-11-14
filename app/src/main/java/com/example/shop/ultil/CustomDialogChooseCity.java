@@ -52,7 +52,6 @@ public class CustomDialogChooseCity extends Dialog implements View.OnClickListen
     @Override
     public void onClick(View v) {
         mListener.onItemSelected(mSpinnerCity.getSelectedItemPosition());
-        Toast.makeText(context, "" + mSpinnerCity.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
         dismiss();
     }
 

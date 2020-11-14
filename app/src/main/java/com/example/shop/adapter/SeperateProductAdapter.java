@@ -175,7 +175,7 @@ public class SeperateProductAdapter extends RecyclerView.Adapter<SeperateProduct
 
                             @Override
                             public void confirmChooseMultipleUpgrade(ArrayList<Upgrade> upgradeList) {
-                               onAlacarteUpgraded.onMultipleUpgrade(upgradeList, mProductALacartes.get(getAdapterPosition()));
+                               onAlacarteUpgraded.onMultipleUpgrade(upgradeList, getAdapterPosition());
                             }
                         });
                     } else {
@@ -210,6 +210,6 @@ public class SeperateProductAdapter extends RecyclerView.Adapter<SeperateProduct
     public interface OnAlacarteUpgraded {
         void onUpgraded(int priceChanged);
         void onChangeOption(String lastChosen, String newChosen);
-        void onMultipleUpgrade(ArrayList<Upgrade> upgradeList, ProductALaCarte aLaCarte);
+        void onMultipleUpgrade(ArrayList<Upgrade> upgradeList, int position);
     }
 }

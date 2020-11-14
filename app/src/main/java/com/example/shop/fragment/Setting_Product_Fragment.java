@@ -259,8 +259,16 @@ public class Setting_Product_Fragment extends Fragment implements View.OnClickLi
             }
 
             @Override
-            public void onMultipleUpgrade(ArrayList<Upgrade> upgradeList, ProductALaCarte aLaCarte) {
-
+            public void onMultipleUpgrade(ArrayList<Upgrade> upgradeList, int position) {
+               for(int i = 1; i< upgradeList.size(); i++){
+                   Gson gson = new Gson();
+                   ProductALaCarte aLaCarte = productSetting.getAlacarte().get(position);
+                   String productAlacarteJson = gson.toJson(aLaCarte);
+                   ProductALaCarte productALaCarte = gson.fromJson(productAlacarteJson, ProductALaCarte.class);
+//                   productALaCarte.getUpgrades().get(productALaCarte.getUpgrades().size() - 1).setPortion(upgradeList.get(upgradeList.size() -1).getPortion());
+                   productSetting.getAlacarte().add(productALaCarte);
+                   seperateProductAdapter.notifyDataSetChanged();
+               }
             }
         });
     }

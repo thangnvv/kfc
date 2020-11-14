@@ -15,6 +15,7 @@ public class Product {
     public Product(){
     }
 
+
     public int getPosition() {
         return position;
     }
@@ -39,7 +40,6 @@ public class Product {
         this.portion = portion;
         this.alacarte = alacarte;
     }
-
 
     public Product(ArrayList<String> urls_banner, String food_name, String food_price, String food_descript, int portion) {
         this.urls_banner = urls_banner;

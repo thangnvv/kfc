@@ -43,7 +43,6 @@ public class RestaurantActivity extends AppCompatActivity implements BottomNavig
     private boolean doubleBackToExitPressedOnce;
     private Handler mHandlerQuiteApp = new Handler();
     private String[] cityList;
-    private String[] districtList;
     private int cityPosition = 0;
     private int districtPosition = 0;
     private Boolean citySelected = false;
