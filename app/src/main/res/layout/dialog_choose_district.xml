@@ -5,62 +5,11 @@
     android:orientation="vertical"
     android:layout_gravity="center_horizontal">
 
-    <LinearLayout
+    <include
+        android:layout_marginBottom="@dimen/_16sdp"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal">
-
-        <View
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp" />
-
-        <View
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp"
-            android:background="@color/red" />
-
-        <View
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp" />
-
-        <View
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp"
-            android:background="@color/red" />
-
-        <View
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp" />
-
-        <View
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp"
-            android:background="@color/red" />
-
-        <View
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp" />
-
-        <View
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp"
-            android:background="@color/red" />
-
-        <View
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp" />
-
-        <View
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp"
-            android:background="@color/red" />
-
-        <View
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp" />
-
-    </LinearLayout>
+        android:layout_height="wrap_content"
+        layout="@layout/layout_red_columns"/>
 
     <Spinner
         android:background="@drawable/background_black_thin"

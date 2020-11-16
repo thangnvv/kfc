@@ -62,7 +62,6 @@
                     android:id="@+id/textViewCity"
                     android:textColor="@color/darkGrey"
                     android:textSize="@dimen/h0"
-                    android:text="Tỉnh/Thành Phố"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"/>

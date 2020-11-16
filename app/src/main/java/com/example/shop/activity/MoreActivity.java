@@ -3,6 +3,7 @@ package com.example.shop.activity;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
@@ -16,6 +17,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -26,18 +28,36 @@ import com.example.shop.R;
 import com.example.shop.ultil.CustomDialogOperationPolicy;
 import com.example.shop.ultil.CustomDialogPolicyAndRegulation;
 import com.example.shop.ultil.CustomDialogTermsAndConditons;
+import com.example.shop.ultil.Customer;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MoreActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener,
-        View.OnClickListener{
+        View.OnClickListener {
+
+    // Showing layout base on Sign In status
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private DatabaseReference mDataRef = FirebaseDatabase.getInstance().getReference();
+    LinearLayout mLlSignedUp, mLlSignInAndSignUp;
+    TextView mTxtViewUserName, mTxtViewSignOut;
+    Button mBtnSignIn, mBtnSignUp;
 
     BottomNavigationView mBtmNavigationView;
-    TextView mTxtViewAppSetting, mTxtAboutKFC, mTxtViewContact, mTxtViewTermsAndConDitionsTitle, mTxtViewOperationPolicyTitle, mTxtViewPolicyAndRegulationTitle;
+    TextView mTxtViewAppSetting, mTxtAboutKFC, mTxtViewContact, mTxtViewTermsAndConditionsTitle, mTxtViewOperationPolicyTitle, mTxtViewPolicyAndRegulationTitle;
+    TextView mTxtViewMyAccount, mTxtViewOrderHistory, mTxtViewShippingAddress;
+    LinearLayout mLlAccountInformation;
+    TextView mTxtViewReceiptNotification, mTxtViewChangePassword, mTxtViewChangeAccountInformation;
     ImageButton mImgButtonFacebook, mImgButtonYoutube, mImgButtonInstagram;
     ImageView mImgViewHotline;
-    LinearLayout mLinearLayoutAboutKFC;
-    boolean mAboutKFCIsClicked = false;
-    private final int REQUEST_CODE_CALL_PHONE = 123;
+    LinearLayout mLlAboutKFC;
+    boolean mAboutKFCIsClicked = false, mAccountInfoIsClick = false;
+    private final int REQUEST_CODE_CALL_PHONE = 111;
     private boolean doubleBackToExitPressedOnce;
     private Handler mHandlerQuiteApp = new Handler();
 
@@ -48,37 +68,65 @@ public class MoreActivity extends AppCompatActivity implements BottomNavigationV
 
         initView();
         setOnClick();
-
     }
 
     private void setOnClick() {
-        mBtmNavigationView.setSelectedItemId(R.id.more);
-        mBtmNavigationView.setOnNavigationItemSelectedListener(this);
-        mTxtViewAppSetting.setOnClickListener(this);
         mTxtAboutKFC.setOnClickListener(this);
-        mTxtViewContact.setOnClickListener(this);
-        mTxtViewTermsAndConDitionsTitle.setOnClickListener(this);
+        mTxtViewTermsAndConditionsTitle.setOnClickListener(this);
         mTxtViewOperationPolicyTitle.setOnClickListener(this);
         mTxtViewPolicyAndRegulationTitle.setOnClickListener(this);
+        mTxtViewContact.setOnClickListener(this);
+
+        mBtmNavigationView.setSelectedItemId(R.id.more);
+        mBtmNavigationView.setOnNavigationItemSelectedListener(this);
+
+        mTxtViewAppSetting.setOnClickListener(this);
+
         mImgButtonFacebook.setOnClickListener(this);
         mImgButtonYoutube.setOnClickListener(this);
         mImgButtonInstagram.setOnClickListener(this);
         mImgViewHotline.setOnClickListener(this);
+
+        mBtnSignUp.setOnClickListener(this);
+        mBtnSignIn.setOnClickListener(this);
+        mTxtViewSignOut.setOnClickListener(this);
+
+        mTxtViewChangePassword.setOnClickListener(this);
+        mTxtViewReceiptNotification.setOnClickListener(this);
+        mTxtViewChangeAccountInformation.setOnClickListener(this);
     }
 
     private void initView() {
-        mBtmNavigationView               = findViewById(R.id.bottomNavigationView);
-        mTxtViewAppSetting               = findViewById(R.id.textViewAppSetting);
-        mTxtAboutKFC                     = findViewById(R.id.textViewAboutKFC);
-        mTxtViewContact                  = findViewById(R.id.textViewContact);
-        mTxtViewTermsAndConDitionsTitle  = findViewById(R.id.textViewTermsAndConditionsTitle);
-        mTxtViewOperationPolicyTitle     = findViewById(R.id.textViewOperationPolicyTitle);
+        mBtmNavigationView = findViewById(R.id.bottomNavigationView);
+        mTxtViewAppSetting = findViewById(R.id.textViewAppSetting);
+
+        mLlAboutKFC = findViewById(R.id.linearAbouKFC);
+        mTxtAboutKFC = findViewById(R.id.textViewAboutKFC);
+        mTxtViewContact = findViewById(R.id.textViewContact);
         mTxtViewPolicyAndRegulationTitle = findViewById(R.id.textViewPolicyAndRegulationTitle);
-        mLinearLayoutAboutKFC            = findViewById(R.id.linearAbouKFC);
-        mImgButtonFacebook               = findViewById(R.id.imageButtonFacebook);
-        mImgButtonYoutube                = findViewById(R.id.imageButtonYoutube);
-        mImgButtonInstagram              = findViewById(R.id.imageButtonInstagram);
-        mImgViewHotline                  = findViewById(R.id.imageViewHotline);
+        mTxtViewTermsAndConditionsTitle = findViewById(R.id.textViewTermsAndConditionsTitle);
+        mTxtViewOperationPolicyTitle = findViewById(R.id.textViewOperationPolicyTitle);
+
+        mLlAccountInformation = findViewById(R.id.linearLayoutAccountInformation);
+        mTxtViewChangeAccountInformation = findViewById(R.id.textViewChangeAccountInformation);
+        mTxtViewReceiptNotification = findViewById(R.id.textViewReceiptNotification);
+        mTxtViewChangePassword = findViewById(R.id.textViewChangePassword);
+
+        mImgButtonFacebook = findViewById(R.id.imageButtonFacebook);
+        mImgButtonYoutube = findViewById(R.id.imageButtonYoutube);
+        mImgButtonInstagram = findViewById(R.id.imageButtonInstagram);
+        mImgViewHotline = findViewById(R.id.imageViewHotline);
+
+        // Include Sign In Sign Up
+        mLlSignedUp = findViewById(R.id.linearLayoutSignedUp);
+        mLlSignInAndSignUp = findViewById(R.id.linearLayoutSignInAndSignUp);
+        mBtnSignUp = findViewById(R.id.buttonSignUp);
+        mBtnSignIn = findViewById(R.id.buttonSignIn);
+        mTxtViewUserName = findViewById(R.id.textViewUserName);
+        mTxtViewSignOut = findViewById(R.id.textViewSignOut);
+        mTxtViewShippingAddress = findViewById(R.id.textViewShippingAddress);
+        mTxtViewOrderHistory = findViewById(R.id.textViewOrderHistory);
+        mTxtViewMyAccount = findViewById(R.id.textViewMyAccount);
     }
 
 
@@ -107,17 +155,17 @@ public class MoreActivity extends AppCompatActivity implements BottomNavigationV
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.textViewAppSetting:
                 Intent intentSettingActitity = new Intent(MoreActivity.this, SettingActivity.class);
                 startActivity(intentSettingActitity);
                 break;
             case R.id.textViewAboutKFC:
-                if(mAboutKFCIsClicked){
-                    mLinearLayoutAboutKFC.setVisibility(View.GONE);
+                if (mAboutKFCIsClicked) {
+                    mLlAboutKFC.setVisibility(View.GONE);
                     mAboutKFCIsClicked = false;
-                }else{
-                    mLinearLayoutAboutKFC.setVisibility(View.VISIBLE);
+                } else {
+                    mLlAboutKFC.setVisibility(View.VISIBLE);
                     mAboutKFCIsClicked = true;
                 }
                 break;
@@ -153,16 +201,48 @@ public class MoreActivity extends AppCompatActivity implements BottomNavigationV
                 startActivity(intentInstagram);
                 break;
             case R.id.imageViewHotline:
-                if(ContextCompat.checkSelfPermission(MoreActivity.this, Manifest.permission.CALL_PHONE)
-                                                  == PackageManager.PERMISSION_GRANTED){
-                Intent intentCallHotline = new Intent(Intent.ACTION_CALL);
-                intentCallHotline.setData(Uri.parse("tel:19006886"));
-                startActivity(intentCallHotline);
-                }else{
+                if (ContextCompat.checkSelfPermission(MoreActivity.this, Manifest.permission.CALL_PHONE)
+                        == PackageManager.PERMISSION_GRANTED) {
+                    Intent intentCallHotline = new Intent(Intent.ACTION_CALL);
+                    intentCallHotline.setData(Uri.parse("tel:19006886"));
+                    startActivity(intentCallHotline);
+                } else {
                     Toast.makeText(this, "Vui lòng cho phép áp truy cập danh bạ để thực hiện cuộc gọi", Toast.LENGTH_SHORT).show();
-                    requestPermissions(new String[] {Manifest.permission.CALL_PHONE} , REQUEST_CODE_CALL_PHONE );
+                    requestPermissions(new String[]{Manifest.permission.CALL_PHONE}, REQUEST_CODE_CALL_PHONE);
                 }
-            break;
+                break;
+            case R.id.buttonSignIn:
+                Intent intentSignIn = new Intent(MoreActivity.this, SignInActivity.class);
+                startActivity(intentSignIn);
+                break;
+            case R.id.buttonSignUp:
+                Intent intentSignUp = new Intent(MoreActivity.this, AccountRegisterActivity.class);
+                startActivity(intentSignUp);
+                break;
+            case R.id.textViewSignOut:
+                FirebaseAuth.getInstance().signOut();
+                mLlSignInAndSignUp.setVisibility(View.VISIBLE);
+                mLlSignedUp.setVisibility(View.GONE);
+                mTxtViewSignOut.setVisibility(View.GONE);
+                mTxtViewMyAccount.setTextColor(AppCompatResources.getColorStateList(MoreActivity.this, R.color.darkGrey));
+                mTxtViewMyAccount.setClickable(false);
+                mTxtViewOrderHistory.setTextColor(AppCompatResources.getColorStateList(MoreActivity.this, R.color.darkGrey));
+                mTxtViewOrderHistory.setClickable(false);
+                mTxtViewShippingAddress.setTextColor(AppCompatResources.getColorStateList(MoreActivity.this, R.color.darkGrey));
+                mTxtViewShippingAddress.setClickable(false);
+                if(mAccountInfoIsClick){
+                    mLlAccountInformation.setVisibility(View.GONE);
+                    mAccountInfoIsClick = false;
+                }
+
+                break;
+            case R.id.textViewChangePassword:
+                startActivity(new Intent(MoreActivity.this, ChangePasswordActivity.class));
+                break;
+            case R.id.textViewChangeAccountInformation:
+            case R.id.textViewReceiptNotification:
+                Toast.makeText(MoreActivity.this, "Chức năng đang được cập nhật. Vui lòng thử lại sau!", Toast.LENGTH_SHORT).show();
+                break;
         }
     }
 
@@ -170,12 +250,80 @@ public class MoreActivity extends AppCompatActivity implements BottomNavigationV
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if(requestCode == REQUEST_CODE_CALL_PHONE && permissions.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+        if (requestCode == REQUEST_CODE_CALL_PHONE && permissions.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             Intent intentCallHotline = new Intent(Intent.ACTION_CALL);
             intentCallHotline.setData(Uri.parse("tel:19006886"));
             startActivity(intentCallHotline);
         }
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        final FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            mTxtViewMyAccount.setTextColor(getResources().getColor(R.color.black));
+            mTxtViewMyAccount.setClickable(true);
+            mTxtViewOrderHistory.setTextColor(getResources().getColor(R.color.black));
+            mTxtViewOrderHistory.setClickable(true);
+            mTxtViewShippingAddress.setTextColor(getResources().getColor(R.color.black));
+            mTxtViewShippingAddress.setClickable(true);
+
+            mTxtViewOrderHistory.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(MoreActivity.this, OrderHistoryActivity.class));
+                }
+            });
+
+            mTxtViewShippingAddress.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(MoreActivity.this, "Chức năng đang được nâng cấp, vui lòng thử lại sau." , Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            mTxtViewMyAccount.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(mAccountInfoIsClick){
+                        mLlAccountInformation.setVisibility(View.GONE);
+                        mAccountInfoIsClick = false;
+                    }else{
+                        mLlAccountInformation.setVisibility(View.VISIBLE);
+                        mAccountInfoIsClick = true;
+                    }
+                }
+            });
+
+            mLlSignInAndSignUp.setVisibility(View.GONE);
+            mLlSignedUp.setVisibility(View.VISIBLE);
+            mTxtViewSignOut.setVisibility(View.VISIBLE);
+            String userUrl = "user/" + currentUser.getUid();
+            mDataRef.child(userUrl).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    Customer customer = snapshot.getValue(Customer.class);
+                    mTxtViewUserName.setText(customer.getFull_name());
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+        } else {
+            mLlSignedUp.setVisibility(View.GONE);
+            mLlSignInAndSignUp.setVisibility(View.VISIBLE);
+            mTxtViewMyAccount.setTextColor(AppCompatResources.getColorStateList(MoreActivity.this, R.color.darkGrey));
+            mTxtViewMyAccount.setClickable(false);
+            mTxtViewOrderHistory.setTextColor(AppCompatResources.getColorStateList(MoreActivity.this, R.color.darkGrey));
+            mTxtViewOrderHistory.setClickable(false);
+            mTxtViewShippingAddress.setTextColor(AppCompatResources.getColorStateList(MoreActivity.this, R.color.darkGrey));
+            mTxtViewShippingAddress.setClickable(false);
+        }
     }
 
     //Click twice to quite the app
@@ -202,6 +350,8 @@ public class MoreActivity extends AppCompatActivity implements BottomNavigationV
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mHandlerQuiteApp != null) { mHandlerQuiteApp.removeCallbacks(mRunnable); }
+        if (mHandlerQuiteApp != null) {
+            mHandlerQuiteApp.removeCallbacks(mRunnable);
+        }
     }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/_230sdp"
-    android:layout_height="@dimen/_60sdp"
+    android:layout_height="@dimen/_70sdp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="@dimen/_4sdp"
     android:layout_marginRight="@dimen/margin_right_parent"
@@ -36,7 +36,7 @@
             android:id="@+id/textViewRestaurantAddress"
             android:textSize="@dimen/addressRestaurant"
             android:textColor="@color/black"
-            android:paddingBottom="@dimen/_2sdp"
+            android:layout_marginBottom="@dimen/_2sdp"
             android:text="Restaurant Address"
             android:layout_marginLeft="@dimen/margin_left_parent"
             android:layout_marginTop="@dimen/_4sdp"

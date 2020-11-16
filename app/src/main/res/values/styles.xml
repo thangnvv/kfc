@@ -3,6 +3,22 @@
         <item name="colorPrimaryDark">@color/red</item>
     </style>
 
+    <style name="FacebookLoginButton">
+        <item name="android:textSize">@dimen/h1</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/background_facebook</item>
+        <item name="android:layout_marginTop">@dimen/_16sdp</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
+
+    <style name="GoogleLoginButton">
+        <item name="android:textSize">@dimen/h1</item>
+        <item name="android:textColor">@color/darkGrey</item>
+        <item name="android:background">@drawable/background_black_thin</item>
+        <item name="android:layout_marginTop">@dimen/_16sdp</item>
+        <item name="android:layout_marginBottom">@dimen/_16sdp</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
 
     <style name="BottomNavigationView">
         <item name="itemBackground">@drawable/background_bottom_nav_item</item>

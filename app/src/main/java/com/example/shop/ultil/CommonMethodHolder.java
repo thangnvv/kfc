@@ -85,6 +85,7 @@ public class CommonMethodHolder {
         cart.setCartCount(cartCount);
         cart.setCartTotal(cartTotal);
         cart.setRequireFromEditProduct(isRequireFromEditProduct);
+        Log.d("DDD", "In saveCart: " + cart.getArrListProductInCart().size() + "; " + cart.getCartTotal() + "; " + cart.getCartCount());
         Hawk.put("cart", cart);
     }
 

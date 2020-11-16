@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -82,18 +81,6 @@ public class CartActivity extends AppCompatActivity implements OnDeleteItemClick
     }
 
     private void setUpView() {
-//        for (int i = 0; i < mProductAddedToCartArrList.size(); i++) {
-//            mProductAddedToCartArrList.get(i)
-//                    .setFood_descript(CommonMethodHolder.setDefaultCourse(mProductAddedToCartArrList.get(i).getFood_descript()));
-//            Product product = mProductAddedToCartArrList.get(i);
-//            for(int j = 0; j < product.getAlacarte().size(); j++){
-//                ProductALaCarte aLaCarte = product.getAlacarte().get(j);
-//                if(aLaCarte.isUpgradable()){
-//
-//                }
-//            }
-//        }
-
         removeRepeatProduct();
         mSingleProductAdapter = new SingleProductAdapter(mProductAddedToCartArrList, this);
 
@@ -116,8 +103,9 @@ public class CartActivity extends AppCompatActivity implements OnDeleteItemClick
         mBtnPay.setOnClickListener(this);
         mImgButtonQuiteCart.setOnClickListener(this);
 
+
         // Only set up On Click for Adapter when cart is not empty or it would throw null pointer exeption
-        if(cartCount >0){
+        if (cartCount > 0) {
             mSingleProductAdapter.setOnViewClickListener(new SingleProductAdapter.OnViewClickListener() {
                 @Override
                 public void onMinusPortion(Product product) {
@@ -192,27 +180,30 @@ public class CartActivity extends AppCompatActivity implements OnDeleteItemClick
         // remove and add portion if 2 product have the same name and price and alacartes
         for (int i = 0; i < mProductAddedToCartArrList.size() - 1; i++) {
             Product productTemp1 = mProductAddedToCartArrList.get(i);
-            for (int j = i + 1; j < mProductAddedToCartArrList.size(); j++) {
-                boolean isTheSame = true;
-                Product productTemp2 = mProductAddedToCartArrList.get(j);
-                // Check if the same name and price
-                if (productTemp1.getFood_name().equals(productTemp2.getFood_name()) && productTemp1.getFood_price().equals(productTemp2.getFood_price())) {
-                    for(int k = 0 ; k < productTemp1.getAlacarte().size(); k++){
-                        // check if the same alacarte
-                        ProductALaCarte aLaCarte1 = productTemp1.getAlacarte().get(k);
-                        if(!aLaCarte1.isUpgradable()){
-                            ProductALaCarte aLaCarte2 = productTemp2.getAlacarte().get(k);
-                            if(!aLaCarte1.getChosen_alacarte().equals(aLaCarte2.getChosen_alacarte())){
-                               isTheSame = false;
-                               break;
+            // If Product Alacarte is null meaning this is adds on or goes greate with product
+            if (productTemp1.getAlacarte() != null) {
+                for (int j = i + 1; j < mProductAddedToCartArrList.size(); j++) {
+                    boolean isTheSame = true;
+                    Product productTemp2 = mProductAddedToCartArrList.get(j);
+                    // Check if the same name and price
+                    if (productTemp1.getFood_name().equals(productTemp2.getFood_name()) && productTemp1.getFood_price().equals(productTemp2.getFood_price())) {
+                        for (int k = 0; k < productTemp1.getAlacarte().size(); k++) {
+                            // check if the same alacarte
+                            ProductALaCarte aLaCarte1 = productTemp1.getAlacarte().get(k);
+                            if (!aLaCarte1.isUpgradable()) {
+                                ProductALaCarte aLaCarte2 = productTemp2.getAlacarte().get(k);
+                                if (!aLaCarte1.getChosen_alacarte().equals(aLaCarte2.getChosen_alacarte())) {
+                                    isTheSame = false;
+                                    break;
+                                }
                             }
                         }
-                    }
-                    // Remove the product with the same price, name, alacartes
-                    if(isTheSame){
-                        mProductAddedToCartArrList.get(i).setPortion(mProductAddedToCartArrList.get(i).getPortion() + 1);
-                        mProductAddedToCartArrList.remove(j);
-                        j--;
+                        // Remove the product with the same price, name, alacartes
+                        if (isTheSame) {
+                            mProductAddedToCartArrList.get(i).setPortion(mProductAddedToCartArrList.get(i).getPortion() + 1);
+                            mProductAddedToCartArrList.remove(j);
+                            j--;
+                        }
                     }
                 }
             }
@@ -250,6 +241,10 @@ public class CartActivity extends AppCompatActivity implements OnDeleteItemClick
                 cartTotal = "";
                 cartCount = 0;
                 finish();
+                break;
+            case R.id.buttonPay:
+                Intent intentCheckOut = new Intent(CartActivity.this, CheckOutActivity.class);
+                startActivity(intentCheckOut);
                 break;
         }
     }

@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class OrderLineAdapter extends RecyclerView.Adapter<OrderLineAdapter.ViewHolder>{
 
-    ArrayList mProductArrList;
+    ArrayList<Product> mProductArrList;
     Context context;
 
     public OrderLineAdapter(ArrayList<Product> mProductArrList, Context context) {

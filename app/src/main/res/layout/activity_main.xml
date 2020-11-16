@@ -172,13 +172,35 @@
                             android:layout_marginBottom="@dimen/_4sdp"
                             android:background="@color/darkGrey" />
 
-                        <include
-                            layout="@layout/signin_or_signup"
+                        <LinearLayout
+                            android:id="@+id/linearLayoutSignInAndSignUp"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/_110sdp"
-                            android:layout_margin="@dimen/margin_right_parent" />
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/margin_right_parent" >
 
-                        <!--   app:sliderIndicatorMargin="15dp"-->
+                            <include
+                                layout="@layout/signin_or_signup"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_110sdp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/linearLayoutSignedUp"
+                            android:visibility="gone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/margin_right_parent">
+
+                            <include
+                                layout="@layout/signed_up"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_110sdp"/>
+
+                        </LinearLayout>
+
+
+
 
                         <com.smarteist.autoimageslider.SliderView
                             android:id="@+id/imageSlider"
@@ -195,6 +217,7 @@
                             app:sliderIndicatorUnselectedColor="@color/white"
                             app:sliderScrollTimeInSec="3"
                             app:sliderStartAutoCycle="true" />
+
                     </LinearLayout>
                 </LinearLayout>
 

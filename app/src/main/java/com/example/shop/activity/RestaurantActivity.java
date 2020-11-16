@@ -63,6 +63,7 @@ public class RestaurantActivity extends AppCompatActivity implements BottomNavig
         mLinearLayoutDistrict.setClickable(false);
 
         mTxtViewDistrict.setText(CreateHtmlText.createTextRequired("Quận/Huyện"));
+        mTxtViewCity.setText(CreateHtmlText.createTextRequired("Tỉnh/Thành Phố"));
         cityList = this.getResources().getStringArray(R.array.city);
 
     }
@@ -114,7 +115,7 @@ public class RestaurantActivity extends AppCompatActivity implements BottomNavig
                     @Override
                     public void onItemSelected(int position) {
                         if(position != 0){
-                            mTxtViewCity.setText("Tỉnh/Thành Phố" + "\n" + cityList[position]);
+                            mTxtViewCity.setText(CreateHtmlText.createTextRequiredForDialog("Tỉnh/Thành Phố" , cityList[position]));
                             citySelected = true;
                             cityPosition = position;
                             mLinearLayoutDistrict.setClickable(citySelected);
@@ -128,7 +129,7 @@ public class RestaurantActivity extends AppCompatActivity implements BottomNavig
                             }
                             holdResData.addAll(CreateRestaurantListWithCity.createRestaurantList(RestaurantActivity.this, position));
                         }else{
-                            mTxtViewCity.setText("Tỉnh/Thành Phố");
+                            mTxtViewCity.setText(CreateHtmlText.createTextRequired("Tỉnh/Thành Phố"));
                             citySelected = false;
                             cityPosition = 0;
                             mLinearLayoutDistrict.setClickable(citySelected);
@@ -150,7 +151,8 @@ public class RestaurantActivity extends AppCompatActivity implements BottomNavig
                     @Override
                     public void onItemSelected(int position) {
                         if(position != 0){
-                            mTxtViewDistrict.setText(Html.fromHtml("<font color='#707070'>Quận/Huyện </font><font color='#e4002b'>*</font>") + "\n" + CreateDistrictList.getDistrict(position));
+
+                            mTxtViewDistrict.setText(CreateHtmlText.createTextRequiredForDialog("Quận/Huyện", CreateDistrictList.getDistrict(position)));
                             districtSelected = true;
                             districtPosition = position;
                         }else{

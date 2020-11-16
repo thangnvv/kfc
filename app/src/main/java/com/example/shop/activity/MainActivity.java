@@ -10,6 +10,7 @@ import com.example.shop.interfaces.OnProductClickListener;
 import com.example.shop.interfaces.OnSpinnerItemSelectedListener;
 import com.example.shop.ultil.Cart;
 import com.example.shop.ultil.CustomDialogStartOrdering;
+import com.example.shop.ultil.Customer;
 import com.example.shop.ultil.Product;
 import com.example.shop.ultil.CommonMethodHolder;
 
@@ -42,15 +43,19 @@ import com.example.shop.adapter.AdapterForSlider;
 import com.example.shop.adapter.ViewPagerAdapterForTabLine;
 import com.example.shop.adapter.ViewPagerAdapterForMainTab;
 import com.example.shop.R;
-import com.example.shop.ultil.ProductALaCarte;
+import com.example.shop.ultil.Promotion;
 import com.example.shop.ultil.noneAllowSwipeViewPager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 import com.orhanobut.hawk.Hawk;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
@@ -61,6 +66,15 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener,
         TabLayout.OnTabSelectedListener, View.OnClickListener, OnProductClickListener {
 
+    // Showing layout base on Sign In status
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private DatabaseReference mDataRef = FirebaseDatabase.getInstance().getReference();
+    LinearLayout mLlSignedUp, mLlSignInAndSignUp;
+    TextView mTxtViewUserName;
+    Button mBtnSignIn, mBtnSignUp, mBtnOrderHistory;
+    private final int REQUEST_CODE_FROM_MAIN = 111;
+//    Customer customer;
+
     Cart cart;
     TextView mTxtViewChangeCity, mTxtViewCity, mTxtViewCartTotal, mTxtViewCartCount;
     ImageView mImgButtonMore, mImgButtonHideSetting, mImgViewCart;
@@ -70,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     ViewPagerAdapterForTabLine viewPagerAdapterForTabLine;
     ViewPagerAdapterForMainTab viewPagerAdapterForMainTab;
     BottomNavigationView mBtmNavigationView;
-    Button mBtnSignIn, mBtnSignUp;
+
     LinearLayout mainActivity, linearLayoutCart, mLlSettingHolder, mLlBottomNavigationHolder;
     FragmentManager fragmentManager;
     CoordinatorLayout mCoordinatorLayoutMain;
@@ -91,6 +105,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     //For slider banner in main
     private ArrayList<String> bannerMain;
+    private ArrayList<Promotion> promotionList;
     private SliderView sliderView;
     private AdapterForSlider adapter;
 
@@ -266,11 +281,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                         }
 
                         // Check if alacarte option has been change
-                        for(int j = 0; j < productTemp.getAlacarte().size(); j++){
+                        for (int j = 0; j < productTemp.getAlacarte().size(); j++) {
                             Log.d("DDD", "j: " + j + "; alacarte size: " + productTemp.getAlacarte().size());
-                            if(!productTemp.getAlacarte().get(j).isUpgradable()){
-                                if(!productTemp.getAlacarte().get(j).getChosen_alacarte().trim()
-                                        .equals(product.getAlacarte().get(j).getChosen_alacarte().trim())){
+                            if (!productTemp.getAlacarte().get(j).isUpgradable()) {
+                                if (!productTemp.getAlacarte().get(j).getChosen_alacarte().trim()
+                                        .equals(product.getAlacarte().get(j).getChosen_alacarte().trim())) {
                                     mProductAddedToCartArrList.get(i).getAlacarte().get(j).setChosen_alacarte(product.getAlacarte().get(j).getChosen_alacarte());
                                 }
                             }
@@ -353,6 +368,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         mImgButtonMore.setOnClickListener(this);
         mImgButtonHideSetting.setOnClickListener(this);
         mBtnSignUp.setOnClickListener(this);
+        mBtnSignIn.setOnClickListener(this);
         mTxtViewChangeCity.setOnClickListener(this);
         mTabLayoutMain.addOnTabSelectedListener(this);
         mImgButtonCancel.setOnClickListener(this);
@@ -381,8 +397,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         fragmentManager = getSupportFragmentManager();
 
         // Include Sign In Sign Up
+        mLlSignedUp = findViewById(R.id.linearLayoutSignedUp);
+        mLlSignInAndSignUp = findViewById(R.id.linearLayoutSignInAndSignUp);
         mBtnSignUp = findViewById(R.id.buttonSignUp);
         mBtnSignIn = findViewById(R.id.buttonSignIn);
+        mBtnOrderHistory = findViewById(R.id.buttonOrderHistory);
+        mTxtViewUserName = findViewById(R.id.textViewUserName);
 
         // Include layout of Product Added To Cart
         relativeLayoutProductAddedToCart = findViewById(R.id.includeProductAddedToCart);
@@ -468,7 +488,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 break;
             case R.id.buttonSignUp:
                 Intent intentSignUp = new Intent(MainActivity.this, AccountRegisterActivity.class);
-                startActivity(intentSignUp);
+                startActivityForResult(intentSignUp, REQUEST_CODE_FROM_MAIN);
+                break;
+            case R.id.buttonSignIn:
+                startActivity(new Intent(MainActivity.this, SignInActivity.class));
                 break;
             case R.id.textViewChangeCity:
                 final String[] cityList = getResources().getStringArray(R.array.city);
@@ -540,12 +563,24 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     private void setUpSliderBanner() {
         bannerMain = new ArrayList<>();
+        promotionList = new ArrayList<>();
         adapter = new AdapterForSlider(this, bannerMain);
-        DatabaseReference myRef = database.getReference().child("promotion_banner");
+        adapter.setOnBannerClickListener(new AdapterForSlider.OnBannerClickListener() {
+            @Override
+            public void onClick(int position) {
+                String newsUrl = promotionList.get(position).getLink();
+                Intent intentViewPromotionNews = new Intent(MainActivity.this, ViewPromotionActivity.class);
+                intentViewPromotionNews.putExtra("newsUrl", newsUrl);
+                startActivity(intentViewPromotionNews);
+            }
+        });
+
+        DatabaseReference myRef = database.getReference().child("promotion_news");
         myRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                bannerMain.add(snapshot.getValue(String.class));
+                bannerMain.add(snapshot.getValue(Promotion.class).getBanner());
+                promotionList.add(snapshot.getValue(Promotion.class));
                 adapter.notifyDataSetChanged();
             }
 
@@ -576,7 +611,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         sliderView.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_RIGHT);
         sliderView.setAutoCycle(true);
         sliderView.startAutoCycle();
-
     }
 
     private void setUpViewPagerALaCarte() {
@@ -615,11 +649,26 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     private void createCartInstance() {
         if (Hawk.get("cart") == null) {
+            Log.d("DDD", "In Main Cart Null");
             cart = Cart.getInstance();
             cart.setRequireFromEditProduct(false);
             Hawk.put("cart", cart);
         } else {
+            Log.d("DDD", "In Main Cart Not Null");
             cart = Hawk.get("cart");
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_FROM_MAIN && resultCode == RESULT_OK && data != null) {
+            String customerJson = data.getStringExtra("customer");
+            Gson gson = new Gson();
+            Customer customer = gson.fromJson(customerJson, Customer.class);
+            mTxtViewUserName.setText(customer.getFull_name());
+            mLlSignedUp.setVisibility(View.VISIBLE);
+            mLlSignInAndSignUp.setVisibility(View.GONE);
         }
     }
 
@@ -629,6 +678,40 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         if (cart.isRequireFromEditProduct()) {
             CommonMethodHolder.saveCart(mProductAddedToCartArrList, cartCount,
                     mTxtViewCartTotal.getText().toString(), false, cart);
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            mLlSignInAndSignUp.setVisibility(View.GONE);
+            mLlSignedUp.setVisibility(View.VISIBLE);
+
+            mDataRef.child("user").child(currentUser.getUid()).child("full_name").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                    customer = snapshot.getValue(Customer.class);
+                    mTxtViewUserName.setText(snapshot.getValue(String.class));
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+
+            mBtnOrderHistory.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(MainActivity.this, OrderHistoryActivity.class));
+                }
+            });
+        } else {
+            mLlSignedUp.setVisibility(View.GONE);
+            mLlSignInAndSignUp.setVisibility(View.VISIBLE);
         }
     }
 
@@ -643,7 +726,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     protected void onRestart() {
         super.onRestart();
         // Hide the Layout Product Added To Cart if it is showing
-        if(isShowing){
+        if (isShowing) {
             relativeLayoutProductAddedToCart.setVisibility(View.GONE);
             isShowing = false;
         }
@@ -664,9 +747,16 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (Hawk.get("orderSuccessful") == null) {
+            Hawk.put("orderSuccessful", false);
+        }
+        boolean orderSuccessful = Hawk.get("orderSuccessful");
+        if (orderSuccessful) {
 
-        CommonMethodHolder.saveCart(mProductAddedToCartArrList, cartCount,
-                mTxtViewCartTotal.getText().toString(), cart.isRequireFromEditProduct(), cart);
+        } else {
+            CommonMethodHolder.saveCart(mProductAddedToCartArrList, cartCount,
+                    mTxtViewCartTotal.getText().toString(), cart.isRequireFromEditProduct(), cart);
+        }
         if (mHandlerQuiteApp != null) {
             mHandlerQuiteApp.removeCallbacks(mRunnable);
         }

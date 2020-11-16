@@ -23,16 +23,18 @@
             android:layout_height="@dimen/_150sdp">
 
             <TextView
+                android:layout_alignParentLeft="true"
                 android:layout_marginLeft="@dimen/margin_left_parent"
                 android:layout_centerVertical="true"
                 android:textStyle="bold"
-                android:textSize="@dimen/h2"
+                android:textSize="@dimen/h1"
                 android:textColor="@color/black"
-                android:text="HÃY LÀ THÀNH VIÊN\nKFC NGAY HÔM NAY"
-                android:layout_width="wrap_content"
+                android:text="@string/become_member_today"
+                android:layout_width="@dimen/_160sdp"
                 android:layout_height="wrap_content"/>
 
             <ImageView
+                android:id="@+id/imageHappyMan"
                 android:src="@drawable/happy_man"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
@@ -171,7 +173,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:textSize="@dimen/h0" />
+                    android:textSize="@dimen/_12sdp" />
 
             </LinearLayout>
 
@@ -192,12 +194,13 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:textSize="@dimen/h0" />
+                    android:textSize="@dimen/_12sdp" />
 
             </LinearLayout>
 
             <Button
                 android:id="@+id/buttonRegister"
+                android:clickable="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_16sdp"
@@ -237,56 +240,20 @@
                     android:layout_height="@dimen/_1sdp"/>
             </LinearLayout>
 
-            <LinearLayout
-                android:padding="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_16sdp"
-                android:gravity="center_vertical"
-                android:background="@drawable/background_facebook"
+            <com.facebook.login.widget.LoginButton
+                android:id="@+id/signInFacebookButton"
+                xmlns:facebook="http://schemas.android.com/apk/res-auto"
+                facebook:com_facebook_login_text="@string/sign_up_with_facebook"
+                facebook:com_facebook_logout_text="Đăng xuất"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                style="@style/FacebookLoginButton"/>
 
-                <ImageButton
-                    android:background="@drawable/facebook_blue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-                <TextView
-                    android:id="@+id/textViewRegisterViaFacebook"
-                    android:gravity="center_horizontal"
-                    android:textStyle="bold"
-                    android:textSize="@dimen/h1"
-                    android:textColor="@color/white"
-                    android:text="Đăng ký với Facebook"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:padding="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_16sdp"
-                android:gravity="center_vertical"
-                android:background="@drawable/background_black_thin"
+            <com.google.android.gms.common.SignInButton
+                android:id="@+id/signInGoogleButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageButton
-                    android:background="@drawable/google"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-                <TextView
-                    android:id="@+id/textViewRegisterViaGoogle"
-                    android:gravity="center_horizontal"
-                    android:textSize="@dimen/h1"
-                    android:textColor="@color/darkGrey"
-                    android:text="Đăng ký với Google"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
+               style="@style/GoogleLoginButton"/>
 
             <TextView
                 android:id="@+id/textViewAcceptSignUp"
@@ -332,30 +299,6 @@
 
 
             </LinearLayout>
-
-            <com.facebook.login.widget.LoginButton
-                android:id="@+id/signInFacebookButton"
-                android:paddingTop="@dimen/_6sdp"
-                android:paddingBottom="@dimen/_6sdp"
-                xmlns:facebook="http://schemas.android.com/apk/res-auto"
-                facebook:com_facebook_login_text="Đăng nhập bằng Facebook"
-                facebook:com_facebook_logout_text="Đăng xuất"
-                android:background="@drawable/background_button_facebook"
-                android:textColor="@color/white"
-                android:textSize="@dimen/h1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:layout_marginTop="@dimen/_16sdp"/>
-
-            <com.google.android.gms.common.SignInButton
-                android:id="@+id/signInGoogleButton"
-                android:background="@drawable/background_black_thin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:layout_marginTop="@dimen/_16sdp"
-                android:layout_marginBottom="@dimen/_16sdp"/>
 
         </LinearLayout>
 

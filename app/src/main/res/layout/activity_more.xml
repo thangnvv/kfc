@@ -60,10 +60,46 @@
                         android:textSize="@dimen/h1"
                         android:textStyle="bold" />
 
-                    <include
-                        layout="@layout/signin_or_signup"
+                    <LinearLayout
+                        android:id="@+id/linearLayoutSignInAndSignUp"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_110sdp"/>
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginBottom="@dimen/_8sdp" >
+
+                        <include
+                            layout="@layout/signin_or_signup"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_110sdp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linearLayoutSignedUp"
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginBottom="@dimen/_8sdp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/h1"
+                            android:text="@string/welcome_back"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                        <TextView
+                            android:id="@+id/textViewUserName"
+                            android:textStyle="bold"
+                            android:text="User Name"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/h3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
@@ -81,8 +117,49 @@
                         android:textSize="@dimen/h3"
                         android:textStyle="bold" />
 
+                    <LinearLayout
+                        android:id="@+id/linearLayoutAccountInformation"
+                        android:visibility="gone"
+                        android:orientation="vertical"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginRight="@dimen/_16sdp"
+                        android:layout_marginLeft="@dimen/_16sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/textViewReceiptNotification"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:textSize="@dimen/h0"
+                            android:text="Thông báo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                        <TextView
+                            android:id="@+id/textViewChangePassword"
+                            android:layout_marginTop="@dimen/_4sdp"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/h0"
+                            android:textStyle="bold"
+                            android:text="Đổi mật khẩu"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                        <TextView
+                            android:id="@+id/textViewChangeAccountInformation"
+                            android:layout_marginTop="@dimen/_4sdp"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:textSize="@dimen/h0"
+                            android:text="Cập nhật thông tin tài khoản"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+
                     <TextView
-                        android:id="@+id/textViewTransactionHistory"
+                        android:id="@+id/textViewOrderHistory"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_12sdp"
@@ -223,9 +300,21 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
+                        android:background="@android:color/darker_gray" />
+
+                    <TextView
+                        android:id="@+id/textViewSignOut"
+                        android:visibility="gone"
+                        android:clickable="true"
+                        android:textAllCaps="true"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/h1"
+                        android:textColor="@color/red"
+                        android:text="@string/sign_out"
                         android:layout_marginTop="@dimen/_8sdp"
                         android:layout_marginBottom="@dimen/_8sdp"
-                        android:background="@android:color/darker_gray" />
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
 
                 </LinearLayout>
 

@@ -12,7 +12,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/myTheme">
-        <activity android:name=".activity.ViewPromotionActivity"></activity>
+        <activity android:name=".activity.OrderHistoryActivity"></activity>
+        <activity android:name=".activity.ChangePasswordActivity" />
+        <activity android:name=".activity.ConfirmOrderActivity" />
+        <activity android:name=".activity.CheckOutActivity" />
+        <activity android:name=".activity.SignInActivity" />
+        <activity android:name=".activity.ViewPromotionActivity" />
         <activity android:name=".activity.CartActivity" />
 
         <meta-data

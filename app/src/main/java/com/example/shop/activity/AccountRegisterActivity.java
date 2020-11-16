@@ -14,19 +14,20 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.example.shop.R;
 import com.example.shop.ultil.CreateHtmlText;
 import com.example.shop.ultil.CustomDialogPolicyAndRegulation;
 import com.example.shop.ultil.CustomDialogTermsAndConditons;
+import com.example.shop.ultil.Customer;
 import com.facebook.AccessToken;
-import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -35,26 +36,39 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.EmailAuthProvider;
+import com.google.firebase.auth.FacebookAuthProvider;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
-public class AccountRegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
-    TextInputLayout mTxtInputName, mTxtInputEmail, mTxtInputPassword, mTxtInputRepeatPW, mTxtInputPhone;
+public class AccountRegisterActivity extends AppCompatActivity {
+
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+    TextInputEditText mTxtInputName, mTxtInputEmail, mTxtInputPassword, mTxtInputRepeatPW, mTxtInputPhone;
+    TextInputLayout mTxtInputLayoutName, mTxtInputLayoutEmail, mTxtInputLayoutPassword, mTxtInputLayoutRepeatPW, mTxtInputLayoutPhone;
     TextView mTxtViewNotice, mTxtViewAcceptPolicy, mTxtViewAcceptReceiptPromo, mTxtViewAcceptSignUp, mTxtViewSignIn;
+    Button mBtnRegisterWithEmail;
+    CheckBox mCbAcceptPolicy;
     LoginButton mSignInFacebookButton;
     CallbackManager mCallBackManager;
     GoogleSignInClient mGoogleSignInClient;
     SignInButton mSignInGoogleButton;
     int RC_SIGN_IN = 123;
-    String firstName = "";
-    String lastName = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,65 +83,111 @@ public class AccountRegisterActivity extends AppCompatActivity implements View.O
         setClickAbleAcceptSignUp(acceptSignUp, acceptSignUp.indexOf("Điều"),
                 acceptSignUp.indexOf("và"), acceptSignUp.indexOf("Chính"), acceptSignUp.length());
 
+        // Facebook
         mSignInFacebookButton.setPermissions(Arrays.asList("email", "public_profile"));
-        mSignInFacebookButton.setText("Đăng nhập bằng Facebook");
         mSignInFacebookButton.registerCallback(mCallBackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                GraphRequest request = GraphRequest.newMeRequest(
-                AccessToken.getCurrentAccessToken(),
-                new GraphRequest.GraphJSONObjectCallback() {
-                    @Override
-                    public void onCompleted(
-                            JSONObject object,
-                            GraphResponse response) {
-                        // Application code
-                        Log.d("DDD", object.toString());
-
-                        try {
-                            firstName = object.getString("first_name");
-                            lastName = object.getString("last_name");
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-                Bundle bundle = new Bundle();
-                bundle.putString(firstName, lastName);
-                request.setParameters(bundle);
-                request.executeAsync();
+                handleFacebookAccessToken(loginResult.getAccessToken());
+                Log.d("DDD", "At Account Register Activity in button Click succress");
             }
 
             @Override
             public void onCancel() {
-                // App code
+
             }
 
             @Override
-            public void onError(FacebookException exception) {
-                // App code
+            public void onError(FacebookException error) {
+                Log.d("DDD", "At Account Register Activity in button Click error: " + error.getMessage());
             }
         });
 
-
+        // Google
         mSignInGoogleButton.setSize(SignInButton.SIZE_WIDE);
         setGoogleButtonText(mSignInGoogleButton, "Đăng ký với Google");
-
-
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-//        updateUI(account);
 
     }
 
     private void setUpViewOnClick() {
-        mTxtViewSignIn.setOnClickListener(this);
-        mSignInGoogleButton.setOnClickListener(this);
+        mTxtViewSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        mSignInGoogleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signIn();
+            }
+        });
+        mBtnRegisterWithEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String fullName = mTxtInputName.getText().toString();
+                final String email = mTxtInputEmail.getText().toString();
+                final String password = mTxtInputPassword.getText().toString();
+                String repeatPassword = mTxtInputRepeatPW.getText().toString();
+                final String phoneNumber = mTxtInputPhone.getText().toString();
+                boolean isAcceptPolicy = mCbAcceptPolicy.isChecked();
+                if (checkInformationEmpty(fullName, email, password, repeatPassword, phoneNumber, isAcceptPolicy)) {
+                    mAuth.createUserWithEmailAndPassword(email, password)
+                            .addOnCompleteListener(AccountRegisterActivity.this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        FirebaseUser user = mAuth.getCurrentUser();
+                                        Customer customer = new Customer(user.getUid(), fullName, email, password, phoneNumber);
+                                        DatabaseReference newRef = mDatabase.child("user").child(user.getUid());
+                                        newRef.setValue(customer);
+                                        finish();
+                                    } else {
+                                        Log.d("EEE", "In Account Register Activity: " + task.getException());
+                                    }
+                                }
+                            });
+                } else {
+                    Toast.makeText(AccountRegisterActivity.this, "Register Failed!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
     }
+
+    private void handleFacebookAccessToken(AccessToken token) {
+        Log.d("DDD", "At Account Register Activity In Handle Facebook Access");
+        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            Customer customer = new Customer(user.getUid(), user.getDisplayName(), user.getEmail(), "", user.getPhoneNumber());
+                            DatabaseReference newRef = mDatabase.child("user").child(user.getUid());
+                            newRef.setValue(customer);
+                            Intent intentGoToMain = new Intent(AccountRegisterActivity.this, MainActivity.class);
+                            intentGoToMain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                            startActivity(new Intent(AccountRegisterActivity.this, MainActivity.class));
+                            Log.d("DDD", "At Account Register Activity In Handle Facebook Access Success");
+                            finish();
+                        } else {
+                            // If sign in fails, display a message to the user.
+
+                        }
+
+                        // ...
+                    }
+                });
+    }
+
 
     private void setClickAbleAcceptSignUp(String str, int startOperation, int endOperation, int startPolicy, int endPolicy) {
         SpannableString spn = new SpannableString(str);
@@ -169,45 +229,67 @@ public class AccountRegisterActivity extends AppCompatActivity implements View.O
     }
 
     private void addText() {
-        mTxtInputName.setHint(CreateHtmlText.createTextRequired("Họ tên"));
-        mTxtInputEmail.setHint(CreateHtmlText.createTextRequired("Email"));
-        mTxtInputPassword.setHint(CreateHtmlText.createTextRequired("Mật khẩu"));
-        mTxtInputRepeatPW.setHint(CreateHtmlText.createTextRequired("Lặp lại mật khẩu"));
-        mTxtInputPhone.setHint(CreateHtmlText.createTextRequired("Điện thoại"));
+        mTxtInputLayoutName.setHint(CreateHtmlText.createTextRequired("Họ tên"));
+        mTxtInputLayoutEmail.setHint(CreateHtmlText.createTextRequired("Email"));
+        mTxtInputLayoutPassword.setHint(CreateHtmlText.createTextRequired("Mật khẩu"));
+        mTxtInputLayoutRepeatPW.setHint(CreateHtmlText.createTextRequired("Lặp lại mật khẩu"));
+        mTxtInputLayoutPhone.setHint(CreateHtmlText.createTextRequired("Điện thoại"));
         mTxtViewNotice.setText(CreateHtmlText.buildText(getString(R.string.registerNotice)));
         mTxtViewAcceptPolicy.setText(CreateHtmlText.buildText(getString(R.string.acceptPolicy)));
         mTxtViewAcceptReceiptPromo.setText(CreateHtmlText.buildText(getString(R.string.acceptReceiptPromo)));
     }
 
-
     private void initView() {
-        mTxtInputName = findViewById(R.id.textInputLayoutName);
-        mTxtInputEmail = findViewById(R.id.textInputLayoutEmail);
-        mTxtInputPassword= findViewById(R.id.textInputLayoutPassword);
-        mTxtInputRepeatPW = findViewById(R.id.textInputLayoutRepeat);
-        mTxtInputPhone = findViewById(R.id.textInputLayoutPhone);
+        mTxtInputName = findViewById(R.id.edittextName);
+        mTxtInputEmail = findViewById(R.id.edittextEmail);
+        mTxtInputPassword = findViewById(R.id.edittextPassword);
+        mTxtInputRepeatPW = findViewById(R.id.edittextRepeat);
+        mTxtInputPhone = findViewById(R.id.edittextPhone);
+
+        mTxtInputLayoutName = findViewById(R.id.textInputLayoutName);
+        mTxtInputLayoutEmail = findViewById(R.id.textInputLayoutEmail);
+        mTxtInputLayoutPassword = findViewById(R.id.textInputLayoutPassword);
+        mTxtInputLayoutRepeatPW = findViewById(R.id.textInputLayoutRepeat);
+        mTxtInputLayoutPhone = findViewById(R.id.textInputLayoutPhone);
+
+        mBtnRegisterWithEmail = findViewById(R.id.buttonRegister);
+        mSignInFacebookButton = findViewById(R.id.signInFacebookButton);
+        mSignInGoogleButton = findViewById(R.id.signInGoogleButton);
+
+        mCbAcceptPolicy = findViewById(R.id.checkBoxAcceptPolicy);
         mTxtViewNotice = findViewById(R.id.textViewNotice);
         mTxtViewAcceptPolicy = findViewById(R.id.textViewAcceptPolicy);
         mTxtViewAcceptReceiptPromo = findViewById(R.id.textViewAcceptReceiptPromo);
         mTxtViewAcceptSignUp = findViewById(R.id.textViewAcceptSignUp);
         mTxtViewSignIn = findViewById(R.id.textViewSignIn);
-        mSignInFacebookButton = findViewById(R.id.signInFacebookButton);
-        mSignInGoogleButton = findViewById(R.id.signInGoogleButton);
+
 
         mCallBackManager = CallbackManager.Factory.create();
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.textViewSignIn:
-                break;
-            case R.id.signInGoogleButton:
-                signIn();
-                break;
+    private boolean checkInformationEmpty(String fullName, String email, String password, String repeatPassword, String phoneNumber, boolean isAcceptPolicy) {
+        if (fullName.equals("")) {
+            Toast.makeText(AccountRegisterActivity.this, "Vui lòng nhập Họ Và Tên", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (email.equals("")) {
+            Toast.makeText(AccountRegisterActivity.this, "Vui lòng nhập Email", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (password.equals("")) {
+            Toast.makeText(AccountRegisterActivity.this, "Vui lòng nhập Mật Khẩu", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (repeatPassword.equals("") || !repeatPassword.equals(password)) {
+            Toast.makeText(AccountRegisterActivity.this, "Mật khẩu và mật khẩu lặp lại không trùng khớp", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (phoneNumber.equals("")) {
+            Toast.makeText(AccountRegisterActivity.this, "Vui lòng nhập Số điện thoại", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (!isAcceptPolicy) {
+            Toast.makeText(AccountRegisterActivity.this, "Vui lòng đọc và đồng ý với chính sách và điều khoản của KFC Việt Nam", Toast.LENGTH_SHORT).show();
+            return false;
+        } else {
+            return true;
         }
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -217,30 +299,32 @@ public class AccountRegisterActivity extends AppCompatActivity implements View.O
             // a listener.
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
-        }else{
+        } else {
             mCallBackManager.onActivityResult(requestCode, resultCode, data);
             super.onActivityResult(requestCode, resultCode, data);
         }
 
+
+
     }
-
-    AccessToken accessToken = AccessToken.getCurrentAccessToken();
-    boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
-
-    AccessTokenTracker accessTokenTracker = new AccessTokenTracker() {
-        @Override
-        protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
-            if(currentAccessToken == null){
-                LoginManager.getInstance().logOut();
-                Log.d("DDD", "Log out");
-            }
-        }
-    };
+    // Facebook
+//    AccessToken accessToken = AccessToken.getCurrentAccessToken();
+//    boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
+//
+//    AccessTokenTracker accessTokenTracker = new AccessTokenTracker() {
+//        @Override
+//        protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
+//            if(currentAccessToken == null){
+//                LoginManager.getInstance().logOut();
+//                Log.d("DDD", "Log out");
+//            }
+//        }
+//    };
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        accessTokenTracker.stopTracking();
+//        accessTokenTracker.stopTracking();
     }
 
     @Override
@@ -251,7 +335,6 @@ public class AccountRegisterActivity extends AppCompatActivity implements View.O
     }
 
     // Google
-
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);

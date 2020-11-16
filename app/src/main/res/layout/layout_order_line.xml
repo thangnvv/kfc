@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"/>
 
     <View
-        android:layout_width="@dimen/_24sdp"
+        android:layout_width="@dimen/_8sdp"
         android:layout_height="1dp"/>
 
     <TextView

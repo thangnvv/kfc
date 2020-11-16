@@ -54,9 +54,20 @@ public class SingleProductAdapter extends RecyclerView.Adapter<SingleProductAdap
         final Product product = mProductArrList.get(position);
         holder.mTxtViewProductName.setText(product.getFood_name());
 
-        DescriptLineAdapter descriptLineAdapter = new DescriptLineAdapter(product.getAlacarte(), context);
-        holder.mRvProductDescript.setLayoutManager(new LinearLayoutManager(context));
-        holder.mRvProductDescript.setAdapter(descriptLineAdapter);
+        if(product.getAlacarte()!= null){
+            DescriptLineAdapter descriptLineAdapter = new DescriptLineAdapter(product.getAlacarte(), context);
+            holder.mRvProductDescript.setLayoutManager(new LinearLayoutManager(context));
+            holder.mRvProductDescript.setAdapter(descriptLineAdapter);
+            holder.mImgButtonEditProduct.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onViewClickListener.onEditProduct(product);
+                }
+            });
+        }else{
+            holder.mImgButtonEditProduct.setVisibility(View.GONE);
+        }
+
 
         holder.mTxtViewPortion.setText(product.getPortion() + "");
         if(product.getPortion() > 1){
@@ -96,12 +107,7 @@ public class SingleProductAdapter extends RecyclerView.Adapter<SingleProductAdap
             }
         });
 
-        holder.mImgButtonEditProduct.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onViewClickListener.onEditProduct(product);
-            }
-        });
+
     }
 
     private String calculateFoodPrice(String foodPrice, int portion) {

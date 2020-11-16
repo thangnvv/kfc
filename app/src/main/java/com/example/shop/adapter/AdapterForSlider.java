@@ -46,7 +46,7 @@ public class AdapterForSlider extends SliderViewAdapter<AdapterForSlider.SliderA
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "This is item in position " + position, Toast.LENGTH_SHORT).show();
+                onBannerClickListener.onClick(position);
             }
         });
     }
@@ -67,6 +67,16 @@ public class AdapterForSlider extends SliderViewAdapter<AdapterForSlider.SliderA
             imageBannerMain = itemView.findViewById(R.id.imageBanner);
             this.itemView = itemView;
         }
+    }
+
+    OnBannerClickListener onBannerClickListener;
+
+    public void setOnBannerClickListener(OnBannerClickListener onBannerClickListener){
+        this.onBannerClickListener = onBannerClickListener;
+    }
+
+    public interface OnBannerClickListener{
+        void onClick(int position);
     }
 
 }

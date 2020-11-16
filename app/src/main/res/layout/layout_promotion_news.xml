@@ -16,7 +16,7 @@
             android:id="@+id/imageViewBannerPromotion"
             android:layout_width="match_parent"
             android:scaleType="fitXY"
-            android:layout_height="@dimen/_180sdp"/>
+            android:layout_height="@dimen/_160sdp"/>
 
         <TextView
             android:id="@+id/textViewTitle"
