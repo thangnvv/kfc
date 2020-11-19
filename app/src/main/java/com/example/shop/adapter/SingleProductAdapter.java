@@ -1,12 +1,10 @@
 package com.example.shop.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,24 +13,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shop.R;
 import com.example.shop.interfaces.OnDeleteItemClickListener;
-import com.example.shop.ultil.Product;
-import com.example.shop.ultil.CommonMethodHolder;
-import com.example.shop.ultil.ProductALaCarte;
+import com.example.shop.utils.objects.Product;
+import com.example.shop.utils.CommonMethodHolder;
 
 import java.util.ArrayList;
 
 public class SingleProductAdapter extends RecyclerView.Adapter<SingleProductAdapter.ViewHolder>{
 
     ArrayList<Product> mProductArrList;
-    String foodPrice;
-    Context context;
+    String mFoodPrice;
+    Context mContext;
     OnDeleteItemClickListener onDeleteItemClickListener;
     OnViewClickListener onViewClickListener;
 
 
-    public SingleProductAdapter(ArrayList<Product> mProductArrList, Context context) {
+    public SingleProductAdapter(ArrayList<Product> mProductArrList, Context mContext) {
         this.mProductArrList = mProductArrList;
-        this.context = context;
+        this.mContext = mContext;
     }
 
     public void setOnViewClickListener(OnViewClickListener onViewClickListener){
@@ -46,7 +43,7 @@ public class SingleProductAdapter extends RecyclerView.Adapter<SingleProductAdap
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_product_in_cart, parent , false));
+        return new ViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_product_just_added_to_cart, parent , false));
     }
 
     @Override
@@ -55,9 +52,9 @@ public class SingleProductAdapter extends RecyclerView.Adapter<SingleProductAdap
         holder.mTxtViewProductName.setText(product.getFood_name());
 
         if(product.getAlacarte()!= null){
-            DescriptLineAdapter descriptLineAdapter = new DescriptLineAdapter(product.getAlacarte(), context);
-            holder.mRvProductDescript.setLayoutManager(new LinearLayoutManager(context));
-            holder.mRvProductDescript.setAdapter(descriptLineAdapter);
+            DescriptionLineAdapter descriptionLineAdapter = new DescriptionLineAdapter(product.getAlacarte(), mContext);
+            holder.mRvProductDescript.setLayoutManager(new LinearLayoutManager(mContext));
+            holder.mRvProductDescript.setAdapter(descriptionLineAdapter);
             holder.mImgButtonEditProduct.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -71,8 +68,8 @@ public class SingleProductAdapter extends RecyclerView.Adapter<SingleProductAdap
 
         holder.mTxtViewPortion.setText(product.getPortion() + "");
         if(product.getPortion() > 1){
-            foodPrice = calculateFoodPrice(product.getFood_price(), product.getPortion());
-            holder.mTxtViewProductPrice.setText(foodPrice);
+            mFoodPrice = calculateFoodPrice(product.getFood_price(), product.getPortion());
+            holder.mTxtViewProductPrice.setText(mFoodPrice);
         }else{
             holder.mTxtViewProductPrice.setText(product.getFood_price());
         }
@@ -80,9 +77,9 @@ public class SingleProductAdapter extends RecyclerView.Adapter<SingleProductAdap
             @Override
             public void onClick(View v) {
                 product.setPortion(product.getPortion() + 1);
-                foodPrice = calculateFoodPrice(product.getFood_price(), product.getPortion());
+                mFoodPrice = calculateFoodPrice(product.getFood_price(), product.getPortion());
                 holder.mTxtViewPortion.setText(product.getPortion() + "");
-                holder.mTxtViewProductPrice.setText(foodPrice);
+                holder.mTxtViewProductPrice.setText(mFoodPrice);
                 onViewClickListener.onPlusPortion(product);
             }
         });
@@ -91,9 +88,9 @@ public class SingleProductAdapter extends RecyclerView.Adapter<SingleProductAdap
             public void onClick(View v) {
                 if(product.getPortion() > 1){
                     product.setPortion(product.getPortion() - 1);
-                    foodPrice = calculateFoodPrice(product.getFood_price(), product.getPortion());
+                    mFoodPrice = calculateFoodPrice(product.getFood_price(), product.getPortion());
                     holder.mTxtViewPortion.setText(product.getPortion() + "");
-                    holder.mTxtViewProductPrice.setText(foodPrice);
+                    holder.mTxtViewProductPrice.setText(mFoodPrice);
                     onViewClickListener.onMinusPortion(product);
                 }
             }

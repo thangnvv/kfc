@@ -17,16 +17,14 @@ import android.widget.Toast;
 
 import com.example.shop.R;
 import com.example.shop.adapter.OrderLineAdapter;
-import com.example.shop.ultil.Cart;
-import com.example.shop.ultil.CommonMethodHolder;
-import com.example.shop.ultil.CreateDistrictList;
-import com.example.shop.ultil.CreateHtmlText;
-import com.example.shop.ultil.Product;
+import com.example.shop.utils.objects.Cart;
+import com.example.shop.utils.CommonMethodHolder;
+import com.example.shop.utils.CreateDistrictListHelper;
+import com.example.shop.utils.CreateHtmlTextHelper;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.orhanobut.hawk.Hawk;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 
 public class CheckOutActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
@@ -107,13 +105,13 @@ public class CheckOutActivity extends AppCompatActivity implements AdapterView.O
     }
 
     private void addText() {
-        mTxtInputLayoutName.setHint(CreateHtmlText.createTextRequired("Họ tên"));
-        mTxtInputLayoutEmail.setHint(CreateHtmlText.createTextRequired("Email"));
-        mTxtInputLayoutPhone.setHint(CreateHtmlText.createTextRequired("Điện thoại"));
-        mTxtInputLayoutAddress.setHint(CreateHtmlText.createTextRequired("Địa chỉ (Số nhà - Tên Đường - Phường/Xã"));
+        mTxtInputLayoutName.setHint(CreateHtmlTextHelper.createTextRequired("Họ tên"));
+        mTxtInputLayoutEmail.setHint(CreateHtmlTextHelper.createTextRequired("Email"));
+        mTxtInputLayoutPhone.setHint(CreateHtmlTextHelper.createTextRequired("Điện thoại"));
+        mTxtInputLayoutAddress.setHint(CreateHtmlTextHelper.createTextRequired("Địa chỉ (Số nhà - Tên Đường - Phường/Xã"));
 
-        mTxtViewShippingDateTitle.setText(CreateHtmlText.createTextRequired("Ngày giao hàng"));
-        mTxtViewShippingTimeTitle.setText(CreateHtmlText.createTextRequired("Thời gian"));
+        mTxtViewShippingDateTitle.setText(CreateHtmlTextHelper.createTextRequired("Ngày giao hàng"));
+        mTxtViewShippingTimeTitle.setText(CreateHtmlTextHelper.createTextRequired("Thời gian"));
 
         Calendar calendar = Calendar.getInstance();
         mTxtViewCurrentTime.setText(("Hôm nay " + calendar.get(Calendar.DATE) + "/" + (calendar.get(Calendar.MONTH) + 1) + " (" + calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE) + ")"));
@@ -130,7 +128,7 @@ public class CheckOutActivity extends AppCompatActivity implements AdapterView.O
         mSpinnerChooseCity.setOnItemSelectedListener(this);
 
         // Set up spinner District
-        districtList = CreateDistrictList.createDistrictList(CheckOutActivity.this, mSpinnerChooseCity.getSelectedItemPosition());
+        districtList = CreateDistrictListHelper.createDistrictList(CheckOutActivity.this, mSpinnerChooseCity.getSelectedItemPosition());
         ArrayAdapter<String> dataAdapterDistrict = new ArrayAdapter<String>(CheckOutActivity.this, R.layout.layout_selected_city,
                 R.id.textViewCity, districtList);
         dataAdapterDistrict.setDropDownViewResource(R.layout.layout_spinner_single_line);
@@ -196,7 +194,7 @@ public class CheckOutActivity extends AppCompatActivity implements AdapterView.O
             mSpinnerChooseDistrict.setSelection(0);
         } else {
             mSpinnerChooseDistrict.setEnabled(true);
-            districtList = CreateDistrictList.createDistrictList(CheckOutActivity.this, position);
+            districtList = CreateDistrictListHelper.createDistrictList(CheckOutActivity.this, position);
             ArrayAdapter<String> dataAdapterDistrict = new ArrayAdapter<String>(CheckOutActivity.this, R.layout.layout_selected_city,
                     R.id.textViewCity, districtList);
             dataAdapterDistrict.setDropDownViewResource(R.layout.layout_spinner_single_line);

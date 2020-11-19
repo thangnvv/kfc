@@ -7,10 +7,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.shop.fragment.ALaCarte_Menu_Fragment;
-import com.example.shop.fragment.For_One_Fragment;
-import com.example.shop.fragment.For_Sharing_Fragment;
-import com.example.shop.fragment.Hot_Deals_Fragment;
+import com.example.shop.fragment.ALaCarteMenuFragment;
+import com.example.shop.fragment.ForOneFragment;
+import com.example.shop.fragment.ForSharingFragment;
+import com.example.shop.fragment.HotDealsFragment;
 
 public class ViewPagerAdapterForMainTab extends FragmentPagerAdapter {
 
@@ -31,13 +31,13 @@ public class ViewPagerAdapterForMainTab extends FragmentPagerAdapter {
 
         switch (position){
             case 0:
-                return new For_One_Fragment(context);
+                return new ForOneFragment(context);
             case 1:
-                return new For_Sharing_Fragment(context);
+                return new ForSharingFragment(context);
             case 2:
-                return new Hot_Deals_Fragment(context);
+                return new HotDealsFragment(context);
             case 3:
-                return new ALaCarte_Menu_Fragment(context);
+                return new ALaCarteMenuFragment(context);
             default:
                 return null;
         }

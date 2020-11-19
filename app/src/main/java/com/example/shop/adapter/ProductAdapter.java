@@ -1,7 +1,6 @@
 package com.example.shop.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,50 +14,42 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shop.R;
 import com.example.shop.interfaces.OnProductClickListener;
-import com.example.shop.ultil.DownloadImageTask;
-import com.example.shop.ultil.Product;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
+import com.example.shop.utils.DownloadImageTask;
+import com.example.shop.utils.objects.Product;
 import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
     private ArrayList<Product> mProductList;
-    private Context context;
-    private boolean expandTextStatus = false;
-    OnProductClickListener onProductClickListener;
-    private StorageReference mStorageRef;
+    private Context mContext;
+    private boolean isExpandedText = false;
+    OnProductClickListener mOnProductClickListener;
 
     // This method set callback for fragment
     public void setOnProductClickListener(OnProductClickListener onProductClickListener){
-        this.onProductClickListener = onProductClickListener;
+        this.mOnProductClickListener = onProductClickListener;
     }
 
-    public ProductAdapter(ArrayList<Product> mProductList, Context context) {
+    public ProductAdapter(ArrayList<Product> mProductList, Context mContext) {
         this.mProductList = mProductList;
-        this.context = context;
-        mStorageRef = FirebaseStorage.getInstance().getReference();
+        this.mContext = mContext;
     }
 
-    public Context getContext() {
-        return context;
-    }
-
-    public void setContext(Context context) {
-        this.context = context;
+    public Context getmContext() {
+        return mContext;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_product, parent, false));
+        return new ViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_product, parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         Product product = mProductList.get(position);
-        AdapterForSlider adapter = new AdapterForSlider(getContext(), product.getUrls_banner() );
+        SliderAdapter adapter = new SliderAdapter(getmContext(), product.getUrls_banner() );
         if(product.getUrls_banner().size() == 1){
             holder.sliderView.setVisibility(View.GONE);
             holder.imgViewProductBanner.setVisibility(View.VISIBLE);
@@ -76,14 +67,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.btnExpandText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(expandTextStatus){
+                if(isExpandedText){
                     holder.txtViewProductDescript.setMaxLines(3);
                     holder.btnExpandText.setImageResource(R.drawable.arrow_down);
-                    expandTextStatus = false;
+                    isExpandedText = false;
                 }else {
                     holder.txtViewProductDescript.setMaxLines(Integer.MAX_VALUE);
                     holder.btnExpandText.setImageResource(R.drawable.arrow_up);
-                    expandTextStatus = true;
+                    isExpandedText = true;
                 }
             }
         });
@@ -91,14 +82,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.btnOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onProductClickListener.onOrderProduct(mProductList.get(position));
+                mOnProductClickListener.onOrderProduct(mProductList.get(position));
             }
         });
 
         holder.btnSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onProductClickListener.onSettingProduct(mProductList.get(position));
+                mOnProductClickListener.onSettingProduct(mProductList.get(position));
             }
         });
 

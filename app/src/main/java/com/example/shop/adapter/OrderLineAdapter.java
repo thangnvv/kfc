@@ -10,8 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shop.R;
-import com.example.shop.ultil.CommonMethodHolder;
-import com.example.shop.ultil.Product;
+import com.example.shop.utils.CommonMethodHolder;
+import com.example.shop.utils.objects.Product;
 
 import java.util.ArrayList;
 
@@ -28,7 +28,7 @@ public class OrderLineAdapter extends RecyclerView.Adapter<OrderLineAdapter.View
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.layout_order_line, parent, false));
+        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_product_portion_added_to_cart, parent, false));
     }
 
     @Override

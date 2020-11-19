@@ -16,10 +16,10 @@ import android.widget.TextView;
 import com.example.shop.R;
 import com.example.shop.adapter.SingleProductAdapter;
 import com.example.shop.interfaces.OnDeleteItemClickListener;
-import com.example.shop.ultil.Cart;
-import com.example.shop.ultil.Product;
-import com.example.shop.ultil.CommonMethodHolder;
-import com.example.shop.ultil.ProductALaCarte;
+import com.example.shop.utils.objects.Cart;
+import com.example.shop.utils.objects.Product;
+import com.example.shop.utils.CommonMethodHolder;
+import com.example.shop.utils.objects.ProductALaCarte;
 import com.google.android.material.textfield.TextInputEditText;
 import com.orhanobut.hawk.Hawk;
 
@@ -33,7 +33,7 @@ public class CartActivity extends AppCompatActivity implements OnDeleteItemClick
     SingleProductAdapter mSingleProductAdapter;
     RecyclerView mRecyclerViewProductInCart;
     LinearLayout mLLCartHasItem, mLLCartEmpty, mLineCartCountTop, mLineCartCountBottom, mLineCartCountGrandTotal;
-    Button mBtnOrderNow, mBtnUseVoucher, mBtnKeepShopping, mBtnPay;
+    Button mBtnOrderNow, mBtnUseVoucher, mBtnKeepShopping, mBtnPay, mBtnGoToPay;
     ImageButton mImgButtonQuiteCart;
     EditText mEdtTextOrderNote;
     TextInputEditText mTxtInputEdtText;
@@ -101,6 +101,7 @@ public class CartActivity extends AppCompatActivity implements OnDeleteItemClick
         mBtnOrderNow.setOnClickListener(this);
         mBtnKeepShopping.setOnClickListener(this);
         mBtnPay.setOnClickListener(this);
+        mBtnGoToPay.setOnClickListener(this);
         mImgButtonQuiteCart.setOnClickListener(this);
 
 
@@ -154,6 +155,7 @@ public class CartActivity extends AppCompatActivity implements OnDeleteItemClick
         mBtnUseVoucher = findViewById(R.id.buttonUseVoucher);
         mBtnKeepShopping = findViewById(R.id.buttonKeepShopping);
         mBtnPay = findViewById(R.id.buttonPay);
+        mBtnGoToPay = findViewById(R.id.buttonGotoPay);
         mImgButtonQuiteCart = findViewById(R.id.imageButtonQuitCart);
         mTxtInputEdtText = findViewById(R.id.textInputEdtTextVoucher);
         mEdtTextOrderNote = findViewById(R.id.editTextOrderNote);
@@ -242,6 +244,7 @@ public class CartActivity extends AppCompatActivity implements OnDeleteItemClick
                 cartCount = 0;
                 finish();
                 break;
+            case R.id.buttonGotoPay:
             case R.id.buttonPay:
                 Intent intentCheckOut = new Intent(CartActivity.this, CheckOutActivity.class);
                 startActivity(intentCheckOut);

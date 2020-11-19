@@ -3,7 +3,6 @@ package com.example.shop.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,7 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.shop.R;
-import com.example.shop.ultil.CreateHtmlText;
+import com.example.shop.utils.CreateHtmlTextHelper;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
@@ -20,9 +19,6 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class SignInActivity extends AppCompatActivity {
     TextInputEditText mEdtTextEmail, mEdtTextPassword;
@@ -36,8 +32,8 @@ public class SignInActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_in);
         initView();
 
-        mTxtInputLayoutEmail.setHint(CreateHtmlText.createTextRequired("Email"));
-        mTxtInputLayoutPassword.setHint(CreateHtmlText.createTextRequired("Mật khẩu"));
+        mTxtInputLayoutEmail.setHint(CreateHtmlTextHelper.createTextRequired("Email"));
+        mTxtInputLayoutPassword.setHint(CreateHtmlTextHelper.createTextRequired("Mật khẩu"));
 
         mBtnSignInWithMail.setOnClickListener(new View.OnClickListener() {
             @Override

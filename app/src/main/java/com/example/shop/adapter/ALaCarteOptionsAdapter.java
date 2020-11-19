@@ -34,7 +34,7 @@ public class ALaCarteOptionsAdapter extends RecyclerView.Adapter<ALaCarteOptions
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.alacarte_line, parent,false));
+        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_chosen_alacarte, parent,false));
     }
 
 

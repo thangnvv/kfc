@@ -11,4 +11,4 @@
     <dimen name="h6">@dimen/_26ssp</dimen>
     <dimen name="nameRestaurant">@dimen/_12ssp</dimen>
     <dimen name="addressRestaurant">@dimen/_10ssp</dimen>
-    </resources>
+</resources>

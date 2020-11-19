@@ -12,9 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shop.R;
-import com.example.shop.ultil.DownloadImageTask;
-import com.example.shop.ultil.Product;
-import com.example.shop.ultil.CommonMethodHolder;
+import com.example.shop.utils.DownloadImageTask;
+import com.example.shop.utils.objects.Product;
+import com.example.shop.utils.CommonMethodHolder;
 
 import java.util.ArrayList;
 
@@ -48,7 +48,6 @@ public class AddsOnAdapter extends RecyclerView.Adapter<AddsOnAdapter.ViewHolder
         holder.mTxtViewAddsOnPortion.setText("0");
 
         new DownloadImageTask(holder.mImgViewBanner).execute(productALaCarte.getUrls_banner().get(0));
-//        new DownloadImageTask(holder.mImgViewBanner).execute(productALaCarte.getUrlImageBanner().get(0).getImageUrl());
 
         holder.mImgButtonAddsOnMinus.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="ĐƠN HÀNG CỦA BẠN"
+            android:text="@string/label_your_cart"
             android:textColor="@color/red"
             android:textSize="@dimen/h3"
             android:textStyle="bold" />
@@ -73,7 +73,7 @@
 
                 <include
                     android:id="@+id/lineCartCountTop"
-                    layout="@layout/line_cart_count"
+                    layout="@layout/layout_cart_total"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
@@ -84,7 +84,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="@dimen/_8sdp"
                     android:background="@drawable/background_red_thick"
-                    android:text="TIẾN HÀNH THANH TOÁN"
+                    android:text="@string/label_check_out"
                     android:textColor="@color/white"
                     android:textSize="@dimen/h1"
                     android:textStyle="bold" />
@@ -102,7 +102,7 @@
                     android:layout_marginTop="@dimen/_24sdp"
                     android:background="@drawable/background_black_thin"
                     android:gravity="top|left"
-                    android:hint="Ghi chú đơn hàng"
+                    android:hint="@string/hint_order_note"
                     android:padding="@dimen/_8sdp"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black"
@@ -116,7 +116,7 @@
 
                 <include
                     android:id="@+id/lineCartCountBottom"
-                    layout="@layout/line_cart_count"
+                    layout="@layout/layout_cart_total"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
@@ -134,7 +134,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="7"
                         android:background="@drawable/background_black_thin"
-                        android:hint="Nhập mã khuyến mãi"
+                        android:hint="@string/hint_discount_code"
                         android:paddingLeft="@dimen/_8sdp"
                         android:paddingTop="@dimen/_12sdp"
                         android:paddingRight="@dimen/_8sdp"
@@ -153,7 +153,7 @@
                         android:paddingTop="@dimen/_12sdp"
                         android:paddingRight="@dimen/_8sdp"
                         android:paddingBottom="@dimen/_12sdp"
-                        android:text="Áp dụng"
+                        android:text="@string/label_apply"
                         android:textAllCaps="false"
                         android:textColor="@color/black"
                         android:textSize="@dimen/h0"
@@ -169,7 +169,7 @@
 
                 <include
                     android:id="@+id/lineCartCountGrandTotal"
-                    layout="@layout/line_cart_count"
+                    layout="@layout/layout_cart_total"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_8sdp"
@@ -196,7 +196,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/background_black_thick"
                 android:padding="@dimen/_8sdp"
-                android:text="TIẾP TỤC MUA HÀNG"
+                android:text="@string/label_keep_shopping"
                 android:textColor="@color/black"
                 android:textSize="@dimen/h1"
                 android:textStyle="bold" />
@@ -209,7 +209,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/background_red_thick"
                 android:padding="@dimen/_8sdp"
-                android:text="TIẾN HÀNH THANH TOÁN"
+                android:text="@string/label_check_out"
                 android:textColor="@color/white"
                 android:textSize="@dimen/h1"
                 android:textStyle="bold" />
@@ -237,7 +237,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_12sdp"
             android:gravity="center_horizontal"
-            android:text="Giỏ hàng của bạn trống"
+            android:text="@string/label_your_cart_is_empty"
             android:textColor="@color/black"
             android:textSize="@dimen/h0"
             android:textStyle="bold" />
@@ -248,7 +248,7 @@
             android:layout_marginLeft="@dimen/margin_left_parent"
             android:layout_marginRight="@dimen/margin_right_parent"
             android:gravity="center_horizontal"
-            android:text="Đặt hàng để thưởng thức công thức đặc biệt của KFC"
+            android:text="@string/label_order_to_enjoy_our_special_recipe"
             android:textColor="@color/black"
             android:textSize="@dimen/h0" />
 
@@ -268,7 +268,7 @@
             android:gravity="center"
             android:paddingTop="@dimen/_4sdp"
             android:paddingBottom="@dimen/_4sdp"
-            android:text="ĐẶT HÀNG NGAY"
+            android:text="@string/label_order_now"
             android:textColor="@color/white"
             android:textSize="@dimen/h1"
             android:textStyle="bold" />

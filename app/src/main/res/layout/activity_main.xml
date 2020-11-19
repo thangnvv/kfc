@@ -111,7 +111,7 @@
 
         <include
             android:id="@+id/includeProductAddedToCart"
-            layout="@layout/layout_product_added_to_cart"
+            layout="@layout/item_product_added_to_cart"
             android:layout_margin="@dimen/_4sdp"
             android:visibility="gone"
             android:layout_width="match_parent"
@@ -179,7 +179,7 @@
                             android:layout_margin="@dimen/margin_right_parent" >
 
                             <include
-                                layout="@layout/signin_or_signup"
+                                layout="@layout/layout_signin_or_signup"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_110sdp" />
 
@@ -193,7 +193,7 @@
                             android:layout_margin="@dimen/margin_right_parent">
 
                             <include
-                                layout="@layout/signed_up"
+                                layout="@layout/layout_signed_up"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_110sdp"/>
 
@@ -231,7 +231,7 @@
                     app:layout_anchor="@id/imageSlider"
                     app:layout_anchorGravity="bottom">
 
-                    <com.example.shop.ultil.noneAllowSwipeViewPager
+                    <com.example.shop.utils.NoneAllowSwipeViewPager
                         android:id="@+id/viewPagerLine"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_50sdp" />
@@ -239,7 +239,7 @@
                 </LinearLayout>
             </com.google.android.material.appbar.AppBarLayout>
 
-            <com.example.shop.ultil.noneAllowSwipeViewPager
+            <com.example.shop.utils.NoneAllowSwipeViewPager
                 android:id="@+id/viewPagerMain"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

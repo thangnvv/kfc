@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shop.R;
-import com.example.shop.ultil.Order;
+import com.example.shop.utils.objects.Order;
 
 import java.util.ArrayList;
 

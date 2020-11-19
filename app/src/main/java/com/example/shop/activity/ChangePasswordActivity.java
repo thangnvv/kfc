@@ -11,8 +11,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.shop.R;
-import com.example.shop.ultil.CreateHtmlText;
-import com.example.shop.ultil.Customer;
+import com.example.shop.utils.CreateHtmlTextHelper;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
@@ -24,7 +23,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.database.core.view.Change;
 
 public class ChangePasswordActivity extends AppCompatActivity {
     TextInputLayout mTxtInputLayoutCurrentPW, mTxtInputLayoutNewPW, mTxtInputLayoutRepeatNewPW;
@@ -42,10 +40,10 @@ public class ChangePasswordActivity extends AppCompatActivity {
         initView();
         addText();
 
-        mDataRef.child("user").child(mCurrentUser.getUid()).addValueEventListener(new ValueEventListener() {
+        mDataRef.child("user").child(mCurrentUser.getUid()).child("password").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                password = snapshot.getValue(Customer.class).getPassword();
+                password = snapshot.getValue(String.class);
             }
 
             @Override
@@ -109,9 +107,9 @@ public class ChangePasswordActivity extends AppCompatActivity {
     }
 
     private void addText() {
-        mTxtInputLayoutCurrentPW.setHint(CreateHtmlText.createTextRequired("Mật khẩu hiện tại"));
-        mTxtInputLayoutNewPW.setHint(CreateHtmlText.createTextRequired("Mật khẩu mới"));
-        mTxtInputLayoutRepeatNewPW.setHint(CreateHtmlText.createTextRequired("Xác nhận mật khẩu"));
+        mTxtInputLayoutCurrentPW.setHint(CreateHtmlTextHelper.createTextRequired(getString(R.string.hint_current_password)));
+        mTxtInputLayoutNewPW.setHint(CreateHtmlTextHelper.createTextRequired(getString(R.string.hint_new_password)));
+        mTxtInputLayoutRepeatNewPW.setHint(CreateHtmlTextHelper.createTextRequired(getString(R.string.hint_confirm_password)));
     }
 
     private void initView() {

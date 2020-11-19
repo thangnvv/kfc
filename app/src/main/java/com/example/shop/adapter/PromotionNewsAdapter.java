@@ -13,8 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shop.R;
-import com.example.shop.ultil.DownloadImageTask;
-import com.example.shop.ultil.Promotion;
+import com.example.shop.utils.DownloadImageTask;
+import com.example.shop.utils.objects.Promotion;
 
 import java.util.ArrayList;
 
@@ -31,7 +31,7 @@ public class PromotionNewsAdapter extends RecyclerView.Adapter<PromotionNewsAdap
     @NonNull
     @Override
     public PromotionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.layout_promotion_news, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_promotion_news, parent, false);
         return new PromotionViewHolder(view);
     }
 

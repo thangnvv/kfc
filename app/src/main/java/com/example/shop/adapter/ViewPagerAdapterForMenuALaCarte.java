@@ -8,12 +8,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.shop.fragment.ALaCarte_Menu_Fragment;
-import com.example.shop.fragment.Desserts_And_Drinks_Fragment;
-import com.example.shop.fragment.Fried_RoastedChicken_Fragment;
-import com.example.shop.fragment.Hot_Deals_Fragment;
-import com.example.shop.fragment.Rice_Burger_Fragment;
-import com.example.shop.fragment.Snacks_Fragment;
+import com.example.shop.fragment.DessertsAndDrinksFragment;
+import com.example.shop.fragment.FriedRoastedChickenFragment;
+import com.example.shop.fragment.RiceBurgerFragment;
+import com.example.shop.fragment.SnacksFragment;
 
 public class ViewPagerAdapterForMenuALaCarte extends FragmentPagerAdapter{
 
@@ -34,13 +32,13 @@ public class ViewPagerAdapterForMenuALaCarte extends FragmentPagerAdapter{
 
         switch (position){
             case 0:
-                return new Fried_RoastedChicken_Fragment(context);
+                return new FriedRoastedChickenFragment(context);
             case 1:
-                return new Rice_Burger_Fragment(context);
+                return new RiceBurgerFragment(context);
             case 2:
-                return new Snacks_Fragment(context);
+                return new SnacksFragment(context);
             case 3:
-                return new Desserts_And_Drinks_Fragment(context);
+                return new DessertsAndDrinksFragment(context);
             default:
                 Log.d("DDD",  "Check tab 1");
                 return null;

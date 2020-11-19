@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/_8sdp"
-    tools:context=".fragment.For_One_Fragment">
+    tools:context=".fragment.ForOneFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewProduct"

@@ -68,7 +68,7 @@
                         android:layout_marginBottom="@dimen/_8sdp" >
 
                         <include
-                            layout="@layout/signin_or_signup"
+                            layout="@layout/layout_signin_or_signup"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_110sdp" />
 
@@ -86,7 +86,7 @@
                         <TextView
                             android:textColor="@color/black"
                             android:textSize="@dimen/h1"
-                            android:text="@string/welcome_back"
+                            android:text="@string/label_welcome_back"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
 
@@ -310,7 +310,7 @@
                         android:textStyle="bold"
                         android:textSize="@dimen/h1"
                         android:textColor="@color/red"
-                        android:text="@string/sign_out"
+                        android:text="@string/label_sign_out"
                         android:layout_marginTop="@dimen/_8sdp"
                         android:layout_marginBottom="@dimen/_8sdp"
                         android:layout_width="match_parent"

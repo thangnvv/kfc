@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.example.shop.R;
 import com.example.shop.adapter.PromotionNewsAdapter;
-import com.example.shop.ultil.Promotion;
+import com.example.shop.utils.objects.Promotion;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -45,7 +45,7 @@ public class PromotionNewsActivity extends AppCompatActivity implements BottomNa
         mBtmNavigationView.setSelectedItemId(R.id.promotion);
         mBtmNavigationView.setOnNavigationItemSelectedListener(this);
 
-        mPromotionNewsAdapter      = new PromotionNewsAdapter(getApplicationContext(), mListPromotion);
+        mPromotionNewsAdapter = new PromotionNewsAdapter(getApplicationContext(), mListPromotion);
         mLayoutManager             = new LinearLayoutManager(getApplicationContext());
         mRecyclerViewPromotionNews.setLayoutManager(mLayoutManager);
         mRecyclerViewPromotionNews.setAdapter(mPromotionNewsAdapter);
@@ -81,7 +81,7 @@ public class PromotionNewsActivity extends AppCompatActivity implements BottomNa
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 mListPromotion.add(snapshot.getValue(Promotion.class));
-                if(mPromotionNewsAdapter!= null){
+                if(mPromotionNewsAdapter != null){
                     mPromotionNewsAdapter.notifyDataSetChanged();
                 }
             }

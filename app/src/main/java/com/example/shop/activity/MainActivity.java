@@ -1,18 +1,18 @@
 package com.example.shop.activity;
 
 import com.example.shop.adapter.OrderLineAdapter;
-import com.example.shop.fragment.ALaCarte_Menu_Fragment;
-import com.example.shop.fragment.For_One_Fragment;
-import com.example.shop.fragment.For_Sharing_Fragment;
-import com.example.shop.fragment.Hot_Deals_Fragment;
-import com.example.shop.fragment.Setting_Product_Fragment;
+import com.example.shop.fragment.ALaCarteMenuFragment;
+import com.example.shop.fragment.ForOneFragment;
+import com.example.shop.fragment.ForSharingFragment;
+import com.example.shop.fragment.HotDealsFragment;
+import com.example.shop.fragment.SettingProductFragment;
 import com.example.shop.interfaces.OnProductClickListener;
 import com.example.shop.interfaces.OnSpinnerItemSelectedListener;
-import com.example.shop.ultil.Cart;
-import com.example.shop.ultil.CustomDialogStartOrdering;
-import com.example.shop.ultil.Customer;
-import com.example.shop.ultil.Product;
-import com.example.shop.ultil.CommonMethodHolder;
+import com.example.shop.utils.objects.Cart;
+import com.example.shop.utils.dialogs.CustomDialogStartOrdering;
+import com.example.shop.utils.objects.Customer;
+import com.example.shop.utils.objects.Product;
+import com.example.shop.utils.CommonMethodHolder;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -39,12 +39,12 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.shop.adapter.AdapterForSlider;
+import com.example.shop.adapter.SliderAdapter;
 import com.example.shop.adapter.ViewPagerAdapterForTabLine;
 import com.example.shop.adapter.ViewPagerAdapterForMainTab;
 import com.example.shop.R;
-import com.example.shop.ultil.Promotion;
-import com.example.shop.ultil.noneAllowSwipeViewPager;
+import com.example.shop.utils.objects.Promotion;
+import com.example.shop.utils.NoneAllowSwipeViewPager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     ImageView mImgButtonMore, mImgButtonHideSetting, mImgViewCart;
     Toolbar mToolbarMain;
     TabLayout mTabLayoutMain;
-    noneAllowSwipeViewPager mViewPagerLine, mViewPagerMain;
+    NoneAllowSwipeViewPager mViewPagerLine, mViewPagerMain;
     ViewPagerAdapterForTabLine viewPagerAdapterForTabLine;
     ViewPagerAdapterForMainTab viewPagerAdapterForMainTab;
     BottomNavigationView mBtmNavigationView;
@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private ArrayList<String> bannerMain;
     private ArrayList<Promotion> promotionList;
     private SliderView sliderView;
-    private AdapterForSlider adapter;
+    private SliderAdapter adapter;
 
     private boolean doubleBackToExitPressedOnce;
     private Handler mHandlerQuiteApp = new Handler();
@@ -212,7 +212,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     private void showSettingProduct() {
-        Setting_Product_Fragment setting_product_fragment = new Setting_Product_Fragment(cart.isRequireFromEditProduct());
+        SettingProductFragment setting_product_fragment = new SettingProductFragment(cart.isRequireFromEditProduct());
         mLlBottomNavigationHolder.setVisibility(View.INVISIBLE);
         mLlSettingHolder.setVisibility(View.VISIBLE);
         mCoordinatorLayoutMain.setVisibility(View.INVISIBLE);
@@ -222,7 +222,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         atSettingProduct = true;
         mImgButtonMore.setVisibility(View.GONE);
         mImgButtonHideSetting.setVisibility(View.VISIBLE);
-        setting_product_fragment.setOnButtonClickListener(new Setting_Product_Fragment.OnButtonClickListener() {
+        setting_product_fragment.setOnButtonClickListener(new SettingProductFragment.OnButtonClickListener() {
             @Override
             public void onHideSettingProductFragment() {
                 hideSettingProductFragment();
@@ -428,17 +428,17 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     private void getShowingFragment(Fragment fragment) {
-        if (fragment instanceof For_One_Fragment) {
-            For_One_Fragment for_one = (For_One_Fragment) fragment;
+        if (fragment instanceof ForOneFragment) {
+            ForOneFragment for_one = (ForOneFragment) fragment;
             for_one.setProductClickListener(this);
-        } else if (fragment instanceof For_Sharing_Fragment) {
-            For_Sharing_Fragment for_sharing = (For_Sharing_Fragment) fragment;
+        } else if (fragment instanceof ForSharingFragment) {
+            ForSharingFragment for_sharing = (ForSharingFragment) fragment;
             for_sharing.setProductClickListener(this);
-        } else if (fragment instanceof Hot_Deals_Fragment) {
-            Hot_Deals_Fragment hot_deals = (Hot_Deals_Fragment) fragment;
+        } else if (fragment instanceof HotDealsFragment) {
+            HotDealsFragment hot_deals = (HotDealsFragment) fragment;
             hot_deals.setProductClickListener(this);
-        } else if (fragment instanceof ALaCarte_Menu_Fragment) {
-            ALaCarte_Menu_Fragment aLaCarte_menu = (ALaCarte_Menu_Fragment) fragment;
+        } else if (fragment instanceof ALaCarteMenuFragment) {
+            ALaCarteMenuFragment aLaCarte_menu = (ALaCarteMenuFragment) fragment;
             aLaCarte_menu.setOnProductClickListener(this);
         }
     }
@@ -564,8 +564,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private void setUpSliderBanner() {
         bannerMain = new ArrayList<>();
         promotionList = new ArrayList<>();
-        adapter = new AdapterForSlider(this, bannerMain);
-        adapter.setOnBannerClickListener(new AdapterForSlider.OnBannerClickListener() {
+        adapter = new SliderAdapter(this, bannerMain);
+        adapter.setOnBannerClickListener(new SliderAdapter.OnBannerClickListener() {
             @Override
             public void onClick(int position) {
                 String newsUrl = promotionList.get(position).getLink();

@@ -1,7 +1,6 @@
 package com.example.shop.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.shop.R;
-import com.example.shop.ultil.Product;
-import com.example.shop.ultil.Upgrade;
+import com.example.shop.utils.objects.Product;
+import com.example.shop.utils.objects.Upgrade;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

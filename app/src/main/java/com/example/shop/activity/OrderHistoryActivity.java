@@ -13,7 +13,7 @@ import android.widget.ImageButton;
 
 import com.example.shop.R;
 import com.example.shop.adapter.OrderHistoryAdapter;
-import com.example.shop.ultil.Order;
+import com.example.shop.utils.objects.Order;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;

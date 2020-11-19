@@ -64,7 +64,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="THỜI GIAN GIAO HÀNG"
+                        android:text="@string/label_order_time"
                         android:textColor="@color/black"
                         android:textSize="@dimen/h3"
                         android:textStyle="bold" />

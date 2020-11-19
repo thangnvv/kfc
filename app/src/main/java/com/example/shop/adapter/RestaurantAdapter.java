@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shop.R;
-import com.example.shop.ultil.Restaurant;
+import com.example.shop.utils.objects.Restaurant;
 
 import java.util.ArrayList;
 
@@ -28,7 +28,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
     @Override
     public RestaurantViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(mContext).inflate(R.layout.layout_restaurant, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_restaurant, parent, false);
 
         return new RestaurantViewHolder(view);
     }

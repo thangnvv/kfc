@@ -20,10 +20,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.shop.R;
-import com.example.shop.ultil.CreateHtmlText;
-import com.example.shop.ultil.CustomDialogPolicyAndRegulation;
-import com.example.shop.ultil.CustomDialogTermsAndConditons;
-import com.example.shop.ultil.Customer;
+import com.example.shop.utils.CreateHtmlTextHelper;
+import com.example.shop.utils.dialogs.CustomDialogPolicyAndRegulation;
+import com.example.shop.utils.dialogs.CustomDialogTermsAndConditons;
+import com.example.shop.utils.objects.Customer;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -42,14 +42,11 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.gson.Gson;
 
 
 import java.util.Arrays;
@@ -229,22 +226,22 @@ public class AccountRegisterActivity extends AppCompatActivity {
     }
 
     private void addText() {
-        mTxtInputLayoutName.setHint(CreateHtmlText.createTextRequired("Họ tên"));
-        mTxtInputLayoutEmail.setHint(CreateHtmlText.createTextRequired("Email"));
-        mTxtInputLayoutPassword.setHint(CreateHtmlText.createTextRequired("Mật khẩu"));
-        mTxtInputLayoutRepeatPW.setHint(CreateHtmlText.createTextRequired("Lặp lại mật khẩu"));
-        mTxtInputLayoutPhone.setHint(CreateHtmlText.createTextRequired("Điện thoại"));
-        mTxtViewNotice.setText(CreateHtmlText.buildText(getString(R.string.registerNotice)));
-        mTxtViewAcceptPolicy.setText(CreateHtmlText.buildText(getString(R.string.acceptPolicy)));
-        mTxtViewAcceptReceiptPromo.setText(CreateHtmlText.buildText(getString(R.string.acceptReceiptPromo)));
+        mTxtInputLayoutName.setHint(CreateHtmlTextHelper.createTextRequired(getString(R.string.hint_full_name)));
+        mTxtInputLayoutEmail.setHint(CreateHtmlTextHelper.createTextRequired(getString(R.string.hint_email)));
+        mTxtInputLayoutPassword.setHint(CreateHtmlTextHelper.createTextRequired(getString(R.string.hint_password)));
+        mTxtInputLayoutRepeatPW.setHint(CreateHtmlTextHelper.createTextRequired(getString(R.string.hint_repeat_password)));
+        mTxtInputLayoutPhone.setHint(CreateHtmlTextHelper.createTextRequired(getString(R.string.hint_phone_number)));
+        mTxtViewNotice.setText(CreateHtmlTextHelper.buildText(getString(R.string.hint_register_notice)));
+        mTxtViewAcceptPolicy.setText(CreateHtmlTextHelper.buildText(getString(R.string.label_accept_policy)));
+        mTxtViewAcceptReceiptPromo.setText(CreateHtmlTextHelper.buildText(getString(R.string.hint_accept_receipt_promotion)));
     }
 
     private void initView() {
-        mTxtInputName = findViewById(R.id.edittextName);
-        mTxtInputEmail = findViewById(R.id.edittextEmail);
-        mTxtInputPassword = findViewById(R.id.edittextPassword);
-        mTxtInputRepeatPW = findViewById(R.id.edittextRepeat);
-        mTxtInputPhone = findViewById(R.id.edittextPhone);
+        mTxtInputName = findViewById(R.id.editTextName);
+        mTxtInputEmail = findViewById(R.id.editTextEmail);
+        mTxtInputPassword = findViewById(R.id.editTextPassword);
+        mTxtInputRepeatPW = findViewById(R.id.editTextRepeat);
+        mTxtInputPhone = findViewById(R.id.editTextPhone);
 
         mTxtInputLayoutName = findViewById(R.id.textInputLayoutName);
         mTxtInputLayoutEmail = findViewById(R.id.textInputLayoutEmail);

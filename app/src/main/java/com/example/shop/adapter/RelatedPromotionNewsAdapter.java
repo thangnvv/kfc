@@ -4,8 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,10 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.shop.R;
-import com.example.shop.ultil.DownloadImageTask;
-import com.example.shop.ultil.Promotion;
-import com.example.shop.ultil.RelatedNews;
-import com.orhanobut.hawk.Hawk;
+import com.example.shop.utils.objects.RelatedNews;
 
 import java.util.ArrayList;
 
@@ -34,7 +29,7 @@ public class RelatedPromotionNewsAdapter extends RecyclerView.Adapter<RelatedPro
     @NonNull
     @Override
     public PromotionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.layout_related_promotion_news, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_related_promotion_news, parent, false);
         return new PromotionViewHolder(view);
     }
 

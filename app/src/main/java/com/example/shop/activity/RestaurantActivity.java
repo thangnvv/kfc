@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -18,13 +17,12 @@ import android.widget.Toast;
 import com.example.shop.R;
 import com.example.shop.adapter.RestaurantAdapter;
 import com.example.shop.interfaces.OnSpinnerItemSelectedListener;
-import com.example.shop.ultil.CreateDistrictList;
-import com.example.shop.ultil.CreateHtmlText;
-import com.example.shop.ultil.CreateRestaurantListWithCity;
-import com.example.shop.ultil.CreateRestaurantListWithDistrict;
-import com.example.shop.ultil.CustomDialogChooseCity;
-import com.example.shop.ultil.CustomDialogChooseDistrict;
-import com.example.shop.ultil.Restaurant;
+import com.example.shop.utils.CreateDistrictListHelper;
+import com.example.shop.utils.CreateHtmlTextHelper;
+import com.example.shop.utils.CreateRestaurantListHelper;
+import com.example.shop.utils.dialogs.CustomDialogChooseCity;
+import com.example.shop.utils.dialogs.CustomDialogChooseDistrict;
+import com.example.shop.utils.objects.Restaurant;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -62,8 +60,8 @@ public class RestaurantActivity extends AppCompatActivity implements BottomNavig
         mTxtViewFind.setOnClickListener(this);
         mLinearLayoutDistrict.setClickable(false);
 
-        mTxtViewDistrict.setText(CreateHtmlText.createTextRequired("Quận/Huyện"));
-        mTxtViewCity.setText(CreateHtmlText.createTextRequired("Tỉnh/Thành Phố"));
+        mTxtViewDistrict.setText(CreateHtmlTextHelper.createTextRequired("Quận/Huyện"));
+        mTxtViewCity.setText(CreateHtmlTextHelper.createTextRequired("Tỉnh/Thành Phố"));
         cityList = this.getResources().getStringArray(R.array.city);
 
     }
@@ -115,26 +113,26 @@ public class RestaurantActivity extends AppCompatActivity implements BottomNavig
                     @Override
                     public void onItemSelected(int position) {
                         if(position != 0){
-                            mTxtViewCity.setText(CreateHtmlText.createTextRequiredForDialog("Tỉnh/Thành Phố" , cityList[position]));
+                            mTxtViewCity.setText(CreateHtmlTextHelper.createTextRequiredForDialog("Tỉnh/Thành Phố" , cityList[position]));
                             citySelected = true;
                             cityPosition = position;
                             mLinearLayoutDistrict.setClickable(citySelected);
                             if(districtSelected){
-                                mTxtViewDistrict.setText(CreateHtmlText.createTextRequired("Quận/Huyện"));
+                                mTxtViewDistrict.setText(CreateHtmlTextHelper.createTextRequired("Quận/Huyện"));
                                 districtSelected = false;
                                 districtPosition = 0;
                             }
                             if(holdResData != null){
                                 holdResData.clear();
                             }
-                            holdResData.addAll(CreateRestaurantListWithCity.createRestaurantList(RestaurantActivity.this, position));
+                            holdResData.addAll(CreateRestaurantListHelper.createRestaurantListInCity(RestaurantActivity.this, position));
                         }else{
-                            mTxtViewCity.setText(CreateHtmlText.createTextRequired("Tỉnh/Thành Phố"));
+                            mTxtViewCity.setText(CreateHtmlTextHelper.createTextRequired("Tỉnh/Thành Phố"));
                             citySelected = false;
                             cityPosition = 0;
                             mLinearLayoutDistrict.setClickable(citySelected);
                             if(districtSelected == true){
-                                mTxtViewDistrict.setText(CreateHtmlText.createTextRequired("Quận/Huyện"));
+                                mTxtViewDistrict.setText(CreateHtmlTextHelper.createTextRequired("Quận/Huyện"));
                                 districtSelected = false;
                                 districtPosition = 0;
                             }
@@ -152,11 +150,11 @@ public class RestaurantActivity extends AppCompatActivity implements BottomNavig
                     public void onItemSelected(int position) {
                         if(position != 0){
 
-                            mTxtViewDistrict.setText(CreateHtmlText.createTextRequiredForDialog("Quận/Huyện", CreateDistrictList.getDistrict(position)));
+                            mTxtViewDistrict.setText(CreateHtmlTextHelper.createTextRequiredForDialog("Quận/Huyện", CreateDistrictListHelper.getDistrict(position)));
                             districtSelected = true;
                             districtPosition = position;
                         }else{
-                            mTxtViewDistrict.setText(CreateHtmlText.createTextRequired("Quận/Huyện"));
+                            mTxtViewDistrict.setText(CreateHtmlTextHelper.createTextRequired("Quận/Huyện"));
                             districtSelected = false;
                             districtPosition = 0;
                         }
@@ -168,21 +166,21 @@ public class RestaurantActivity extends AppCompatActivity implements BottomNavig
                 if(citySelected == true &&  districtSelected == false ){
                     if(mArrayListRestaurant !=null){
                         mArrayListRestaurant.clear();
-                        mArrayListRestaurant.addAll(CreateRestaurantListWithCity.createRestaurantList(RestaurantActivity.this, cityPosition));
+                        mArrayListRestaurant.addAll(CreateRestaurantListHelper.createRestaurantListInCity(RestaurantActivity.this, cityPosition));
                     }else{
-                        mArrayListRestaurant = CreateRestaurantListWithCity.createRestaurantList(RestaurantActivity.this, cityPosition);
+                        mArrayListRestaurant = CreateRestaurantListHelper.createRestaurantListInCity(RestaurantActivity.this, cityPosition);
                     }
                 }
                 if(citySelected == true &&  districtSelected == true ){
                     if(mArrayListRestaurant !=null){
                         mArrayListRestaurant.clear();
-                        mArrayListRestaurant.addAll(CreateRestaurantListWithDistrict.createRestaurantListWithDistrict(holdResData,CreateDistrictList.getDistrict(districtPosition)));
+                        mArrayListRestaurant.addAll(CreateRestaurantListHelper.createRestaurantListInDistrict(holdResData, CreateDistrictListHelper.getDistrict(districtPosition)));
                     }else{
-                        mArrayListRestaurant.addAll(CreateRestaurantListWithDistrict.createRestaurantListWithDistrict(holdResData,CreateDistrictList.getDistrict(districtPosition)));
+                        mArrayListRestaurant.addAll(CreateRestaurantListHelper.createRestaurantListInDistrict(holdResData, CreateDistrictListHelper.getDistrict(districtPosition)));
                     }
                 }
                 if(mRestaurantAdapter == null){
-                    mRestaurantAdapter  = new RestaurantAdapter(mArrayListRestaurant, RestaurantActivity.this);
+                    mRestaurantAdapter = new RestaurantAdapter(mArrayListRestaurant, RestaurantActivity.this);
                     mRecyclerView.setLayoutManager(mLayoutManager);
                     mRecyclerView.setAdapter(mRestaurantAdapter);
                 }

@@ -1,7 +1,6 @@
 package com.example.shop.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +14,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.shop.R;
-import com.example.shop.ultil.CustomDialogChooseALaCarte;
-import com.example.shop.ultil.CustomDialogUpgradeALaCarte;
-import com.example.shop.ultil.Product;
-import com.example.shop.ultil.ProductALaCarte;
-import com.example.shop.ultil.ProductSeperated;
-import com.example.shop.ultil.Upgrade;
+import com.example.shop.utils.dialogs.CustomDialogChooseALaCarte;
+import com.example.shop.utils.dialogs.CustomDialogUpgradeALaCarte;
+import com.example.shop.utils.objects.Product;
+import com.example.shop.utils.objects.ProductALaCarte;
+import com.example.shop.utils.objects.ProductSeperated;
+import com.example.shop.utils.objects.Upgrade;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -47,7 +46,7 @@ public class SeperateProductAdapter extends RecyclerView.Adapter<SeperateProduct
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.layout_seperated_product, parent, false));
+        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_seperated_product, parent, false));
     }
 
     @Override

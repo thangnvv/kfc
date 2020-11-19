@@ -14,21 +14,21 @@
     <string name="updateCart">CẬP NHẬT</string>
 
 
-    <string name="registerNotice">
+    <string name="hint_register_notice">
         <![CDATA[
             <p><font color="#000>(</font><font color="#e4002b">*</font><font color="#000000>) Thông tin cần thiết</font>
             <font color="#707070> Bạn sẽ nhận được phần thưởng đặc biệt nếu bạn đăng ký thông tin thành viên đầy đủ.</font></p>
         ]]>
     </string>
 
-    <string name="acceptPolicy">
+    <string name="label_accept_policy">
         <![CDATA[
             <p><font color="#707070">Tôi đã đọc và chấp nhận</font>
                 <u><font color="#000"> Điều khoản & Điều kiện của KFC Việt Nam</font></u></p>
         ]]>
     </string>
 
-    <string name="acceptReceiptPromo">
+    <string name="hint_accept_receipt_promotion">
         <![CDATA[
             <p><font color="#000"><b>Có, tôi muốn nhận các ưu đãi tuyệt vời nhất từ KFC!</b></font>
             <br><font color="#707070">Tôi đồng ý nhận bản tin từ KFC qua Email.</font></p>
@@ -230,21 +230,50 @@
         <item>Siêu thị Lotte Đà Nẵng, 6 Nại Nam, P.Hòa Cường Bắc, Q.Hải Châu, TP Đà Nẵng</item>
         <item>125 Nguyễn Văn Thoại, P. An Hải Đông, Q. Sơn Trà, TP. Đà Nẵng</item>
     </string-array>
+
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="welcome_back">Chào mừng quay lại!</string>
-    <string name="order_history">Lịch sử đơn hàng</string>
-    <string name="already_have_an_account">Bạn đã có tài khoản?</string>
-    <string name="not_have_an_account_yet">Bạn chưa có tài khoản KFC?</string>
-    <string name="sign_up_now">Đăng ký ngay</string>
-    <string name="sign_in_with_mail">ĐĂNG NHẬP</string>
-    <string name="sign_up_with_mail">ĐĂNG KÝ</string>
-    <string name="sign_in_with_facebook">Đăng nhập với Facebook</string>
-    <string name="sign_up_with_facebook">Đăng ký với Facebook</string>
-    <string name="sign_in_with_google">Đăng nhập với Google</string>
-    <string name="sign_up_with_google">Đăng ký với Google</string>
-    <string name="become_member_today">HÃY LÀ THÀNH VIÊN KFC NGAY HÔM NAY</string>
-    <string name="sign_out">ĐĂNG XUẤT</string>
+    <string name="label_welcome_back">Chào mừng quay lại!</string>
+    <string name="label_order_history">Lịch sử đơn hàng</string>
+    <string name="label_already_have_an_account">Bạn đã có tài khoản?</string>
+    <string name="label_not_have_an_account_yet">Bạn chưa có tài khoản KFC?</string>
+    <string name="label_sign_up_now">Đăng ký ngay</string>
+    <string name="label_sign_in_with_mail">ĐĂNG NHẬP</string>
+    <string name="label_sign_up_with_mail">ĐĂNG KÝ</string>
+    <string name="label_sign_in_with_facebook">Đăng nhập với Facebook</string>
+    <string name="label_sign_up_with_facebook">Đăng ký với Facebook</string>
+    <string name="label_sign_in_with_google">Đăng nhập với Google</string>
+    <string name="label_sign_up_with_google">Đăng ký với Google</string>
+    <string name="label_become_member_today">HÃY LÀ THÀNH VIÊN KFC NGAY HÔM NAY</string>
+    <string name="label_sign_out">ĐĂNG XUẤT</string>
+    <string name="label_deliver_to">Giao hàng đến:</string>
+    <string name="label_chosen_city">Hồ Chí Minh</string>
+    <string name="label_change"><![CDATA[Thay đổi >]]></string>
+    <string name="label_user_name">User Name</string>
+    <string name="label_sign_in_or_sign_up">Đăng nhập hoặc Đăng ký tài khoản KFC để mua hàng và nhận ưu đãi dành riêng cho bạn</string>
+    <string name="label_sign_up">ĐĂNG KÝ</string>
+    <string name="label_sign_in">ĐĂNG NHẬP</string>
+    <string name="label_enjoy_member_preferred">Tận hưởng thành viên KFC với các ưu đãi và khuyến mãi đặc biệt!</string>
+
+    <string name="hint_chosen_city">Chosen City</string>
+    <string name="hint_full_name">Họ tên</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Mật khẩu</string>
+    <string name="hint_repeat_password">Lặp lại mật khẩu</string>
+    <string name="hint_phone_number">Điện thoại</string>
+    <string name="label_your_cart">ĐƠN HÀNG CỦA BẠN</string>
+    <string name="label_check_out">TIẾN HÀNH THANH TOÁN</string>
+    <string name="hint_order_note">Ghi chú đơn hàng</string>
+    <string name="hint_discount_code">Nhập mã khuyến mãi</string>
+    <string name="label_apply">Áp dụng</string>
+    <string name="label_keep_shopping">TIẾP TỤC MUA HÀNG</string>
+    <string name="label_your_cart_is_empty">Giỏ hàng của bạn trống</string>
+    <string name="label_order_to_enjoy_our_special_recipe">Đặt hàng để thưởng thức công thức đặc biệt của KFC</string>
+    <string name="label_order_now">ĐẶT HÀNG NGAY</string>
+    <string name="label_change_password">ĐỔI MẬT KHẨU</string>
+    <string name="hint_current_password">Mật khẩu hiện tại</string>
+    <string name="hint_new_password">Mật khẩu mới</string>
+    <string name="hint_confirm_password">Xác nhận mật khẩu</string>
+    <string name="label_order_time">THỜI GIAN GIAO HÀNG</string>
 
 
 </resources>

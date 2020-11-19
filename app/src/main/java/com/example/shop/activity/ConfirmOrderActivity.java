@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -15,11 +14,10 @@ import android.widget.Toast;
 
 import com.example.shop.R;
 import com.example.shop.adapter.OrderLineAdapter;
-import com.example.shop.ultil.Cart;
-import com.example.shop.ultil.CommonMethodHolder;
-import com.example.shop.ultil.Order;
-import com.example.shop.ultil.Product;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.example.shop.utils.objects.Cart;
+import com.example.shop.utils.CommonMethodHolder;
+import com.example.shop.utils.objects.Order;
+import com.example.shop.utils.objects.Product;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;

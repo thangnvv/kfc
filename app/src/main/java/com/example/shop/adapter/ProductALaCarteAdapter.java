@@ -15,8 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shop.R;
 import com.example.shop.interfaces.OnProductClickListener;
-import com.example.shop.ultil.DownloadImageTask;
-import com.example.shop.ultil.Product;
+import com.example.shop.utils.DownloadImageTask;
+import com.example.shop.utils.objects.Product;
 import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;
@@ -24,16 +24,16 @@ import java.util.ArrayList;
 public class ProductALaCarteAdapter extends RecyclerView.Adapter<ProductALaCarteAdapter.ViewHolder>{
 
     private ArrayList<Product> mProductList;
-    private Context context;
-    OnProductClickListener onProductClickListener;
+    private Context mContext;
+    OnProductClickListener mOnProductClickListener;
 
     public void setOnProductClickListener(OnProductClickListener onProductClickListener){
-        this.onProductClickListener = onProductClickListener;
+        this.mOnProductClickListener = onProductClickListener;
     }
 
-    public ProductALaCarteAdapter(ArrayList<Product> mProductList, Context context) {
+    public ProductALaCarteAdapter(ArrayList<Product> mProductList, Context mContext) {
         this.mProductList = mProductList;
-        this.context = context;
+        this.mContext = mContext;
     }
 
     public ArrayList<Product> getmProductList() {
@@ -44,25 +44,25 @@ public class ProductALaCarteAdapter extends RecyclerView.Adapter<ProductALaCarte
         this.mProductList = mProductList;
     }
 
-    public Context getContext() {
-        return context;
+    public Context getmContext() {
+        return mContext;
     }
 
-    public void setContext(Context context) {
-        this.context = context;
+    public void setmContext(Context mContext) {
+        this.mContext = mContext;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_product_alacarte, parent, false));
+        return new ViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_product_alacarte, parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         final Product productALaCarte = mProductList.get(position);
 
-        AdapterForSlider adapter = new AdapterForSlider(getContext(), productALaCarte.getUrls_banner());
+        SliderAdapter adapter = new SliderAdapter(getmContext(), productALaCarte.getUrls_banner());
         if(productALaCarte.getUrls_banner().size() == 1){
             holder.mSliderViewBanner.setVisibility(View.GONE);
             holder.imgViewProductBanner.setVisibility(View.VISIBLE);
@@ -99,7 +99,7 @@ public class ProductALaCarteAdapter extends RecyclerView.Adapter<ProductALaCarte
             @Override
             public void onClick(View v) {
                 Log.d("EEE", "At Product ALaCarte Adapter");
-                onProductClickListener.onOrderProduct(mProductList.get(position));
+                mOnProductClickListener.onOrderProduct(mProductList.get(position));
             }
         });
     }

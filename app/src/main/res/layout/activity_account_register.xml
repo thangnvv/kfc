@@ -29,7 +29,7 @@
                 android:textStyle="bold"
                 android:textSize="@dimen/h1"
                 android:textColor="@color/black"
-                android:text="@string/become_member_today"
+                android:text="@string/label_become_member_today"
                 android:layout_width="@dimen/_160sdp"
                 android:layout_height="wrap_content"/>
 
@@ -57,7 +57,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_16sdp"
-                android:text="Tận hưởng thành viên KFC với các ưu đãi và khuyến mãi đặc biệt!"
+                android:text="@string/label_enjoy_member_preferred"
                 android:textColor="@color/black"
                 android:textSize="@dimen/h0"
                 android:textStyle="bold" />
@@ -70,7 +70,7 @@
                 android:layout_marginTop="@dimen/_16sdp">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edittextName"
+                    android:id="@+id/editTextName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/_8sdp"
@@ -86,7 +86,7 @@
                 android:layout_marginTop="@dimen/_16sdp">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edittextEmail"
+                    android:id="@+id/editTextEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/_8sdp"
@@ -105,7 +105,7 @@
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edittextPassword"
+                    android:id="@+id/editTextPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
@@ -123,7 +123,7 @@
                 app:passwordToggleEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edittextRepeat"
+                    android:id="@+id/editTextRepeat"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
@@ -140,7 +140,7 @@
                 android:layout_marginTop="@dimen/_16sdp">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edittextPhone"
+                    android:id="@+id/editTextPhone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="phone"
@@ -243,7 +243,7 @@
             <com.facebook.login.widget.LoginButton
                 android:id="@+id/signInFacebookButton"
                 xmlns:facebook="http://schemas.android.com/apk/res-auto"
-                facebook:com_facebook_login_text="@string/sign_up_with_facebook"
+                facebook:com_facebook_login_text="@string/label_sign_up_with_facebook"
                 facebook:com_facebook_logout_text="Đăng xuất"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

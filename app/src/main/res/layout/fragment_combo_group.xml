@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".fragment.For_Sharing_Fragment">
+    tools:context=".fragment.ForSharingFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewComboGroup"

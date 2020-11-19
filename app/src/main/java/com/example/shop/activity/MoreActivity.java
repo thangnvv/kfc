@@ -25,10 +25,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.shop.R;
-import com.example.shop.ultil.CustomDialogOperationPolicy;
-import com.example.shop.ultil.CustomDialogPolicyAndRegulation;
-import com.example.shop.ultil.CustomDialogTermsAndConditons;
-import com.example.shop.ultil.Customer;
+import com.example.shop.utils.dialogs.CustomDialogOperationPolicy;
+import com.example.shop.utils.dialogs.CustomDialogPolicyAndRegulation;
+import com.example.shop.utils.dialogs.CustomDialogTermsAndConditons;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -301,11 +300,10 @@ public class MoreActivity extends AppCompatActivity implements BottomNavigationV
             mLlSignedUp.setVisibility(View.VISIBLE);
             mTxtViewSignOut.setVisibility(View.VISIBLE);
             String userUrl = "user/" + currentUser.getUid();
-            mDataRef.child(userUrl).addValueEventListener(new ValueEventListener() {
+            mDataRef.child(userUrl).child("full_name").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    Customer customer = snapshot.getValue(Customer.class);
-                    mTxtViewUserName.setText(customer.getFull_name());
+                    mTxtViewUserName.setText(snapshot.getValue(String.class));
                 }
 
                 @Override

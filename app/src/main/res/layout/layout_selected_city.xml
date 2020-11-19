@@ -20,7 +20,7 @@
         android:textColor="@color/darkGrey"
         android:layout_gravity="center"
         android:textSize="@dimen/h0"
-        android:text="Choosen City"
+        android:text="@string/hint_chosen_city"
         android:layout_weight="1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"/>
