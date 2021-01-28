@@ -15,8 +15,9 @@ import android.view.ViewGroup;
 
 import com.example.shop.R;
 import com.example.shop.adapter.ProductAdapter;
+import com.example.shop.interfaces.OnFragmentScrollListener;
 import com.example.shop.interfaces.OnProductClickListener;
-import com.example.shop.utils.objects.Product;
+import com.example.shop.objects.Product;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -32,6 +33,7 @@ public class ForSharingFragment extends Fragment implements OnProductClickListen
     ArrayList<Product> mListProduct;
     ProductAdapter mProductAdapter;
     OnProductClickListener onProductClickListener;
+    OnFragmentScrollListener onFragmentScrollListener;
     Context context;
 
     public ForSharingFragment() {
@@ -43,6 +45,10 @@ public class ForSharingFragment extends Fragment implements OnProductClickListen
 
     public void setProductClickListener(OnProductClickListener onProductClickListener){
         this.onProductClickListener = onProductClickListener;
+    }
+
+    public void setOnFragmentScrollListener(OnFragmentScrollListener onFragmentScrollListener){
+        this.onFragmentScrollListener = onFragmentScrollListener;
     }
 
     @Override
@@ -91,7 +97,13 @@ public class ForSharingFragment extends Fragment implements OnProductClickListen
         recyclerViewProductGroup.setLayoutManager(staggeredGridLayoutManager);
         recyclerViewProductGroup.setAdapter(mProductAdapter);
         mProductAdapter.setOnProductClickListener(this);
-
+        recyclerViewProductGroup.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                onFragmentScrollListener.onScroll();
+            }
+        });
         return view;
     }
 

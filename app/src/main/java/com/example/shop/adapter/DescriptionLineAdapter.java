@@ -11,8 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shop.R;
-import com.example.shop.utils.objects.Product;
-import com.example.shop.utils.objects.ProductALaCarte;
+import com.example.shop.objects.Product;
+import com.example.shop.objects.ProductALaCarte;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

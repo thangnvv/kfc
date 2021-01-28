@@ -12,11 +12,14 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.example.shop.R;
 import com.example.shop.adapter.ProductAdapter;
+import com.example.shop.interfaces.OnFragmentScrollListener;
+import com.example.shop.interfaces.OnLoadDataListener;
 import com.example.shop.interfaces.OnProductClickListener;
-import com.example.shop.utils.objects.Product;
+import com.example.shop.objects.Product;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,11 +32,17 @@ import java.util.ArrayList;
 
 public class ForOneFragment extends Fragment implements OnProductClickListener{
 
-    RecyclerView recyclerViewProductForOne;
-    ArrayList<Product> mListProduct;
-    ProductAdapter mProductAdapter;
-    OnProductClickListener onProductClickListener;
-    Context context;
+    private RecyclerView recyclerViewProductForOne;
+    private ArrayList<Product> mListProduct;
+    private ProductAdapter mProductAdapter;
+    private OnProductClickListener onProductClickListener;
+    private OnFragmentScrollListener onFragmentScrollListener;
+    private Context context;
+    private OnLoadDataListener onLoadDataListener;
+
+    public void setOnLoadDataListener (OnLoadDataListener onLoadDataListener){
+        this.onLoadDataListener = onLoadDataListener;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,6 +57,10 @@ public class ForOneFragment extends Fragment implements OnProductClickListener{
                 mListProduct.add(snapshot.getValue(Product.class));
                 if(mProductAdapter != null){
                     mProductAdapter.notifyDataSetChanged();
+                    recyclerViewProductForOne.setVisibility(View.VISIBLE);
+                    onLoadDataListener.onSucceed();
+                }else{
+                    onLoadDataListener.onFailed();
                 }
             }
 
@@ -67,8 +80,6 @@ public class ForOneFragment extends Fragment implements OnProductClickListener{
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-
-
     }
 
     public ForOneFragment(){
@@ -83,6 +94,10 @@ public class ForOneFragment extends Fragment implements OnProductClickListener{
         this.onProductClickListener = onProductClickListener;
     }
 
+    public void setOnFragmentScrollListener(OnFragmentScrollListener onFragmentScrollListener){
+        this.onFragmentScrollListener = onFragmentScrollListener;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -94,7 +109,13 @@ public class ForOneFragment extends Fragment implements OnProductClickListener{
         recyclerViewProductForOne.setLayoutManager(staggeredGridLayoutManager);
         recyclerViewProductForOne.setAdapter(mProductAdapter);
         mProductAdapter.setOnProductClickListener(this);
-
+        recyclerViewProductForOne.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                onFragmentScrollListener.onScroll();
+            }
+        });
         return view;
     }
 

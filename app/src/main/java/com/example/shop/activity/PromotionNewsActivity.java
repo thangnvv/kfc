@@ -1,7 +1,6 @@
 package com.example.shop.activity;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,39 +13,41 @@ import android.widget.Toast;
 
 import com.example.shop.R;
 import com.example.shop.adapter.PromotionNewsAdapter;
-import com.example.shop.utils.objects.Promotion;
+import com.example.shop.dialogs.CustomDialogLoading;
+import com.example.shop.objects.Promotion;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class PromotionNewsActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
+public class PromotionNewsActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
-    ArrayList<Promotion> mListPromotion;
-    PromotionNewsAdapter mPromotionNewsAdapter;
-    RecyclerView.LayoutManager mLayoutManager;
-    RecyclerView mRecyclerViewPromotionNews;
-    BottomNavigationView mBtmNavigationView;
+    private ArrayList<Promotion> mListPromotion;
+    private PromotionNewsAdapter mPromotionNewsAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private RecyclerView mRecyclerViewPromotionNews;
+    private BottomNavigationView mBtmNavigationView;
     private boolean doubleBackToExitPressedOnce;
     private final Handler mHandlerQuiteApp = new Handler();
+    private CustomDialogLoading dialogLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_promotion_news);
-
         intiView();
+        showLoadingDialog();
         addPromotionNews();
 
         mBtmNavigationView.setSelectedItemId(R.id.promotion);
         mBtmNavigationView.setOnNavigationItemSelectedListener(this);
 
         mPromotionNewsAdapter = new PromotionNewsAdapter(getApplicationContext(), mListPromotion);
-        mLayoutManager             = new LinearLayoutManager(getApplicationContext());
+        mLayoutManager = new LinearLayoutManager(getApplicationContext());
         mRecyclerViewPromotionNews.setLayoutManager(mLayoutManager);
         mRecyclerViewPromotionNews.setAdapter(mPromotionNewsAdapter);
 
@@ -65,40 +66,32 @@ public class PromotionNewsActivity extends AppCompatActivity implements BottomNa
         });
     }
 
+    private void showLoadingDialog() {
+        dialogLoading = new CustomDialogLoading();
+        dialogLoading.setCancelable(false);
+        dialogLoading.show(this.getSupportFragmentManager(), "Loading Dialog In Promotion News");
+    }
+
     private void intiView() {
         mListPromotion = new ArrayList<>();
         mRecyclerViewPromotionNews = findViewById(R.id.recyclerViewPromotionNews);
         mBtmNavigationView = findViewById(R.id.bottomNavigationView);
-
     }
 
     private void addPromotionNews() {
-
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference dataRef = database.getReference().child("promotion_news");
 
-        dataRef.addChildEventListener(new ChildEventListener() {
+        dataRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                mListPromotion.add(snapshot.getValue(Promotion.class));
-                if(mPromotionNewsAdapter != null){
-                    mPromotionNewsAdapter.notifyDataSetChanged();
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    mListPromotion.add(dataSnapshot.getValue(Promotion.class));
                 }
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
+                if (mPromotionNewsAdapter != null) {
+                    mPromotionNewsAdapter.notifyDataSetChanged();
+                    dialogLoading.dismiss();
+                }
             }
 
             @Override
@@ -106,7 +99,6 @@ public class PromotionNewsActivity extends AppCompatActivity implements BottomNa
 
             }
         });
-
     }
 
     @Override
@@ -130,6 +122,7 @@ public class PromotionNewsActivity extends AppCompatActivity implements BottomNa
 
         return true;
     }
+
     @Override
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
@@ -153,6 +146,8 @@ public class PromotionNewsActivity extends AppCompatActivity implements BottomNa
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mHandlerQuiteApp != null) { mHandlerQuiteApp.removeCallbacks(mRunnable); }
+        if (mHandlerQuiteApp != null) {
+            mHandlerQuiteApp.removeCallbacks(mRunnable);
+        }
     }
 }

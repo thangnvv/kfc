@@ -30,8 +30,6 @@ public class ViewPagerAdapterForMainTab extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
 
         switch (position){
-            case 0:
-                return new ForOneFragment(context);
             case 1:
                 return new ForSharingFragment(context);
             case 2:
@@ -39,7 +37,7 @@ public class ViewPagerAdapterForMainTab extends FragmentPagerAdapter {
             case 3:
                 return new ALaCarteMenuFragment(context);
             default:
-                return null;
+                return new ForOneFragment(context);
         }
     }
 

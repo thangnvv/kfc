@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shop.R;
 import com.example.shop.utils.DownloadImageTask;
-import com.example.shop.utils.objects.Product;
+import com.example.shop.objects.Product;
 import com.example.shop.utils.CommonMethodHolder;
 
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ public class AddsOnAdapter extends RecyclerView.Adapter<AddsOnAdapter.ViewHolder
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_goes_greate_with, parent, false));
+        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_goes_great_with, parent, false));
     }
 
     @Override

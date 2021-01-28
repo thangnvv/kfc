@@ -16,31 +16,31 @@ import android.widget.TextView;
 import com.example.shop.R;
 import com.example.shop.adapter.SingleProductAdapter;
 import com.example.shop.interfaces.OnDeleteItemClickListener;
-import com.example.shop.utils.objects.Cart;
-import com.example.shop.utils.objects.Product;
+import com.example.shop.objects.Cart;
+import com.example.shop.objects.Product;
 import com.example.shop.utils.CommonMethodHolder;
-import com.example.shop.utils.objects.ProductALaCarte;
+import com.example.shop.objects.ProductALaCarte;
 import com.google.android.material.textfield.TextInputEditText;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;
 
 public class CartActivity extends AppCompatActivity implements OnDeleteItemClickListener, View.OnClickListener {
-    int cartCount;
-    String cartTotal;
-    Cart cart;
-    ArrayList<Product> mProductAddedToCartArrList, mProductShowDefaultsArrList;
-    SingleProductAdapter mSingleProductAdapter;
-    RecyclerView mRecyclerViewProductInCart;
-    LinearLayout mLLCartHasItem, mLLCartEmpty, mLineCartCountTop, mLineCartCountBottom, mLineCartCountGrandTotal;
-    Button mBtnOrderNow, mBtnUseVoucher, mBtnKeepShopping, mBtnPay, mBtnGoToPay;
-    ImageButton mImgButtonQuiteCart;
-    EditText mEdtTextOrderNote;
-    TextInputEditText mTxtInputEdtText;
-    boolean editClick = false;
+    private int cartCount;
+    private String cartTotal;
+    private Cart cart;
+    private ArrayList<Product> mProductAddedToCartArrList, mProductShowDefaultsArrList;
+    private SingleProductAdapter mSingleProductAdapter;
+    private RecyclerView mRecyclerViewProductInCart;
+    private LinearLayout mLLCartHasItem, mLLCartEmpty, mLineCartCountTop, mLineCartCountBottom, mLineCartCountGrandTotal;
+    private Button mBtnOrderNow, mBtnUseVoucher, mBtnKeepShopping, mBtnPay, mBtnGoToPay;
+    private ImageButton mImgButtonQuiteCart;
+    private EditText mEdtTextOrderNote;
+    private TextInputEditText mTxtInputEdtText;
+    private boolean editClick = false;
 
     //For include layout
-    TextView mTxtViewProductCount, mTxtViewCartTotal, mTxtViewLineInfoCartBottom, mTxtViewLinePriceCartBottom,
+    private TextView mTxtViewProductCount, mTxtViewCartTotal, mTxtViewLineInfoCartBottom, mTxtViewLinePriceCartBottom,
             mTxtViewLineInfoCartGrandTotal, mTxtViewLinePriceCartGrandTotal;
 
     @Override
@@ -148,6 +148,7 @@ public class CartActivity extends AppCompatActivity implements OnDeleteItemClick
     }
 
     private void initView() {
+        Hawk.init(getApplicationContext()).build();
         mRecyclerViewProductInCart = findViewById(R.id.recyclerViewProuctInCart);
         mLLCartEmpty = findViewById(R.id.linearLayoutCartEmpty);
         mLLCartHasItem = findViewById(R.id.linearLayoutHasItem);

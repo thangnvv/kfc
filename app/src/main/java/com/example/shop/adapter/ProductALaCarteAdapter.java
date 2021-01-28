@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.shop.R;
 import com.example.shop.interfaces.OnProductClickListener;
 import com.example.shop.utils.DownloadImageTask;
-import com.example.shop.utils.objects.Product;
+import com.example.shop.objects.Product;
 import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;

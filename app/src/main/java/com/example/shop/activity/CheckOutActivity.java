@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import com.example.shop.R;
 import com.example.shop.adapter.OrderLineAdapter;
-import com.example.shop.utils.objects.Cart;
+import com.example.shop.objects.Cart;
 import com.example.shop.utils.CommonMethodHolder;
 import com.example.shop.utils.CreateDistrictListHelper;
 import com.example.shop.utils.CreateHtmlTextHelper;

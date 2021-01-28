@@ -1,9 +1,11 @@
 package com.example.shop.utils;
 
-import android.util.Log;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
-import com.example.shop.utils.objects.Cart;
-import com.example.shop.utils.objects.Product;
+import com.example.shop.objects.Cart;
+import com.example.shop.objects.Product;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;
@@ -16,7 +18,7 @@ public class CommonMethodHolder {
                 result = result + price.charAt(i);
             }
         }
-        return Integer.valueOf(result);
+        return Integer.parseInt(result);
     }
 
     public static String convertIntToString(int price) {
@@ -34,36 +36,12 @@ public class CommonMethodHolder {
         return result;
     }
 
-//    public static String setDefaultCourse(String fullCourse) {
-//        String result = "";
-//        for (int i = 0; i < fullCourse.length(); i++) {
-//            boolean isEnd = true;
-//            if (fullCourse.charAt(i) == '*') {
-//                for (int j = i + 1; j < fullCourse.length(); j++) {
-//                    if (fullCourse.charAt(j) == '/') {
-//                        result = result + fullCourse.substring(i, j) + "\n";
-//                        isEnd = false;
-//                        i = j - 1;
-//                        break;
-//                    }
-//                }
-//                if (isEnd) {
-//                    result = result + fullCourse.substring(i);
-//                    break;
-//                }
-//            }
-//        }
-//        return result;
-//    }
-
-    public static String[] seperateAsterisk(String productName) {
-        String[] result = productName.split("\\*");
-        return result;
+    public static String[] separateAsterisk(String productName) {
+        return productName.split("\\*");
     }
 
-    public static String[] seperateSlash(String productName) {
-        String[] result = productName.split("/");
-        return result;
+    public static String[] separateSlash(String productName) {
+        return productName.split("/");
     }
 
     public static String[] deleteNextLine(String[] strArr) {
@@ -71,6 +49,12 @@ public class CommonMethodHolder {
             strArr[i] = strArr[i].replace("\n", "");
         }
         return strArr;
+    }
+
+    public static boolean checkNetworkStatus(Context context) {
+        ConnectivityManager conn =  (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = conn.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isConnected();
     }
 
     public static void saveCart(ArrayList<Product> arrListCart, int cartCount, String cartTotal, boolean isRequireFromEditProduct, Cart cart) {

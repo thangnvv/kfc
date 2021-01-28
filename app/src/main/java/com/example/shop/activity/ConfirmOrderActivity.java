@@ -14,10 +14,10 @@ import android.widget.Toast;
 
 import com.example.shop.R;
 import com.example.shop.adapter.OrderLineAdapter;
-import com.example.shop.utils.objects.Cart;
+import com.example.shop.objects.Cart;
 import com.example.shop.utils.CommonMethodHolder;
-import com.example.shop.utils.objects.Order;
-import com.example.shop.utils.objects.Product;
+import com.example.shop.objects.Order;
+import com.example.shop.objects.Product;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;

@@ -14,8 +14,9 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.example.shop.R;
 import com.example.shop.adapter.ProductALaCarteAdapter;
+import com.example.shop.interfaces.OnFragmentScrollListener;
 import com.example.shop.interfaces.OnProductClickListener;
-import com.example.shop.utils.objects.Product;
+import com.example.shop.objects.Product;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,6 +31,7 @@ public class DessertsAndDrinksFragment extends Fragment implements OnProductClic
     ArrayList<Product> mListProduct;
     ProductALaCarteAdapter mProductAdapter;
     OnProductClickListener onProductClickListener;
+    OnFragmentScrollListener onFragmentScrollListener;
     Context context;
     public DessertsAndDrinksFragment() {
         // Required empty public constructor
@@ -41,6 +43,10 @@ public class DessertsAndDrinksFragment extends Fragment implements OnProductClic
 
     public void setProductClickListener(OnProductClickListener onProductClickListener){
         this.onProductClickListener = onProductClickListener;
+    }
+
+    public void setOnFragmentScrollListener(OnFragmentScrollListener onFragmentScrollListener){
+        this.onFragmentScrollListener = onFragmentScrollListener;
     }
 
     @Override
@@ -88,7 +94,13 @@ public class DessertsAndDrinksFragment extends Fragment implements OnProductClic
         recyclerViewViewProductDessertsAndDrinks.setLayoutManager(staggeredGridLayoutManager);
         recyclerViewViewProductDessertsAndDrinks.setAdapter(mProductAdapter);
         mProductAdapter.setOnProductClickListener(this);
-
+        recyclerViewViewProductDessertsAndDrinks.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                onFragmentScrollListener.onScroll();
+            }
+        });
         return view;
     }
 

@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shop.R;
 import com.example.shop.utils.DownloadImageTask;
-import com.example.shop.utils.objects.Promotion;
+import com.example.shop.objects.Promotion;
 
 import java.util.ArrayList;
 

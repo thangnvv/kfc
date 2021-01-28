@@ -15,12 +15,13 @@ import android.view.ViewGroup;
 
 import com.example.shop.R;
 import com.example.shop.adapter.ViewPagerAdapterForMenuALaCarte;
+import com.example.shop.interfaces.OnFragmentScrollListener;
 import com.example.shop.interfaces.OnProductClickListener;
-import com.example.shop.utils.objects.Product;
+import com.example.shop.objects.Product;
 import com.google.android.material.tabs.TabLayout;
 import com.orhanobut.hawk.Hawk;
 
-public class ALaCarteMenuFragment extends Fragment implements OnProductClickListener{
+public class ALaCarteMenuFragment extends Fragment implements OnProductClickListener, OnFragmentScrollListener {
 
     public static ViewPager mViewPagerMenuAlaCarte;
 
@@ -28,6 +29,7 @@ public class ALaCarteMenuFragment extends Fragment implements OnProductClickList
     FragmentManager mFragmentManagerMenuAlaCarte;
     View view;
     OnProductClickListener onProductClickListener;
+    OnFragmentScrollListener onFragmentScrollListener;
     Context context;
 
     public ALaCarteMenuFragment() {
@@ -40,6 +42,10 @@ public class ALaCarteMenuFragment extends Fragment implements OnProductClickList
 
     public void setOnProductClickListener(OnProductClickListener onProductClickListener){
         this.onProductClickListener = onProductClickListener;
+    }
+
+    public void setOnFragmentScrollListener(OnFragmentScrollListener onFragmentScrollListener){
+        this.onFragmentScrollListener = onFragmentScrollListener;
     }
 
     @Override
@@ -83,18 +89,22 @@ public class ALaCarteMenuFragment extends Fragment implements OnProductClickList
         if(fragment instanceof FriedRoastedChickenFragment){
             FriedRoastedChickenFragment fried_roastedChicken = (FriedRoastedChickenFragment) fragment;
             fried_roastedChicken.setProductClickListener(this);
+            fried_roastedChicken.setOnFragmentScrollListener(this);
             return fried_roastedChicken;
         }else if(fragment instanceof RiceBurgerFragment){
             RiceBurgerFragment rice_burger = (RiceBurgerFragment) fragment;
             rice_burger.setProductClickListener(this);
+            rice_burger.setOnFragmentScrollListener(this);
             return rice_burger;
         }else if(fragment instanceof SnacksFragment){
             SnacksFragment snacks_fragment = (SnacksFragment) fragment;
             snacks_fragment.setProductClickListener(this);
+            snacks_fragment.setOnFragmentScrollListener(this);
             return snacks_fragment;
         }else if(fragment instanceof DessertsAndDrinksFragment){
             DessertsAndDrinksFragment desserts_and_drinks_fragment = (DessertsAndDrinksFragment) fragment;
             desserts_and_drinks_fragment.setProductClickListener(this);
+            desserts_and_drinks_fragment.setOnFragmentScrollListener(this);
             return desserts_and_drinks_fragment;
         } else{
             Log.d("EEE", "Fragment is null");
@@ -113,4 +123,8 @@ public class ALaCarteMenuFragment extends Fragment implements OnProductClickList
         onProductClickListener.onOrderProduct(product);
     }
 
+    @Override
+    public void onScroll() {
+        onFragmentScrollListener.onScroll();
+    }
 }

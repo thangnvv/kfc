@@ -3,7 +3,7 @@ package com.example.shop.utils;
 import android.content.Context;
 
 import com.example.shop.R;
-import com.example.shop.utils.objects.Restaurant;
+import com.example.shop.objects.Restaurant;
 
 import java.util.ArrayList;
 

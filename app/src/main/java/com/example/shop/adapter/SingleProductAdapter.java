@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shop.R;
 import com.example.shop.interfaces.OnDeleteItemClickListener;
-import com.example.shop.utils.objects.Product;
+import com.example.shop.objects.Product;
 import com.example.shop.utils.CommonMethodHolder;
 
 import java.util.ArrayList;

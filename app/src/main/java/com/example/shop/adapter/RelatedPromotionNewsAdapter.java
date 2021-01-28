@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.shop.R;
-import com.example.shop.utils.objects.RelatedNews;
+import com.example.shop.objects.RelatedNews;
 
 import java.util.ArrayList;
 

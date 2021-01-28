@@ -20,11 +20,11 @@ import com.example.shop.adapter.SliderAdapter;
 import com.example.shop.adapter.AddsOnAdapter;
 import com.example.shop.adapter.SeperateProductAdapter;
 import com.example.shop.interfaces.OnProductClickListener;
-import com.example.shop.utils.objects.Product;
-import com.example.shop.utils.objects.ProductALaCarte;
-import com.example.shop.utils.objects.ProductSeperated;
+import com.example.shop.objects.Product;
+import com.example.shop.objects.ProductALaCarte;
+import com.example.shop.objects.ProductSeperated;
 import com.example.shop.utils.CommonMethodHolder;
-import com.example.shop.utils.objects.Upgrade;
+import com.example.shop.objects.Upgrade;
 import com.google.gson.Gson;
 import com.orhanobut.hawk.Hawk;
 import com.smarteist.autoimageslider.SliderView;
@@ -34,29 +34,30 @@ import java.util.ArrayList;
 public class SettingProductFragment extends Fragment implements View.OnClickListener {
 
     // Product Setting
-    TextView mTxtViewProductName, mTxtViewProductPrice, mTxtViewProductPortion, mTxtViewProductTotalPrice;
-    ImageButton mImgButtonProductMinus, mImgButtonProductPlus;
-    Button mBtnReturnMenu, mBtnAddToCart, mBtnReturnCart, mBtnUpdateCart;
-    LinearLayoutManager mLLManagerSeperateProduct;
-    SeperateProductAdapter seperateProductAdapter;
-    RecyclerView mRclViewProductInfo;
-    SliderAdapter mAdapterSlider;
-    SliderView mSliderView;
-    ArrayList<ProductSeperated> mProductSeperateds;
-    Product productSetting;
-    OnButtonClickListener onButtonClickListener;
-    LinearLayout mLLFromMain, mLLFromCart;
-    boolean fromCart;
-    int grandTotal, totalProductPrice, totalAddsOnPrice = 0, totalGoesGreateWithPrice = 0;
+    private TextView mTxtViewProductName, mTxtViewProductPrice, mTxtViewProductPortion, mTxtViewProductTotalPrice;
+    private ImageButton mImgButtonProductMinus, mImgButtonProductPlus;
+    private Button mBtnReturnMenu, mBtnAddToCart, mBtnReturnCart, mBtnUpdateCart;
+    private LinearLayoutManager mLLManagerSeparateProduct;
+    private SeperateProductAdapter seperateProductAdapter;
+    private RecyclerView mRclViewProductInfo;
+    private SliderAdapter mAdapterSlider;
+    private SliderView mSliderView;
+    private ArrayList<ProductSeperated> mProductSeparates;
+    private Product productSetting;
+    private OnButtonClickListener onButtonClickListener;
+    private LinearLayout mLLFromMain, mLLFromCart;
+    private boolean fromCart;
+    private boolean isHasCheese = false;
+    private int grandTotal, totalProductPrice, totalAddsOnPrice = 0, totalGoesGrateWithPrice = 0;
 
-    //Layout holder Goes Greate With and Adds On
-    LinearLayout mLLAddsOnAndGoesGreateWith;
+    //Layout holder Goes Great With and Adds On
+    LinearLayout mLLAddsOnAndGoesGreatWith;
 
-    // Goes Greate With
-    TextView mTxtViewGoesGreateWithName, mTxtViewGoesGreateWithPrice, mTxtViewGoesGreateWithTotalPrice, mTxtViewGoesGreateWithPortion;
-    ImageButton mImgButtonGoesGreateWithMinus, mImgButtonGoesGreateWithPlus;
-    Product productGoesGreateWith;
-    ArrayList<String> ProductGoesGreateWithBanner;
+    // Goes Great With
+    TextView mTxtViewGoesGreatWithName, mTatViewGoesGrateWithPrice, mTxtViewGoesGreatWithTotalPrice, mTxtViewGoesGreatWithPortion;
+    ImageButton mImfButtonGoesGrateWithMinus, mImfButtonGoesGrateWithPlus;
+    Product productGoesGrateWith;
+    ArrayList<String> ProductGoesGrateWithBanner;
 
     // Adds On
     LinearLayoutManager mLLManagerAddsOn;
@@ -116,24 +117,24 @@ public class SettingProductFragment extends Fragment implements View.OnClickList
                 updateButton();
                 break;
             case R.id.imageButtonAddsOnMinus:
-                if (productGoesGreateWith.getPortion() > 0) {
-                    productGoesGreateWith.setPortion(productGoesGreateWith.getPortion() - 1);
-                    mTxtViewGoesGreateWithPortion.setText((productGoesGreateWith.getPortion() + ""));
-                    totalGoesGreateWithPrice = totalGoesGreateWithPrice - CommonMethodHolder.convertStringToInt(productGoesGreateWith.getFood_price());
-                    mTxtViewGoesGreateWithTotalPrice.setText(CommonMethodHolder.convertIntToString(totalGoesGreateWithPrice));
+                if (productGoesGrateWith.getPortion() > 0) {
+                    productGoesGrateWith.setPortion(productGoesGrateWith.getPortion() - 1);
+                    mTxtViewGoesGreatWithPortion.setText((productGoesGrateWith.getPortion() + ""));
+                    totalGoesGrateWithPrice = totalGoesGrateWithPrice - CommonMethodHolder.convertStringToInt(productGoesGrateWith.getFood_price());
+                    mTxtViewGoesGreatWithTotalPrice.setText(CommonMethodHolder.convertIntToString(totalGoesGrateWithPrice));
                     updateButton();
-                    if (productGoesGreateWith.getPortion() == 0) {
-                        mTxtViewGoesGreateWithTotalPrice.setVisibility(View.INVISIBLE);
+                    if (productGoesGrateWith.getPortion() == 0) {
+                        mTxtViewGoesGreatWithTotalPrice.setVisibility(View.INVISIBLE);
                     }
                 }
                 break;
             case R.id.imageButtonAddsOnPlus:
-                productGoesGreateWith.setPortion(productGoesGreateWith.getPortion() + 1);
-                mTxtViewGoesGreateWithPortion.setText((productGoesGreateWith.getPortion() + ""));
-                if (productGoesGreateWith.getPortion() > 0) {
-                    totalGoesGreateWithPrice = totalGoesGreateWithPrice + CommonMethodHolder.convertStringToInt(productGoesGreateWith.getFood_price());
-                    mTxtViewGoesGreateWithTotalPrice.setText(CommonMethodHolder.convertIntToString(totalGoesGreateWithPrice));
-                    mTxtViewGoesGreateWithTotalPrice.setVisibility(View.VISIBLE);
+                productGoesGrateWith.setPortion(productGoesGrateWith.getPortion() + 1);
+                mTxtViewGoesGreatWithPortion.setText((productGoesGrateWith.getPortion() + ""));
+                if (productGoesGrateWith.getPortion() > 0) {
+                    totalGoesGrateWithPrice = totalGoesGrateWithPrice + CommonMethodHolder.convertStringToInt(productGoesGrateWith.getFood_price());
+                    mTxtViewGoesGreatWithTotalPrice.setText(CommonMethodHolder.convertIntToString(totalGoesGrateWithPrice));
+                    mTxtViewGoesGreatWithTotalPrice.setVisibility(View.VISIBLE);
                     updateButton();
                 }
                 break;
@@ -148,8 +149,8 @@ public class SettingProductFragment extends Fragment implements View.OnClickList
                 Product product = gson.fromJson(productJson, Product.class);
 
                 mProductAddsOnForAddingToCartList.add(product);
-                if (productGoesGreateWith.getPortion() > 0) {
-                    mProductAddsOnForAddingToCartList.add(productGoesGreateWith);
+                if (productGoesGrateWith.getPortion() > 0) {
+                    mProductAddsOnForAddingToCartList.add(productGoesGrateWith);
                 }
                 for (int i = 0; i < mArrListAddsOn.size(); i++) {
                     if (mArrListAddsOn.get(i).getPortion() > 0) {
@@ -173,7 +174,7 @@ public class SettingProductFragment extends Fragment implements View.OnClickList
     }
 
     private void updateButton() {
-        grandTotal = totalProductPrice + totalAddsOnPrice + totalGoesGreateWithPrice;
+        grandTotal = totalProductPrice + totalAddsOnPrice + totalGoesGrateWithPrice;
         if (fromCart) {
             mBtnUpdateCart.setText((getResources().getString(R.string.updateCart) + "\n" + CommonMethodHolder.convertIntToString(grandTotal)));
         } else {
@@ -191,8 +192,8 @@ public class SettingProductFragment extends Fragment implements View.OnClickList
         mBtnReturnCart.setOnClickListener(this);
 
         // Goes Greate With
-        mImgButtonGoesGreateWithPlus.setOnClickListener(this);
-        mImgButtonGoesGreateWithMinus.setOnClickListener(this);
+        mImfButtonGoesGrateWithPlus.setOnClickListener(this);
+        mImfButtonGoesGrateWithMinus.setOnClickListener(this);
     }
 
     private void settingLayout() {
@@ -231,10 +232,10 @@ public class SettingProductFragment extends Fragment implements View.OnClickList
         changeLayoutBaseOnCaller();
 
         // Recycler View for line of portion
-        mLLManagerSeperateProduct = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        seperateProductAdapter = new SeperateProductAdapter(productSetting.getAlacarte(), mProductSeperateds, getActivity());
+        mLLManagerSeparateProduct = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        seperateProductAdapter = new SeperateProductAdapter(productSetting.getAlacarte(), mProductSeparates, getActivity());
 
-        mRclViewProductInfo.setLayoutManager(mLLManagerSeperateProduct);
+        mRclViewProductInfo.setLayoutManager(mLLManagerSeparateProduct);
         mRclViewProductInfo.setAdapter(seperateProductAdapter);
         seperateProductAdapter.setOnAlacarteUpgraded(new SeperateProductAdapter.OnAlacarteUpgraded() {
             @Override
@@ -275,15 +276,18 @@ public class SettingProductFragment extends Fragment implements View.OnClickList
 
     private void setDefaultPortion(String chosenAlacarte) {
         // Set default for portions
-        String[] seperateLineResult = CommonMethodHolder.deleteNextLine(CommonMethodHolder.seperateAsterisk(productSetting.getFood_descript()));
-        for (int i = 1; i < seperateLineResult.length; i++) {
-            String[] options = CommonMethodHolder.seperateSlash(seperateLineResult[i]);
-            mProductSeperateds.add(new ProductSeperated(chosenAlacarte, options));
+        String[] separateLineResult = CommonMethodHolder.deleteNextLine(CommonMethodHolder.separateAsterisk(productSetting.getFood_descript()));
+        for (int i = 1; i < separateLineResult.length; i++) {
+            String[] options = CommonMethodHolder.separateSlash(separateLineResult[i]);
+            mProductSeparates.add(new ProductSeperated(chosenAlacarte, options));
 
             // Add Cheese if this combo has burger and setting call from main
             if (options[0].length() >= 9) {
                 if (i == 2 && options[0].substring(2, 9).trim().equals("Burger") && !fromCart) {
-                    mArrListAddsOn.add(new Product(CheeseAddsOnBanner, "1 Phô Mai", "4.000đ", "", 0));
+                    if(!isHasCheese){
+                        mArrListAddsOn.add(new Product(CheeseAddsOnBanner, "1 Phô Mai", "4.000đ", "", 0));
+                        isHasCheese = true;
+                    }
                 }
             }
         }
@@ -320,24 +324,24 @@ public class SettingProductFragment extends Fragment implements View.OnClickList
             mBtnUpdateCart.setText((getResources().getString(R.string.updateCart) + "\n" + mTxtViewProductTotalPrice.getText()));
             mLLFromCart.setVisibility(View.VISIBLE);
             mLLFromMain.setVisibility(View.GONE);
-            mLLAddsOnAndGoesGreateWith.setVisibility(View.GONE);
+            mLLAddsOnAndGoesGreatWith.setVisibility(View.GONE);
         } else {
             mBtnAddToCart.setText((getResources().getString(R.string.addToCart) + "\n" + productSetting.getFood_price()));
             mBtnReturnMenu.setText(getResources().getString(R.string.returnMenu));
             mLLFromMain.setVisibility(View.VISIBLE);
             mLLFromCart.setVisibility(View.GONE);
-            mLLAddsOnAndGoesGreateWith.setVisibility(View.VISIBLE);
+            mLLAddsOnAndGoesGreatWith.setVisibility(View.VISIBLE);
 
             setUpAddsOnProduct();
-            setUpGoesGreateWithProduct();
+            setUpGoesGrateWithProduct();
         }
     }
 
-    private void setUpGoesGreateWithProduct() {
-        // Goes Greate With Product
-        ProductGoesGreateWithBanner = new ArrayList<>();
-        ProductGoesGreateWithBanner.add("https://kfcvietnam.com.vn/uploads/product/be95ff8508fa5aacb78baba4a6b644c1.jpg");
-        productGoesGreateWith = new Product(ProductGoesGreateWithBanner, "Bánh Trứng (4 cái)", "50.000đ", "", 0);
+    private void setUpGoesGrateWithProduct() {
+        // Goes Great With Product
+        ProductGoesGrateWithBanner = new ArrayList<>();
+        ProductGoesGrateWithBanner.add("https://kfcvietnam.com.vn/uploads/product/be95ff8508fa5aacb78baba4a6b644c1.jpg");
+        productGoesGrateWith = new Product(ProductGoesGrateWithBanner, "Bánh Trứng (4 cái)", "50.000đ", "", 0);
     }
 
     private void initView(View view) {
@@ -357,22 +361,22 @@ public class SettingProductFragment extends Fragment implements View.OnClickList
         mLLFromCart = view.findViewById(R.id.linearLayoutFromCart);
         mLLFromMain = view.findViewById(R.id.linearLayoutFromMain);
 
-        //Layout holder Goes Greate With and Adds On
-        mLLAddsOnAndGoesGreateWith = view.findViewById(R.id.llAddsOnAndGoesGreate);
+        //Layout holder Goes Great With and Adds On
+        mLLAddsOnAndGoesGreatWith = view.findViewById(R.id.llAddsOnAndGoesGreat);
 
-        // Goes Greate With
-        mTxtViewGoesGreateWithName = view.findViewById(R.id.textViewAddsOnName);
-        mTxtViewGoesGreateWithPrice = view.findViewById(R.id.textViewAddsOnPrice);
-        mTxtViewGoesGreateWithPortion = view.findViewById(R.id.textViewAddsOnPortion);
-        mTxtViewGoesGreateWithTotalPrice = view.findViewById(R.id.textViewAddsOnTotalPrice);
-        mImgButtonGoesGreateWithMinus = view.findViewById(R.id.imageButtonAddsOnMinus);
-        mImgButtonGoesGreateWithPlus = view.findViewById(R.id.imageButtonAddsOnPlus);
+        // Goes Great With
+        mTxtViewGoesGreatWithName = view.findViewById(R.id.textViewAddsOnName);
+        mTatViewGoesGrateWithPrice = view.findViewById(R.id.textViewAddsOnPrice);
+        mTxtViewGoesGreatWithPortion = view.findViewById(R.id.textViewAddsOnPortion);
+        mTxtViewGoesGreatWithTotalPrice = view.findViewById(R.id.textViewAddsOnTotalPrice);
+        mImfButtonGoesGrateWithMinus = view.findViewById(R.id.imageButtonAddsOnMinus);
+        mImfButtonGoesGrateWithPlus = view.findViewById(R.id.imageButtonAddsOnPlus);
 
         // Adds On
         mRclViewAddsOn = view.findViewById(R.id.recyclerViewAddOns);
 
         mProductAddsOnForAddingToCartList = new ArrayList<>();
-        mProductSeperateds = new ArrayList<>();
+        mProductSeparates = new ArrayList<>();
 
     }
 

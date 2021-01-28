@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -23,6 +22,7 @@
 
             <ImageButton
                 android:id="@+id/imageButtonMore"
+                android:contentDescription="@string/app_name"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="@drawable/cart_ripple"
@@ -30,6 +30,7 @@
 
             <ImageButton
                 android:id="@+id/imageButtonHideSetting"
+                android:contentDescription="@string/app_name"
                 android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -37,11 +38,11 @@
                 android:src="@drawable/arrow_left_black" />
 
             <TextView
-                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginStart="@dimen/_8sdp"
                 android:gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="KFC"
+                android:text="@string/kfc"
                 android:textColor="@color/red"
                 android:textSize="@dimen/h6"
                 android:textStyle="bold" />
@@ -63,6 +64,7 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
+                        android:contentDescription="@string/app_name"
                         android:id="@+id/imageViewCart"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -84,9 +86,9 @@
                     android:id="@+id/textViewTotalPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="@dimen/margin_right_parent"
+                    android:layout_marginEnd="@dimen/margin_right_parent"
                     android:gravity="center"
-                    android:text="Giỏ hàng"
+                    android:text="@string/cart"
                     android:textColor="@color/red"
                     android:textSize="@dimen/_14sdp"
                     android:textStyle="bold" />
@@ -106,8 +108,9 @@
 
 
     <FrameLayout
+        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp">
 
         <include
             android:id="@+id/includeProductAddedToCart"
@@ -132,13 +135,13 @@
             android:layout_marginTop="?attr/actionBarSize"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent"/>
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:id="@+id/coordinatorLayoutMain"
             android:layout_marginTop="?attr/actionBarSize"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
 
             <com.google.android.material.appbar.AppBarLayout
@@ -155,8 +158,8 @@
 
                    <include
                        layout="@layout/layout_deliver_to"
-                       android:layout_marginLeft="@dimen/margin_left_parent"
-                       android:layout_marginRight="@dimen/margin_right_parent"
+                       android:layout_marginStart="@dimen/margin_left_parent"
+                       android:layout_marginEnd="@dimen/margin_right_parent"
                        android:layout_width="match_parent"
                        android:layout_height="wrap_content"/>
 
@@ -199,9 +202,6 @@
 
                         </LinearLayout>
 
-
-
-
                         <com.smarteist.autoimageslider.SliderView
                             android:id="@+id/imageSlider"
                             android:layout_width="match_parent"
@@ -225,14 +225,15 @@
                     android:id="@+id/linear"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_left_parent"
-                    android:layout_marginRight="@dimen/margin_right_parent"
+                    android:layout_marginStart="@dimen/margin_left_parent"
+                    android:layout_marginEnd="@dimen/margin_right_parent"
                     android:orientation="vertical"
                     app:layout_anchor="@id/imageSlider"
                     app:layout_anchorGravity="bottom">
 
                     <com.example.shop.utils.NoneAllowSwipeViewPager
                         android:id="@+id/viewPagerLine"
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_50sdp" />
 
@@ -242,10 +243,9 @@
             <com.example.shop.utils.NoneAllowSwipeViewPager
                 android:id="@+id/viewPagerMain"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/margin_right_parent"
-                android:layout_marginLeft="@dimen/margin_left_parent"
-                android:layout_marginBottom="@dimen/_50sdp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="@dimen/margin_right_parent"
+                android:layout_marginStart="@dimen/margin_left_parent"
                 android:background="@color/white"
                 android:nestedScrollingEnabled="true"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
@@ -267,6 +267,5 @@
             android:layout_gravity="bottom" />
 
     </LinearLayout>
-
 
 </LinearLayout>

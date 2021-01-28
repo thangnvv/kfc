@@ -25,9 +25,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.shop.R;
-import com.example.shop.utils.dialogs.CustomDialogOperationPolicy;
-import com.example.shop.utils.dialogs.CustomDialogPolicyAndRegulation;
-import com.example.shop.utils.dialogs.CustomDialogTermsAndConditons;
+import com.example.shop.dialogs.CustomDialogOperationPolicy;
+import com.example.shop.dialogs.CustomDialogPolicyAndRegulation;
+import com.example.shop.dialogs.CustomDialogTermsAndConditons;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

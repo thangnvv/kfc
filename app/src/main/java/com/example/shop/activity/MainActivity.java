@@ -1,20 +1,27 @@
 package com.example.shop.activity;
 
 import com.example.shop.adapter.OrderLineAdapter;
+import com.example.shop.broadcasts.NetworkBroadcastReceiver;
+import com.example.shop.dialogs.CustomDialogLoading;
+import com.example.shop.dialogs.CustomDialogNoInternet;
 import com.example.shop.fragment.ALaCarteMenuFragment;
 import com.example.shop.fragment.ForOneFragment;
 import com.example.shop.fragment.ForSharingFragment;
 import com.example.shop.fragment.HotDealsFragment;
 import com.example.shop.fragment.SettingProductFragment;
+import com.example.shop.interfaces.OnFragmentScrollListener;
+import com.example.shop.interfaces.OnLoadDataListener;
 import com.example.shop.interfaces.OnProductClickListener;
 import com.example.shop.interfaces.OnSpinnerItemSelectedListener;
-import com.example.shop.utils.objects.Cart;
-import com.example.shop.utils.dialogs.CustomDialogStartOrdering;
-import com.example.shop.utils.objects.Customer;
-import com.example.shop.utils.objects.Product;
+import com.example.shop.objects.Cart;
+import com.example.shop.dialogs.CustomDialogStartOrdering;
+import com.example.shop.objects.Customer;
+import com.example.shop.objects.Product;
 import com.example.shop.utils.CommonMethodHolder;
 
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -33,6 +40,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -43,7 +51,7 @@ import com.example.shop.adapter.SliderAdapter;
 import com.example.shop.adapter.ViewPagerAdapterForTabLine;
 import com.example.shop.adapter.ViewPagerAdapterForMainTab;
 import com.example.shop.R;
-import com.example.shop.utils.objects.Promotion;
+import com.example.shop.objects.Promotion;
 import com.example.shop.utils.NoneAllowSwipeViewPager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
@@ -64,40 +72,37 @@ import com.smarteist.autoimageslider.SliderView;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener,
-        TabLayout.OnTabSelectedListener, View.OnClickListener, OnProductClickListener {
+        TabLayout.OnTabSelectedListener, View.OnClickListener, OnProductClickListener, OnFragmentScrollListener {
 
     // Showing layout base on Sign In status
-    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    private DatabaseReference mDataRef = FirebaseDatabase.getInstance().getReference();
-    LinearLayout mLlSignedUp, mLlSignInAndSignUp;
-    TextView mTxtViewUserName;
-    Button mBtnSignIn, mBtnSignUp, mBtnOrderHistory;
+    private final DatabaseReference mDataRef = FirebaseDatabase.getInstance().getReference();
+    private LinearLayout mLlSignedUp, mLlSignInAndSignUp;
+    private TextView mTxtViewUserName;
+    private Button mBtnSignIn, mBtnSignUp, mBtnOrderHistory;
     private final int REQUEST_CODE_FROM_MAIN = 111;
-//    Customer customer;
 
-    Cart cart;
-    TextView mTxtViewChangeCity, mTxtViewCity, mTxtViewCartTotal, mTxtViewCartCount;
-    ImageView mImgButtonMore, mImgButtonHideSetting, mImgViewCart;
-    Toolbar mToolbarMain;
-    TabLayout mTabLayoutMain;
-    NoneAllowSwipeViewPager mViewPagerLine, mViewPagerMain;
-    ViewPagerAdapterForTabLine viewPagerAdapterForTabLine;
-    ViewPagerAdapterForMainTab viewPagerAdapterForMainTab;
-    BottomNavigationView mBtmNavigationView;
+    private Cart cart;
+    private TextView mTxtViewChangeCity, mTxtViewCity, mTxtViewCartTotal, mTxtViewCartCount;
+    private ImageView mImgButtonMore, mImgButtonHideSetting, mImgViewCart;
+    private Toolbar mToolbarMain;
+    private TabLayout mTabLayoutMain;
+    private NoneAllowSwipeViewPager mViewPagerLine, mViewPagerMain;
+    private ViewPagerAdapterForMainTab viewPagerAdapterForMainTab;
+    private BottomNavigationView mBtmNavigationView;
 
-    LinearLayout mainActivity, linearLayoutCart, mLlSettingHolder, mLlBottomNavigationHolder;
-    FragmentManager fragmentManager;
-    CoordinatorLayout mCoordinatorLayoutMain;
+    private LinearLayout linearLayoutCart, mLlSettingHolder, mLlBottomNavigationHolder;
+    private FragmentManager fragmentManager;
+    private CoordinatorLayout mCoordinatorLayoutMain;
 
     // Include layout of Product Added To Cart
-    ImageButton mImgButtonCancel;
-    RecyclerView recyclerViewOrderInfo;
-    Button mBtnCheckOut;
-    RelativeLayout relativeLayoutProductAddedToCart;
-    ArrayList<Product> mProductArrList, mProductAddedToCartArrList;
-    OrderLineAdapter mOrderLineAdapter;
-    boolean isShowing = false;
-    boolean atSettingProduct = false;
+    private ImageButton mImgButtonCancel;
+    private RecyclerView recyclerViewOrderInfo;
+    private Button mBtnCheckOut;
+    private RelativeLayout relativeLayoutProductAddedToCart;
+    private ArrayList<Product> mProductArrList, mProductAddedToCartArrList;
+    private OrderLineAdapter mOrderLineAdapter;
+    private boolean isShowing = false;
+    private boolean atSettingProduct = false;
     private int cartCount = 0;
     private int cartTotal = 0;
     private boolean cartEmpty = true;
@@ -110,10 +115,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private SliderAdapter adapter;
 
     private boolean doubleBackToExitPressedOnce;
-    private Handler mHandlerQuiteApp = new Handler();
+    private final Handler mHandlerQuiteApp = new Handler();
+    private CustomDialogLoading dialogLoading;
 
-    private FirebaseDatabase database = FirebaseDatabase.getInstance();
-
+    private FragmentTransaction ft;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,12 +126,15 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         initView();
         createCartInstance();
-//        Hawk.deleteAll();
         setUpActionBar();
         setUpTabLayoutMain();
         setViewOnClick();
+
+//        Hawk.deleteAll();
+
         //If create not from edit product
         if (!cart.isRequireFromEditProduct()) {
+            showLoadingDialog();
             setUpSliderBanner();
             setUpNavigationView();
             setUpViewPagerALaCarte();
@@ -141,7 +149,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                     mTabLayoutMain.getTabAt(mainTabPosition).select();
                 }
             }
-            setUpCart();
         }
         // If main is create from edit product
         else {
@@ -151,9 +158,16 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 mViewPagerMain.setCurrentItem(mainTabPosition);
                 mTabLayoutMain.getTabAt(mainTabPosition).select();
             }
-            setUpCart();
             showSettingProduct();
         }
+        setUpCart();
+
+    }
+
+    private void showLoadingDialog() {
+        dialogLoading = new CustomDialogLoading();
+        dialogLoading.setCancelable(false);
+        dialogLoading.show(fragmentManager, "Loading Dialog");
     }
 
     @Override
@@ -184,16 +198,16 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             cartCount = cart.getCartCount();
             mProductAddedToCartArrList.addAll(cart.getArrListProductInCart());
             mTxtViewCartCount.setTextColor(getResources().getColor(R.color.white));
-            mImgViewCart.setImageDrawable(getResources().getDrawable(R.drawable.cart_icon_active));
-            mTxtViewCartCount.setText(cartCount + "");
+            mImgViewCart.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.cart_icon_active, null));
+            mTxtViewCartCount.setText((cartCount + ""));
             String cartTotalText = cart.getCartTotal();
             mTxtViewCartTotal.setText(cartTotalText);
             cartTotal = CommonMethodHolder.convertStringToInt(cartTotalText);
         }
         if (cart.getCartCount() == 0) {
             mTxtViewCartCount.setTextColor(getResources().getColor(R.color.black));
-            mImgViewCart.setImageDrawable(getResources().getDrawable(R.drawable.cart_icon));
-            mTxtViewCartTotal.setText("Giỏ hàng");
+            mImgViewCart.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.cart_icon, null));
+            mTxtViewCartTotal.setText(getResources().getString(R.string.cart));
             mTxtViewCartCount.setText("0");
             cartEmpty = true;
         }
@@ -213,10 +227,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     private void showSettingProduct() {
         SettingProductFragment setting_product_fragment = new SettingProductFragment(cart.isRequireFromEditProduct());
-        mLlBottomNavigationHolder.setVisibility(View.INVISIBLE);
+        mLlBottomNavigationHolder.setVisibility(View.GONE);
         mLlSettingHolder.setVisibility(View.VISIBLE);
-        mCoordinatorLayoutMain.setVisibility(View.INVISIBLE);
-        FragmentTransaction ft = fragmentManager.beginTransaction();
+        mCoordinatorLayoutMain.setVisibility(View.GONE);
+
         ft.add(R.id.linearLayoutSettingHolder, setting_product_fragment).commit();
         ft.addToBackStack("Setting Product");
         atSettingProduct = true;
@@ -263,7 +277,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                             cartTotal = cartTotal + plusPortionCount * CommonMethodHolder.convertStringToInt(product.getFood_price());
                         }
 
-                        // Check if porduct alacarte has been upgrade or downgrade
+                        // Check if product alacarte has been upgrade or downgrade
                         if (!productTemp.getFood_price().equals(product.getFood_price())) {
 
                             // Save price change to cart
@@ -306,14 +320,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     private void showSingleProductAddedToCart(Product product) {
-
-
         ShowLayoutProductAddToCart();
         mProductArrList.add(product);
         mOrderLineAdapter.notifyDataSetChanged();
         mProductAddedToCartArrList.add(product);
-
-
     }
 
 
@@ -324,7 +334,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             mTxtViewCartTotal.setText(CommonMethodHolder.convertIntToString(total));
             mTxtViewCartCount.setText((cartCount + ""));
             mTxtViewCartCount.setTextColor(getResources().getColor(R.color.white));
-            mImgViewCart.setImageDrawable(getResources().getDrawable(R.drawable.cart_icon_active));
+            mImgViewCart.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.cart_icon_active, null));
             cartTotal = total;
             cartEmpty = false;
         } else {
@@ -376,6 +386,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     private void initView() {
+        fragmentManager = getSupportFragmentManager();
+        ft = fragmentManager.beginTransaction();
+
         sliderView = findViewById(R.id.imageSlider);
         mToolbarMain = findViewById(R.id.toolBarMain);
         mImgButtonMore = findViewById(R.id.imageButtonMore);
@@ -389,12 +402,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         mTxtViewCartTotal = findViewById(R.id.textViewTotalPrice);
         mTxtViewCartCount = findViewById(R.id.textViewCartCount);
         mImgViewCart = findViewById(R.id.imageViewCart);
-        mainActivity = findViewById(R.id.main);
         linearLayoutCart = findViewById(R.id.linearLayoutCart);
         mLlSettingHolder = findViewById(R.id.linearLayoutSettingHolder);
         mLlBottomNavigationHolder = findViewById(R.id.bottomNavigationHolder);
         mCoordinatorLayoutMain = findViewById(R.id.coordinatorLayoutMain);
-        fragmentManager = getSupportFragmentManager();
 
         // Include Sign In Sign Up
         mLlSignedUp = findViewById(R.id.linearLayoutSignedUp);
@@ -409,7 +420,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         mImgButtonCancel = findViewById(R.id.imageButtonCancel);
         mBtnCheckOut = findViewById(R.id.buttonCheckOut);
         recyclerViewOrderInfo = findViewById(R.id.recyclerViewOrderInfo);
-        mProductArrList = new ArrayList();
+        mProductArrList = new ArrayList<>();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerViewOrderInfo.setLayoutManager(linearLayoutManager);
         mOrderLineAdapter = new OrderLineAdapter(mProductArrList, MainActivity.this);
@@ -417,7 +428,21 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         // For Cart Activity
         Hawk.init(getApplicationContext()).build();
-        mProductAddedToCartArrList = new ArrayList();
+        mProductAddedToCartArrList = new ArrayList<>();
+
+        NetworkBroadcastReceiver networkBroadcastReceiver = new NetworkBroadcastReceiver();
+        IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        this.registerReceiver(networkBroadcastReceiver, intentFilter);
+        networkBroadcastReceiver.setOnNetworkChangeListener(new NetworkBroadcastReceiver.OnNetworkChangeListener() {
+            @Override
+            public void onNetworkChange(boolean hasNetwork) {
+                if (!hasNetwork) {
+                    CustomDialogNoInternet dialogNoInternet = new CustomDialogNoInternet();
+                    dialogNoInternet.show(getSupportFragmentManager(), "No Internet Dialog");
+                }
+            }
+        });
+
 
     }
 
@@ -431,15 +456,31 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         if (fragment instanceof ForOneFragment) {
             ForOneFragment for_one = (ForOneFragment) fragment;
             for_one.setProductClickListener(this);
+            for_one.setOnFragmentScrollListener(this);
+            for_one.setOnLoadDataListener(new OnLoadDataListener() {
+                @Override
+                public void onSucceed() {
+                    mViewPagerLine.setVisibility(View.VISIBLE);
+                    dialogLoading.dismiss();
+                }
+
+                @Override
+                public void onFailed() {
+
+                }
+            });
         } else if (fragment instanceof ForSharingFragment) {
             ForSharingFragment for_sharing = (ForSharingFragment) fragment;
             for_sharing.setProductClickListener(this);
+            for_sharing.setOnFragmentScrollListener(this);
         } else if (fragment instanceof HotDealsFragment) {
             HotDealsFragment hot_deals = (HotDealsFragment) fragment;
             hot_deals.setProductClickListener(this);
+            hot_deals.setOnFragmentScrollListener(this);
         } else if (fragment instanceof ALaCarteMenuFragment) {
             ALaCarteMenuFragment aLaCarte_menu = (ALaCarteMenuFragment) fragment;
             aLaCarte_menu.setOnProductClickListener(this);
+            aLaCarte_menu.setOnFragmentScrollListener(this);
         }
     }
 
@@ -575,8 +616,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             }
         });
 
-        DatabaseReference myRef = database.getReference().child("promotion_news");
-        myRef.addChildEventListener(new ChildEventListener() {
+        mDataRef.child("promotion_news").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 bannerMain.add(snapshot.getValue(Promotion.class).getBanner());
@@ -614,7 +654,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     private void setUpViewPagerALaCarte() {
-        viewPagerAdapterForTabLine = new ViewPagerAdapterForTabLine(fragmentManager, mTabLayoutMain.getTabCount());
+        ViewPagerAdapterForTabLine viewPagerAdapterForTabLine = new ViewPagerAdapterForTabLine(fragmentManager, mTabLayoutMain.getTabCount());
         mViewPagerLine.setAdapter(viewPagerAdapterForTabLine);
         mViewPagerLine.setOffscreenPageLimit(2);
         mViewPagerLine.setPagingEnabled(false);
@@ -624,12 +664,16 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private void setUpViewPagerCombo() {
         viewPagerAdapterForMainTab = new ViewPagerAdapterForMainTab(fragmentManager, mTabLayoutMain.getTabCount(), getApplicationContext());
         mViewPagerMain.setAdapter(viewPagerAdapterForMainTab);
-        mViewPagerMain.setOffscreenPageLimit(2);
-        mViewPagerMain.setPagingEnabled(false);
+        mViewPagerMain.setOffscreenPageLimit(3);
+        mViewPagerMain.setPagingEnabled (false);
     }
 
     private void hideSettingProductFragment() {
-        fragmentManager.popBackStack();
+        try {
+            fragmentManager.popBackStackImmediate();
+        }catch (Exception e){
+            Log.d("EEE", "Error: " + e.getMessage());
+        }
         atSettingProduct = false;
         mImgButtonHideSetting.setVisibility(View.GONE);
         mImgButtonMore.setVisibility(View.VISIBLE);
@@ -692,7 +736,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             mDataRef.child("user").child(currentUser.getUid()).child("full_name").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                    customer = snapshot.getValue(Customer.class);
                     mTxtViewUserName.setText(snapshot.getValue(String.class));
                 }
 
@@ -759,6 +802,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
         if (mHandlerQuiteApp != null) {
             mHandlerQuiteApp.removeCallbacks(mRunnable);
+        }
+    }
+
+    @Override
+    public void onScroll() {
+        if (isShowing) {
+            relativeLayoutProductAddedToCart.setVisibility(View.GONE);
+            isShowing = false;
         }
     }
 }

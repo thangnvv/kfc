@@ -2,6 +2,7 @@ package com.example.shop.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,9 +21,9 @@ import com.example.shop.interfaces.OnSpinnerItemSelectedListener;
 import com.example.shop.utils.CreateDistrictListHelper;
 import com.example.shop.utils.CreateHtmlTextHelper;
 import com.example.shop.utils.CreateRestaurantListHelper;
-import com.example.shop.utils.dialogs.CustomDialogChooseCity;
-import com.example.shop.utils.dialogs.CustomDialogChooseDistrict;
-import com.example.shop.utils.objects.Restaurant;
+import com.example.shop.dialogs.CustomDialogChooseCity;
+import com.example.shop.dialogs.CustomDialogChooseDistrict;
+import com.example.shop.objects.Restaurant;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -30,14 +31,14 @@ import java.util.ArrayList;
 public class RestaurantActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener,
         View.OnClickListener{
 
-    BottomNavigationView mBtmNavigationView;
-    TextView mTxtViewCity, mTxtViewDistrict, mTxtViewFind;
-    RecyclerView mRecyclerView;
-    RestaurantAdapter mRestaurantAdapter;
-    RecyclerView.LayoutManager mLayoutManager;
-    ArrayList<Restaurant> mArrayListRestaurant, holdResData;
+    private BottomNavigationView mBtmNavigationView;
+    private TextView mTxtViewCity, mTxtViewDistrict, mTxtViewFind;
+    private RecyclerView mRecyclerView;
+    private RestaurantAdapter mRestaurantAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private ArrayList<Restaurant> mArrayListRestaurant, holdResData;
 
-    LinearLayout mLinearLayoutCity, mLinearLayoutDistrict;
+    private ConstraintLayout mLayoutCity, mLayoutDistrict;
     private boolean doubleBackToExitPressedOnce;
     private Handler mHandlerQuiteApp = new Handler();
     private String[] cityList;
@@ -55,10 +56,10 @@ public class RestaurantActivity extends AppCompatActivity implements BottomNavig
 
         mBtmNavigationView.setSelectedItemId(R.id.restaurant);
         mBtmNavigationView.setOnNavigationItemSelectedListener(this);
-        mLinearLayoutCity.setOnClickListener(this);
-        mLinearLayoutDistrict.setOnClickListener(this);
+        mLayoutCity.setOnClickListener(this);
+        mLayoutDistrict.setOnClickListener(this);
         mTxtViewFind.setOnClickListener(this);
-        mLinearLayoutDistrict.setClickable(false);
+        mLayoutDistrict.setClickable(false);
 
         mTxtViewDistrict.setText(CreateHtmlTextHelper.createTextRequired("Quận/Huyện"));
         mTxtViewCity.setText(CreateHtmlTextHelper.createTextRequired("Tỉnh/Thành Phố"));
@@ -67,8 +68,8 @@ public class RestaurantActivity extends AppCompatActivity implements BottomNavig
     }
 
     private void initView() {
-        mLinearLayoutCity   = findViewById(R.id.linearLayoutCity);
-        mLinearLayoutDistrict = findViewById(R.id.linearLayoutDistrict);
+        mLayoutCity = findViewById(R.id.layoutCity);
+        mLayoutDistrict = findViewById(R.id.layoutDistrict);
         mTxtViewCity        = findViewById(R.id.textViewCity);
         mTxtViewDistrict    = findViewById(R.id.textViewDisTrict);
         mTxtViewFind        = findViewById(R.id.textViewFind);
@@ -106,7 +107,7 @@ public class RestaurantActivity extends AppCompatActivity implements BottomNavig
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.linearLayoutCity:
+            case R.id.layoutCity:
                 CustomDialogChooseCity chooseCityDialog = new CustomDialogChooseCity(RestaurantActivity.this);
                 chooseCityDialog.setCancelable(false);
                 chooseCityDialog.setOnItemSelectedListener(new OnSpinnerItemSelectedListener() {
@@ -114,9 +115,10 @@ public class RestaurantActivity extends AppCompatActivity implements BottomNavig
                     public void onItemSelected(int position) {
                         if(position != 0){
                             mTxtViewCity.setText(CreateHtmlTextHelper.createTextRequiredForDialog("Tỉnh/Thành Phố" , cityList[position]));
+                            mTxtViewCity.setMaxLines(Integer.MAX_VALUE);
                             citySelected = true;
                             cityPosition = position;
-                            mLinearLayoutDistrict.setClickable(citySelected);
+                            mLayoutDistrict.setClickable(citySelected);
                             if(districtSelected){
                                 mTxtViewDistrict.setText(CreateHtmlTextHelper.createTextRequired("Quận/Huyện"));
                                 districtSelected = false;
@@ -127,10 +129,11 @@ public class RestaurantActivity extends AppCompatActivity implements BottomNavig
                             }
                             holdResData.addAll(CreateRestaurantListHelper.createRestaurantListInCity(RestaurantActivity.this, position));
                         }else{
+                            mTxtViewCity.setMaxLines(1);
                             mTxtViewCity.setText(CreateHtmlTextHelper.createTextRequired("Tỉnh/Thành Phố"));
                             citySelected = false;
                             cityPosition = 0;
-                            mLinearLayoutDistrict.setClickable(citySelected);
+                            mLayoutDistrict.setClickable(citySelected);
                             if(districtSelected == true){
                                 mTxtViewDistrict.setText(CreateHtmlTextHelper.createTextRequired("Quận/Huyện"));
                                 districtSelected = false;
@@ -142,18 +145,19 @@ public class RestaurantActivity extends AppCompatActivity implements BottomNavig
                 chooseCityDialog.show();
                 break;
 
-            case R.id.linearLayoutDistrict:
+            case R.id.layoutDistrict:
                 CustomDialogChooseDistrict chooseDistrictDialog = new CustomDialogChooseDistrict(RestaurantActivity.this, cityPosition);
                 chooseDistrictDialog.setCancelable(false);
                 chooseDistrictDialog.setOnItemSelectedListener(new OnSpinnerItemSelectedListener() {
                     @Override
                     public void onItemSelected(int position) {
                         if(position != 0){
-
+                            mTxtViewDistrict.setMaxLines(Integer.MAX_VALUE);
                             mTxtViewDistrict.setText(CreateHtmlTextHelper.createTextRequiredForDialog("Quận/Huyện", CreateDistrictListHelper.getDistrict(position)));
                             districtSelected = true;
                             districtPosition = position;
                         }else{
+                            mTxtViewDistrict.setMaxLines(1);
                             mTxtViewDistrict.setText(CreateHtmlTextHelper.createTextRequired("Quận/Huyện"));
                             districtSelected = false;
                             districtPosition = 0;

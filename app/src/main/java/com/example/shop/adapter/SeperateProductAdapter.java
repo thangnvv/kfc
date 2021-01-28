@@ -14,12 +14,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.shop.R;
-import com.example.shop.utils.dialogs.CustomDialogChooseALaCarte;
-import com.example.shop.utils.dialogs.CustomDialogUpgradeALaCarte;
-import com.example.shop.utils.objects.Product;
-import com.example.shop.utils.objects.ProductALaCarte;
-import com.example.shop.utils.objects.ProductSeperated;
-import com.example.shop.utils.objects.Upgrade;
+import com.example.shop.dialogs.CustomDialogChooseALaCarte;
+import com.example.shop.dialogs.CustomDialogUpgradeALaCarte;
+import com.example.shop.objects.Product;
+import com.example.shop.objects.ProductALaCarte;
+import com.example.shop.objects.ProductSeperated;
+import com.example.shop.objects.Upgrade;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,16 +30,16 @@ import java.util.ArrayList;
 
 public class SeperateProductAdapter extends RecyclerView.Adapter<SeperateProductAdapter.ViewHolder> {
 
-    ArrayList<ProductSeperated> mProductSeperateds;
+    ArrayList<ProductSeperated> mProductSeparates;
     ArrayList<ProductALaCarte> mProductALacartes;
     Context context;
     CustomDialogChooseALaCarte customDialogChooseALaCarte;
     CustomDialogUpgradeALaCarte customDialogUpgradeALaCarte;
     Boolean upgradable;
 
-    public SeperateProductAdapter(ArrayList<ProductALaCarte> mProductALacartes, ArrayList<ProductSeperated> mProductSeperateds, Context context) {
+    public SeperateProductAdapter(ArrayList<ProductALaCarte> mProductALacartes, ArrayList<ProductSeperated> mProductSeparates, Context context) {
         this.mProductALacartes = mProductALacartes;
-        this.mProductSeperateds = mProductSeperateds;
+        this.mProductSeparates = mProductSeparates;
         this.context = context;
     }
 
@@ -55,7 +55,7 @@ public class SeperateProductAdapter extends RecyclerView.Adapter<SeperateProduct
 
         if (!productALaCarte.isUpgradable()) {
             // This alacarte only for change option of alacarte
-            final ProductSeperated productSeperated = mProductSeperateds.get(position);
+            final ProductSeperated productSeperated = mProductSeparates.get(position);
             holder.mTxtViewName.setText(productALaCarte.getChosen_alacarte());
             holder.mImgViewProductImage.setVisibility(View.GONE);
             if (productSeperated.getOptions().length <= 1) {
@@ -179,7 +179,7 @@ public class SeperateProductAdapter extends RecyclerView.Adapter<SeperateProduct
                         });
                     } else {
                         // Showing options
-                        final ProductSeperated productSeperated = mProductSeperateds.get(getAdapterPosition());
+                        final ProductSeperated productSeperated = mProductSeparates.get(getAdapterPosition());
 
                         customDialogChooseALaCarte = new CustomDialogChooseALaCarte(context, productALaCarte.getChosen_alacarte(), productSeperated.getOptions());
                         customDialogChooseALaCarte.setCancelable(false);

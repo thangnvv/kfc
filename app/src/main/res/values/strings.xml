@@ -274,6 +274,17 @@
     <string name="hint_new_password">Mật khẩu mới</string>
     <string name="hint_confirm_password">Xác nhận mật khẩu</string>
     <string name="label_order_time">THỜI GIAN GIAO HÀNG</string>
+    <string name="no_internet">Không có kết nối mạng</string>
+    <string name="no_internet_description">Không có kết nối mạng. Bạn vui lòng kiểm tra kết nối mạng và thử lại</string>
+    <string name="setting">Cài đặt</string>
+    <string name="try_again">THỬ LẠI</string>
+    <string name="cart">Giỏ hàng</string>
+    <string name="product_name">Product Name</string>
+    <string name="product_price">Product Price</string>
+    <string name="total_price">Total Price</string>
+    <string name="add_ons">Add-Ons:</string>
+    <string name="goes_great_with">Sẽ tuyệt hơn nếu bạn chọn thêm:</string>
+    <string name="kfc">KFC</string>
 
 
 </resources>

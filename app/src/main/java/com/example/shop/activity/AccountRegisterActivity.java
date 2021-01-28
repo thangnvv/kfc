@@ -21,9 +21,9 @@ import android.widget.Toast;
 
 import com.example.shop.R;
 import com.example.shop.utils.CreateHtmlTextHelper;
-import com.example.shop.utils.dialogs.CustomDialogPolicyAndRegulation;
-import com.example.shop.utils.dialogs.CustomDialogTermsAndConditons;
-import com.example.shop.utils.objects.Customer;
+import com.example.shop.dialogs.CustomDialogPolicyAndRegulation;
+import com.example.shop.dialogs.CustomDialogTermsAndConditons;
+import com.example.shop.objects.Customer;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;

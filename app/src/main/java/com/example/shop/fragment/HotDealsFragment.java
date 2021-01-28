@@ -15,8 +15,9 @@ import android.view.ViewGroup;
 
 import com.example.shop.R;
 import com.example.shop.adapter.ProductAdapter;
+import com.example.shop.interfaces.OnFragmentScrollListener;
 import com.example.shop.interfaces.OnProductClickListener;
-import com.example.shop.utils.objects.Product;
+import com.example.shop.objects.Product;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,10 +29,11 @@ import java.util.ArrayList;
 
 public class HotDealsFragment extends Fragment implements OnProductClickListener {
 
-    RecyclerView recyclerViewProdutHotDeals;
+    RecyclerView recyclerViewProductHotDeals;
     ArrayList<Product> mListProduct;
     ProductAdapter mProductAdapter;
     OnProductClickListener onProductClickListener;
+    OnFragmentScrollListener onFragmentScrollListener;
     Context context;
 
     public HotDealsFragment() {
@@ -41,8 +43,13 @@ public class HotDealsFragment extends Fragment implements OnProductClickListener
     public HotDealsFragment(Context context){
         this.context = context;
     }
+
     public void setProductClickListener(OnProductClickListener onProductClickListener){
         this.onProductClickListener = onProductClickListener;
+    }
+
+    public void setOnFragmentScrollListener(OnFragmentScrollListener onFragmentScrollListener){
+        this.onFragmentScrollListener = onFragmentScrollListener;
     }
 
     @Override
@@ -86,11 +93,17 @@ public class HotDealsFragment extends Fragment implements OnProductClickListener
         View view = inflater.inflate(R.layout.fragment_hot_deals, container, false);
         mProductAdapter = new ProductAdapter(mListProduct, getContext());
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        recyclerViewProdutHotDeals = view.findViewById(R.id.recyclerViewHotDeals);
-        recyclerViewProdutHotDeals.setLayoutManager(staggeredGridLayoutManager);
-        recyclerViewProdutHotDeals.setAdapter(mProductAdapter);
+        recyclerViewProductHotDeals = view.findViewById(R.id.recyclerViewHotDeals);
+        recyclerViewProductHotDeals.setLayoutManager(staggeredGridLayoutManager);
+        recyclerViewProductHotDeals.setAdapter(mProductAdapter);
         mProductAdapter.setOnProductClickListener(this);
-
+        recyclerViewProductHotDeals.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                onFragmentScrollListener.onScroll();
+            }
+        });
         return view;
     }
 

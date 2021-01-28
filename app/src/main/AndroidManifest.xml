@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.shop">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
@@ -12,7 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/myTheme">
-        <activity android:name=".activity.OrderHistoryActivity"></activity>
+        <activity android:name=".activity.OrderHistoryActivity"/>
         <activity android:name=".activity.ChangePasswordActivity" />
         <activity android:name=".activity.ConfirmOrderActivity" />
         <activity android:name=".activity.CheckOutActivity" />
@@ -69,6 +70,13 @@
             </intent-filter>
         </activity>
 
+        <receiver android:name=".broadcasts.NetworkBroadcastReceiver">
+
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+
+        </receiver>
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />

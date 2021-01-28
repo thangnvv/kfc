@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.shop.R;
 import com.example.shop.adapter.RelatedPromotionNewsAdapter;
-import com.example.shop.utils.objects.Promotion;
+import com.example.shop.objects.Promotion;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
